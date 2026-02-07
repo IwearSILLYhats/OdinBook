@@ -3,6 +3,7 @@ const path = require("node:path");
 const cors = require("cors");
 const dotenv = require("dotenv");
 dotenv.config();
+const cookieParser = require("cookie-parser");
 const { PrismaClient } = require("./prisma/generated/prisma/client");
 const prisma = new PrismaClient();
 const indexRouter = require("./routes/indexRouter");
@@ -19,6 +20,7 @@ app.use(
 );
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "/public")));
+app.use(cookieParser());
 app.use(express.json());
 
 app.use("/", indexRouter);

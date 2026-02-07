@@ -1,6 +1,7 @@
 const passport = require("passport");
-const oauthStrategy = require("passport-google-oauth20");
-const LocalStrategy = require("passport-local");
+const oauthStrategy = require("passport-google-oauth20").Strategy;
+const LocalStrategy = require("passport-local").Strategy;
+const jwtStrategy = require("passport-jwt").Strategy;
 const { PrismaClient } = require("../prisma/generated/prisma/client");
 const prisma = new PrismaClient();
 const bcrypt = require("bcryptjs");
@@ -35,7 +36,7 @@ passport.use(
       return done(null, user);
     } catch (error) {
       console.log(error);
-      return done(error);
+      return done({ error });
     }
   }),
 );
