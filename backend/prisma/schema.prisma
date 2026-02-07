@@ -13,6 +13,15 @@ datasource db {
   provider = "postgresql"
 }
 
+model Auth {
+  id          String   @id @default(uuid())
+  user        User     @relation(fields: [user_id], references: [id])
+  user_id     String
+  provider    provider
+  provider_id String
+  password    String?
+}
+
 model Chat {
   id          String @id @default(uuid())
   user_one    User   @relation("userOne", fields: [user_id_one], references: [id])
@@ -63,9 +72,7 @@ model Post {
 
 model User {
   id              String         @id @default(uuid())
-  email           String         @unique
   username        String         @unique
-  password        String
   profile_img_url String?
   joined_date     DateTime       @default(now())
   last_activity   DateTime       @default(now())
@@ -78,6 +85,7 @@ model User {
   chat_user_one   Chat[]         @relation("userOne")
   chat_user_two   Chat[]         @relation("userTwo")
   notifications   Notification[]
+  auths           Auth[]
 }
 
 enum acct_status {
@@ -88,4 +96,9 @@ enum acct_status {
 enum entity_type {
   POST
   REPLY
+}
+
+enum provider {
+  GOOGLE
+  LOCAL
 }
