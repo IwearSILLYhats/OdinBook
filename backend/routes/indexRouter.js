@@ -2,7 +2,6 @@ const express = require("express");
 const indexRouter = express.Router();
 const { PrismaClient } = require("../prisma/generated/prisma/client");
 const prisma = new PrismaClient();
-const bcrypt = require("bcryptjs");
 
 indexRouter.post("/signup", (req, res) => {
   try {

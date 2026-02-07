@@ -6,6 +6,14 @@ const { PrismaClient } = require("../prisma/generated/prisma/client");
 const prisma = new PrismaClient();
 const bcrypt = require("bcryptjs");
 
+function cookieExtractor(req) {
+  let token = null;
+  if (req && req.cookies) {
+    token = req.cookies["jwt"];
+  }
+  return token;
+}
+
 export async function encryptPassword(password) {
   const hash = await bcrypt.hash(password, 10);
   return hash;
@@ -16,11 +24,7 @@ export async function verifyPassword(password, hashedPassword) {
 }
 
 passport.use(
-  new LocalStrategy({ session: false }, async function verify(
-    username,
-    password,
-    done,
-  ) {
+  new LocalStrategy(async function verify(username, password, done) {
     try {
       const user = await prisma.user.findUnique({
         where: {
@@ -39,4 +43,30 @@ passport.use(
       return done({ error });
     }
   }),
+);
+
+passport.use(
+  new jwtStrategy(
+    {
+      jwtFromRequest: cookieExtractor,
+      secretOrKey: process.env.SECRET,
+    },
+    async function verify(payload, done) {
+      try {
+        const user = await prisma.user.findUnique({
+          where: {
+            username: payload.username,
+          },
+        });
+        if (!user) {
+          return done(null, false);
+        } else {
+          return done(null, user);
+        }
+      } catch (error) {
+        console.log(error);
+        return done({ error });
+      }
+    },
+  ),
 );
