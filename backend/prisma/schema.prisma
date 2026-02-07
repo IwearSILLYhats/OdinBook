@@ -1,0 +1,91 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "./generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Chat {
+  id          String @id @default(uuid())
+  user_one    User   @relation("userOne", fields: [user_id_one], references: [id])
+  user_id_one String
+  user_two    User   @relation("userTwo", fields: [user_id_two], references: [id])
+  user_id_two String
+}
+
+model Follow {
+  follower     User   @relation("userFollowing", fields: [follower_id], references: [id])
+  follower_id  String
+  following    User   @relation("userFollowedBy", fields: [following_id], references: [id])
+  following_id String
+
+  @@unique([follower_id, following_id])
+}
+
+model Like {
+  user     User     @relation(fields: [user_id], references: [id])
+  user_id  String
+  post     Post     @relation(fields: [post_id], references: [id])
+  post_id  String
+  liked_at DateTime @default(now())
+
+  @@unique([user_id, post_id])
+}
+
+model Notification {
+  id       String      @id @default(uuid())
+  receiver User        @relation(fields: [userId], references: [id])
+  type     entity_type
+  userId   String
+}
+
+model Post {
+  id        String    @id @default(uuid())
+  author    User      @relation(fields: [author_id], references: [id])
+  author_id String
+  created   DateTime  @default(now())
+  content   String
+  has_image Boolean
+  edited    DateTime?
+  parent    Post?     @relation("postChildren", fields: [parent_id], references: [id])
+  replies   Post[]    @relation("postChildren")
+  parent_id String?
+  likes     Like[]
+}
+
+model User {
+  id              String         @id @default(uuid())
+  email           String         @unique
+  username        String         @unique
+  password        String
+  profile_img_url String?
+  joined_date     DateTime       @default(now())
+  last_activity   DateTime       @default(now())
+  acct_status     acct_status    @default(ACTIVE)
+  bio             String?
+  following       Follow[]       @relation("userFollowing")
+  followed_by     Follow[]       @relation("userFollowedBy")
+  posts           Post[]
+  likes           Like[]
+  chat_user_one   Chat[]         @relation("userOne")
+  chat_user_two   Chat[]         @relation("userTwo")
+  notifications   Notification[]
+}
+
+enum acct_status {
+  ACTIVE
+  DEACTIVATED
+}
+
+enum entity_type {
+  POST
+  REPLY
+}
