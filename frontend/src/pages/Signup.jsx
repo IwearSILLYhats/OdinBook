@@ -70,6 +70,10 @@ export default function Signup() {
       <p>
         Already have an account? <NavLink to={"/login"}>Log in here</NavLink>
       </p>
+      <p>
+        Just want to check out the site?{" "}
+        <NavLink to={"/guest"}>Log in as a guest</NavLink>
+      </p>
     </div>
   );
 }
