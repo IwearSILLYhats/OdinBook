@@ -453,10 +453,6 @@ export type PostUpdateManyWithoutParentNestedInput = {
   deleteMany?: Prisma.PostScalarWhereInput | Prisma.PostScalarWhereInput[]
 }
 
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
-}
-
 export type PostUncheckedUpdateManyWithoutParentNestedInput = {
   create?: Prisma.XOR<Prisma.PostCreateWithoutParentInput, Prisma.PostUncheckedCreateWithoutParentInput> | Prisma.PostCreateWithoutParentInput[] | Prisma.PostUncheckedCreateWithoutParentInput[]
   connectOrCreate?: Prisma.PostCreateOrConnectWithoutParentInput | Prisma.PostCreateOrConnectWithoutParentInput[]

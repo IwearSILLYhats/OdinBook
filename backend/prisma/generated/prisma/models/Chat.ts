@@ -275,10 +275,6 @@ export type ChatOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type StringFieldUpdateOperationsInput = {
-  set?: string
-}
-
 export type ChatCreateNestedManyWithoutUser_oneInput = {
   create?: Prisma.XOR<Prisma.ChatCreateWithoutUser_oneInput, Prisma.ChatUncheckedCreateWithoutUser_oneInput> | Prisma.ChatCreateWithoutUser_oneInput[] | Prisma.ChatUncheckedCreateWithoutUser_oneInput[]
   connectOrCreate?: Prisma.ChatCreateOrConnectWithoutUser_oneInput | Prisma.ChatCreateOrConnectWithoutUser_oneInput[]

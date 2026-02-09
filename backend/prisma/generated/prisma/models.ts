@@ -8,6 +8,7 @@
  *
  * 🟢 You can import this file directly.
  */
+export type * from './models/Auth.ts'
 export type * from './models/Chat.ts'
 export type * from './models/Follow.ts'
 export type * from './models/Like.ts'

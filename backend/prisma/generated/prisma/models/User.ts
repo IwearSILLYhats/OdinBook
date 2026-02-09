@@ -26,9 +26,7 @@ export type AggregateUser = {
 
 export type UserMinAggregateOutputType = {
   id: string | null
-  email: string | null
   username: string | null
-  password: string | null
   profile_img_url: string | null
   joined_date: Date | null
   last_activity: Date | null
@@ -38,9 +36,7 @@ export type UserMinAggregateOutputType = {
 
 export type UserMaxAggregateOutputType = {
   id: string | null
-  email: string | null
   username: string | null
-  password: string | null
   profile_img_url: string | null
   joined_date: Date | null
   last_activity: Date | null
@@ -50,9 +46,7 @@ export type UserMaxAggregateOutputType = {
 
 export type UserCountAggregateOutputType = {
   id: number
-  email: number
   username: number
-  password: number
   profile_img_url: number
   joined_date: number
   last_activity: number
@@ -64,9 +58,7 @@ export type UserCountAggregateOutputType = {
 
 export type UserMinAggregateInputType = {
   id?: true
-  email?: true
   username?: true
-  password?: true
   profile_img_url?: true
   joined_date?: true
   last_activity?: true
@@ -76,9 +68,7 @@ export type UserMinAggregateInputType = {
 
 export type UserMaxAggregateInputType = {
   id?: true
-  email?: true
   username?: true
-  password?: true
   profile_img_url?: true
   joined_date?: true
   last_activity?: true
@@ -88,9 +78,7 @@ export type UserMaxAggregateInputType = {
 
 export type UserCountAggregateInputType = {
   id?: true
-  email?: true
   username?: true
-  password?: true
   profile_img_url?: true
   joined_date?: true
   last_activity?: true
@@ -173,9 +161,7 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 
 export type UserGroupByOutputType = {
   id: string
-  email: string
   username: string
-  password: string
   profile_img_url: string | null
   joined_date: Date
   last_activity: Date
@@ -206,9 +192,7 @@ export type UserWhereInput = {
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   id?: Prisma.StringFilter<"User"> | string
-  email?: Prisma.StringFilter<"User"> | string
   username?: Prisma.StringFilter<"User"> | string
-  password?: Prisma.StringFilter<"User"> | string
   profile_img_url?: Prisma.StringNullableFilter<"User"> | string | null
   joined_date?: Prisma.DateTimeFilter<"User"> | Date | string
   last_activity?: Prisma.DateTimeFilter<"User"> | Date | string
@@ -221,13 +205,12 @@ export type UserWhereInput = {
   chat_user_one?: Prisma.ChatListRelationFilter
   chat_user_two?: Prisma.ChatListRelationFilter
   notifications?: Prisma.NotificationListRelationFilter
+  auths?: Prisma.AuthListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  email?: Prisma.SortOrder
   username?: Prisma.SortOrder
-  password?: Prisma.SortOrder
   profile_img_url?: Prisma.SortOrderInput | Prisma.SortOrder
   joined_date?: Prisma.SortOrder
   last_activity?: Prisma.SortOrder
@@ -240,16 +223,15 @@ export type UserOrderByWithRelationInput = {
   chat_user_one?: Prisma.ChatOrderByRelationAggregateInput
   chat_user_two?: Prisma.ChatOrderByRelationAggregateInput
   notifications?: Prisma.NotificationOrderByRelationAggregateInput
+  auths?: Prisma.AuthOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  email?: string
   username?: string
   AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   OR?: Prisma.UserWhereInput[]
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
-  password?: Prisma.StringFilter<"User"> | string
   profile_img_url?: Prisma.StringNullableFilter<"User"> | string | null
   joined_date?: Prisma.DateTimeFilter<"User"> | Date | string
   last_activity?: Prisma.DateTimeFilter<"User"> | Date | string
@@ -262,13 +244,12 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   chat_user_one?: Prisma.ChatListRelationFilter
   chat_user_two?: Prisma.ChatListRelationFilter
   notifications?: Prisma.NotificationListRelationFilter
-}, "id" | "email" | "username">
+  auths?: Prisma.AuthListRelationFilter
+}, "id" | "username">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  email?: Prisma.SortOrder
   username?: Prisma.SortOrder
-  password?: Prisma.SortOrder
   profile_img_url?: Prisma.SortOrderInput | Prisma.SortOrder
   joined_date?: Prisma.SortOrder
   last_activity?: Prisma.SortOrder
@@ -284,9 +265,7 @@ export type UserScalarWhereWithAggregatesInput = {
   OR?: Prisma.UserScalarWhereWithAggregatesInput[]
   NOT?: Prisma.UserScalarWhereWithAggregatesInput | Prisma.UserScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"User"> | string
-  email?: Prisma.StringWithAggregatesFilter<"User"> | string
   username?: Prisma.StringWithAggregatesFilter<"User"> | string
-  password?: Prisma.StringWithAggregatesFilter<"User"> | string
   profile_img_url?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   joined_date?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   last_activity?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -296,9 +275,7 @@ export type UserScalarWhereWithAggregatesInput = {
 
 export type UserCreateInput = {
   id?: string
-  email: string
   username: string
-  password: string
   profile_img_url?: string | null
   joined_date?: Date | string
   last_activity?: Date | string
@@ -311,13 +288,12 @@ export type UserCreateInput = {
   chat_user_one?: Prisma.ChatCreateNestedManyWithoutUser_oneInput
   chat_user_two?: Prisma.ChatCreateNestedManyWithoutUser_twoInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
+  auths?: Prisma.AuthCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
   id?: string
-  email: string
   username: string
-  password: string
   profile_img_url?: string | null
   joined_date?: Date | string
   last_activity?: Date | string
@@ -330,13 +306,12 @@ export type UserUncheckedCreateInput = {
   chat_user_one?: Prisma.ChatUncheckedCreateNestedManyWithoutUser_oneInput
   chat_user_two?: Prisma.ChatUncheckedCreateNestedManyWithoutUser_twoInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
+  auths?: Prisma.AuthUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   profile_img_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   joined_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   last_activity?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -349,13 +324,12 @@ export type UserUpdateInput = {
   chat_user_one?: Prisma.ChatUpdateManyWithoutUser_oneNestedInput
   chat_user_two?: Prisma.ChatUpdateManyWithoutUser_twoNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
+  auths?: Prisma.AuthUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   profile_img_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   joined_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   last_activity?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -368,13 +342,12 @@ export type UserUncheckedUpdateInput = {
   chat_user_one?: Prisma.ChatUncheckedUpdateManyWithoutUser_oneNestedInput
   chat_user_two?: Prisma.ChatUncheckedUpdateManyWithoutUser_twoNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
+  auths?: Prisma.AuthUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
   id?: string
-  email: string
   username: string
-  password: string
   profile_img_url?: string | null
   joined_date?: Date | string
   last_activity?: Date | string
@@ -384,9 +357,7 @@ export type UserCreateManyInput = {
 
 export type UserUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   profile_img_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   joined_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   last_activity?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -396,9 +367,7 @@ export type UserUpdateManyMutationInput = {
 
 export type UserUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   profile_img_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   joined_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   last_activity?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -413,9 +382,7 @@ export type UserScalarRelationFilter = {
 
 export type UserCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  email?: Prisma.SortOrder
   username?: Prisma.SortOrder
-  password?: Prisma.SortOrder
   profile_img_url?: Prisma.SortOrder
   joined_date?: Prisma.SortOrder
   last_activity?: Prisma.SortOrder
@@ -425,9 +392,7 @@ export type UserCountOrderByAggregateInput = {
 
 export type UserMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  email?: Prisma.SortOrder
   username?: Prisma.SortOrder
-  password?: Prisma.SortOrder
   profile_img_url?: Prisma.SortOrder
   joined_date?: Prisma.SortOrder
   last_activity?: Prisma.SortOrder
@@ -437,14 +402,26 @@ export type UserMaxOrderByAggregateInput = {
 
 export type UserMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  email?: Prisma.SortOrder
   username?: Prisma.SortOrder
-  password?: Prisma.SortOrder
   profile_img_url?: Prisma.SortOrder
   joined_date?: Prisma.SortOrder
   last_activity?: Prisma.SortOrder
   acct_status?: Prisma.SortOrder
   bio?: Prisma.SortOrder
+}
+
+export type UserCreateNestedOneWithoutAuthsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAuthsInput, Prisma.UserUncheckedCreateWithoutAuthsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAuthsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutAuthsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAuthsInput, Prisma.UserUncheckedCreateWithoutAuthsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAuthsInput
+  upsert?: Prisma.UserUpsertWithoutAuthsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAuthsInput, Prisma.UserUpdateWithoutAuthsInput>, Prisma.UserUncheckedUpdateWithoutAuthsInput>
 }
 
 export type UserCreateNestedOneWithoutChat_user_oneInput = {
@@ -549,11 +526,93 @@ export type Enumacct_statusFieldUpdateOperationsInput = {
   set?: $Enums.acct_status
 }
 
+export type UserCreateWithoutAuthsInput = {
+  id?: string
+  username: string
+  profile_img_url?: string | null
+  joined_date?: Date | string
+  last_activity?: Date | string
+  acct_status?: $Enums.acct_status
+  bio?: string | null
+  following?: Prisma.FollowCreateNestedManyWithoutFollowerInput
+  followed_by?: Prisma.FollowCreateNestedManyWithoutFollowingInput
+  posts?: Prisma.PostCreateNestedManyWithoutAuthorInput
+  likes?: Prisma.LikeCreateNestedManyWithoutUserInput
+  chat_user_one?: Prisma.ChatCreateNestedManyWithoutUser_oneInput
+  chat_user_two?: Prisma.ChatCreateNestedManyWithoutUser_twoInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
+}
+
+export type UserUncheckedCreateWithoutAuthsInput = {
+  id?: string
+  username: string
+  profile_img_url?: string | null
+  joined_date?: Date | string
+  last_activity?: Date | string
+  acct_status?: $Enums.acct_status
+  bio?: string | null
+  following?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowerInput
+  followed_by?: Prisma.FollowUncheckedCreateNestedManyWithoutFollowingInput
+  posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput
+  likes?: Prisma.LikeUncheckedCreateNestedManyWithoutUserInput
+  chat_user_one?: Prisma.ChatUncheckedCreateNestedManyWithoutUser_oneInput
+  chat_user_two?: Prisma.ChatUncheckedCreateNestedManyWithoutUser_twoInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
+}
+
+export type UserCreateOrConnectWithoutAuthsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAuthsInput, Prisma.UserUncheckedCreateWithoutAuthsInput>
+}
+
+export type UserUpsertWithoutAuthsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAuthsInput, Prisma.UserUncheckedUpdateWithoutAuthsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAuthsInput, Prisma.UserUncheckedCreateWithoutAuthsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAuthsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAuthsInput, Prisma.UserUncheckedUpdateWithoutAuthsInput>
+}
+
+export type UserUpdateWithoutAuthsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  profile_img_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  joined_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  last_activity?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  acct_status?: Prisma.Enumacct_statusFieldUpdateOperationsInput | $Enums.acct_status
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  following?: Prisma.FollowUpdateManyWithoutFollowerNestedInput
+  followed_by?: Prisma.FollowUpdateManyWithoutFollowingNestedInput
+  posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput
+  likes?: Prisma.LikeUpdateManyWithoutUserNestedInput
+  chat_user_one?: Prisma.ChatUpdateManyWithoutUser_oneNestedInput
+  chat_user_two?: Prisma.ChatUpdateManyWithoutUser_twoNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAuthsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  profile_img_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  joined_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  last_activity?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  acct_status?: Prisma.Enumacct_statusFieldUpdateOperationsInput | $Enums.acct_status
+  bio?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  following?: Prisma.FollowUncheckedUpdateManyWithoutFollowerNestedInput
+  followed_by?: Prisma.FollowUncheckedUpdateManyWithoutFollowingNestedInput
+  posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput
+  likes?: Prisma.LikeUncheckedUpdateManyWithoutUserNestedInput
+  chat_user_one?: Prisma.ChatUncheckedUpdateManyWithoutUser_oneNestedInput
+  chat_user_two?: Prisma.ChatUncheckedUpdateManyWithoutUser_twoNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
+}
+
 export type UserCreateWithoutChat_user_oneInput = {
   id?: string
-  email: string
   username: string
-  password: string
   profile_img_url?: string | null
   joined_date?: Date | string
   last_activity?: Date | string
@@ -565,13 +624,12 @@ export type UserCreateWithoutChat_user_oneInput = {
   likes?: Prisma.LikeCreateNestedManyWithoutUserInput
   chat_user_two?: Prisma.ChatCreateNestedManyWithoutUser_twoInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
+  auths?: Prisma.AuthCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutChat_user_oneInput = {
   id?: string
-  email: string
   username: string
-  password: string
   profile_img_url?: string | null
   joined_date?: Date | string
   last_activity?: Date | string
@@ -583,6 +641,7 @@ export type UserUncheckedCreateWithoutChat_user_oneInput = {
   likes?: Prisma.LikeUncheckedCreateNestedManyWithoutUserInput
   chat_user_two?: Prisma.ChatUncheckedCreateNestedManyWithoutUser_twoInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
+  auths?: Prisma.AuthUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutChat_user_oneInput = {
@@ -592,9 +651,7 @@ export type UserCreateOrConnectWithoutChat_user_oneInput = {
 
 export type UserCreateWithoutChat_user_twoInput = {
   id?: string
-  email: string
   username: string
-  password: string
   profile_img_url?: string | null
   joined_date?: Date | string
   last_activity?: Date | string
@@ -606,13 +663,12 @@ export type UserCreateWithoutChat_user_twoInput = {
   likes?: Prisma.LikeCreateNestedManyWithoutUserInput
   chat_user_one?: Prisma.ChatCreateNestedManyWithoutUser_oneInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
+  auths?: Prisma.AuthCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutChat_user_twoInput = {
   id?: string
-  email: string
   username: string
-  password: string
   profile_img_url?: string | null
   joined_date?: Date | string
   last_activity?: Date | string
@@ -624,6 +680,7 @@ export type UserUncheckedCreateWithoutChat_user_twoInput = {
   likes?: Prisma.LikeUncheckedCreateNestedManyWithoutUserInput
   chat_user_one?: Prisma.ChatUncheckedCreateNestedManyWithoutUser_oneInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
+  auths?: Prisma.AuthUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutChat_user_twoInput = {
@@ -644,9 +701,7 @@ export type UserUpdateToOneWithWhereWithoutChat_user_oneInput = {
 
 export type UserUpdateWithoutChat_user_oneInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   profile_img_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   joined_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   last_activity?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -658,13 +713,12 @@ export type UserUpdateWithoutChat_user_oneInput = {
   likes?: Prisma.LikeUpdateManyWithoutUserNestedInput
   chat_user_two?: Prisma.ChatUpdateManyWithoutUser_twoNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
+  auths?: Prisma.AuthUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutChat_user_oneInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   profile_img_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   joined_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   last_activity?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -676,6 +730,7 @@ export type UserUncheckedUpdateWithoutChat_user_oneInput = {
   likes?: Prisma.LikeUncheckedUpdateManyWithoutUserNestedInput
   chat_user_two?: Prisma.ChatUncheckedUpdateManyWithoutUser_twoNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
+  auths?: Prisma.AuthUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutChat_user_twoInput = {
@@ -691,9 +746,7 @@ export type UserUpdateToOneWithWhereWithoutChat_user_twoInput = {
 
 export type UserUpdateWithoutChat_user_twoInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   profile_img_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   joined_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   last_activity?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -705,13 +758,12 @@ export type UserUpdateWithoutChat_user_twoInput = {
   likes?: Prisma.LikeUpdateManyWithoutUserNestedInput
   chat_user_one?: Prisma.ChatUpdateManyWithoutUser_oneNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
+  auths?: Prisma.AuthUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutChat_user_twoInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   profile_img_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   joined_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   last_activity?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -723,13 +775,12 @@ export type UserUncheckedUpdateWithoutChat_user_twoInput = {
   likes?: Prisma.LikeUncheckedUpdateManyWithoutUserNestedInput
   chat_user_one?: Prisma.ChatUncheckedUpdateManyWithoutUser_oneNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
+  auths?: Prisma.AuthUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutFollowingInput = {
   id?: string
-  email: string
   username: string
-  password: string
   profile_img_url?: string | null
   joined_date?: Date | string
   last_activity?: Date | string
@@ -741,13 +792,12 @@ export type UserCreateWithoutFollowingInput = {
   chat_user_one?: Prisma.ChatCreateNestedManyWithoutUser_oneInput
   chat_user_two?: Prisma.ChatCreateNestedManyWithoutUser_twoInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
+  auths?: Prisma.AuthCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutFollowingInput = {
   id?: string
-  email: string
   username: string
-  password: string
   profile_img_url?: string | null
   joined_date?: Date | string
   last_activity?: Date | string
@@ -759,6 +809,7 @@ export type UserUncheckedCreateWithoutFollowingInput = {
   chat_user_one?: Prisma.ChatUncheckedCreateNestedManyWithoutUser_oneInput
   chat_user_two?: Prisma.ChatUncheckedCreateNestedManyWithoutUser_twoInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
+  auths?: Prisma.AuthUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutFollowingInput = {
@@ -768,9 +819,7 @@ export type UserCreateOrConnectWithoutFollowingInput = {
 
 export type UserCreateWithoutFollowed_byInput = {
   id?: string
-  email: string
   username: string
-  password: string
   profile_img_url?: string | null
   joined_date?: Date | string
   last_activity?: Date | string
@@ -782,13 +831,12 @@ export type UserCreateWithoutFollowed_byInput = {
   chat_user_one?: Prisma.ChatCreateNestedManyWithoutUser_oneInput
   chat_user_two?: Prisma.ChatCreateNestedManyWithoutUser_twoInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
+  auths?: Prisma.AuthCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutFollowed_byInput = {
   id?: string
-  email: string
   username: string
-  password: string
   profile_img_url?: string | null
   joined_date?: Date | string
   last_activity?: Date | string
@@ -800,6 +848,7 @@ export type UserUncheckedCreateWithoutFollowed_byInput = {
   chat_user_one?: Prisma.ChatUncheckedCreateNestedManyWithoutUser_oneInput
   chat_user_two?: Prisma.ChatUncheckedCreateNestedManyWithoutUser_twoInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
+  auths?: Prisma.AuthUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutFollowed_byInput = {
@@ -820,9 +869,7 @@ export type UserUpdateToOneWithWhereWithoutFollowingInput = {
 
 export type UserUpdateWithoutFollowingInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   profile_img_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   joined_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   last_activity?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -834,13 +881,12 @@ export type UserUpdateWithoutFollowingInput = {
   chat_user_one?: Prisma.ChatUpdateManyWithoutUser_oneNestedInput
   chat_user_two?: Prisma.ChatUpdateManyWithoutUser_twoNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
+  auths?: Prisma.AuthUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutFollowingInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   profile_img_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   joined_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   last_activity?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -852,6 +898,7 @@ export type UserUncheckedUpdateWithoutFollowingInput = {
   chat_user_one?: Prisma.ChatUncheckedUpdateManyWithoutUser_oneNestedInput
   chat_user_two?: Prisma.ChatUncheckedUpdateManyWithoutUser_twoNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
+  auths?: Prisma.AuthUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutFollowed_byInput = {
@@ -867,9 +914,7 @@ export type UserUpdateToOneWithWhereWithoutFollowed_byInput = {
 
 export type UserUpdateWithoutFollowed_byInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   profile_img_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   joined_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   last_activity?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -881,13 +926,12 @@ export type UserUpdateWithoutFollowed_byInput = {
   chat_user_one?: Prisma.ChatUpdateManyWithoutUser_oneNestedInput
   chat_user_two?: Prisma.ChatUpdateManyWithoutUser_twoNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
+  auths?: Prisma.AuthUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutFollowed_byInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   profile_img_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   joined_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   last_activity?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -899,13 +943,12 @@ export type UserUncheckedUpdateWithoutFollowed_byInput = {
   chat_user_one?: Prisma.ChatUncheckedUpdateManyWithoutUser_oneNestedInput
   chat_user_two?: Prisma.ChatUncheckedUpdateManyWithoutUser_twoNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
+  auths?: Prisma.AuthUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutLikesInput = {
   id?: string
-  email: string
   username: string
-  password: string
   profile_img_url?: string | null
   joined_date?: Date | string
   last_activity?: Date | string
@@ -917,13 +960,12 @@ export type UserCreateWithoutLikesInput = {
   chat_user_one?: Prisma.ChatCreateNestedManyWithoutUser_oneInput
   chat_user_two?: Prisma.ChatCreateNestedManyWithoutUser_twoInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
+  auths?: Prisma.AuthCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutLikesInput = {
   id?: string
-  email: string
   username: string
-  password: string
   profile_img_url?: string | null
   joined_date?: Date | string
   last_activity?: Date | string
@@ -935,6 +977,7 @@ export type UserUncheckedCreateWithoutLikesInput = {
   chat_user_one?: Prisma.ChatUncheckedCreateNestedManyWithoutUser_oneInput
   chat_user_two?: Prisma.ChatUncheckedCreateNestedManyWithoutUser_twoInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
+  auths?: Prisma.AuthUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutLikesInput = {
@@ -955,9 +998,7 @@ export type UserUpdateToOneWithWhereWithoutLikesInput = {
 
 export type UserUpdateWithoutLikesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   profile_img_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   joined_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   last_activity?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -969,13 +1010,12 @@ export type UserUpdateWithoutLikesInput = {
   chat_user_one?: Prisma.ChatUpdateManyWithoutUser_oneNestedInput
   chat_user_two?: Prisma.ChatUpdateManyWithoutUser_twoNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
+  auths?: Prisma.AuthUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutLikesInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   profile_img_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   joined_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   last_activity?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -987,13 +1027,12 @@ export type UserUncheckedUpdateWithoutLikesInput = {
   chat_user_one?: Prisma.ChatUncheckedUpdateManyWithoutUser_oneNestedInput
   chat_user_two?: Prisma.ChatUncheckedUpdateManyWithoutUser_twoNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
+  auths?: Prisma.AuthUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutNotificationsInput = {
   id?: string
-  email: string
   username: string
-  password: string
   profile_img_url?: string | null
   joined_date?: Date | string
   last_activity?: Date | string
@@ -1005,13 +1044,12 @@ export type UserCreateWithoutNotificationsInput = {
   likes?: Prisma.LikeCreateNestedManyWithoutUserInput
   chat_user_one?: Prisma.ChatCreateNestedManyWithoutUser_oneInput
   chat_user_two?: Prisma.ChatCreateNestedManyWithoutUser_twoInput
+  auths?: Prisma.AuthCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutNotificationsInput = {
   id?: string
-  email: string
   username: string
-  password: string
   profile_img_url?: string | null
   joined_date?: Date | string
   last_activity?: Date | string
@@ -1023,6 +1061,7 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   likes?: Prisma.LikeUncheckedCreateNestedManyWithoutUserInput
   chat_user_one?: Prisma.ChatUncheckedCreateNestedManyWithoutUser_oneInput
   chat_user_two?: Prisma.ChatUncheckedCreateNestedManyWithoutUser_twoInput
+  auths?: Prisma.AuthUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -1043,9 +1082,7 @@ export type UserUpdateToOneWithWhereWithoutNotificationsInput = {
 
 export type UserUpdateWithoutNotificationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   profile_img_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   joined_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   last_activity?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1057,13 +1094,12 @@ export type UserUpdateWithoutNotificationsInput = {
   likes?: Prisma.LikeUpdateManyWithoutUserNestedInput
   chat_user_one?: Prisma.ChatUpdateManyWithoutUser_oneNestedInput
   chat_user_two?: Prisma.ChatUpdateManyWithoutUser_twoNestedInput
+  auths?: Prisma.AuthUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutNotificationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   profile_img_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   joined_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   last_activity?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1075,13 +1111,12 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   likes?: Prisma.LikeUncheckedUpdateManyWithoutUserNestedInput
   chat_user_one?: Prisma.ChatUncheckedUpdateManyWithoutUser_oneNestedInput
   chat_user_two?: Prisma.ChatUncheckedUpdateManyWithoutUser_twoNestedInput
+  auths?: Prisma.AuthUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutPostsInput = {
   id?: string
-  email: string
   username: string
-  password: string
   profile_img_url?: string | null
   joined_date?: Date | string
   last_activity?: Date | string
@@ -1093,13 +1128,12 @@ export type UserCreateWithoutPostsInput = {
   chat_user_one?: Prisma.ChatCreateNestedManyWithoutUser_oneInput
   chat_user_two?: Prisma.ChatCreateNestedManyWithoutUser_twoInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutReceiverInput
+  auths?: Prisma.AuthCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPostsInput = {
   id?: string
-  email: string
   username: string
-  password: string
   profile_img_url?: string | null
   joined_date?: Date | string
   last_activity?: Date | string
@@ -1111,6 +1145,7 @@ export type UserUncheckedCreateWithoutPostsInput = {
   chat_user_one?: Prisma.ChatUncheckedCreateNestedManyWithoutUser_oneInput
   chat_user_two?: Prisma.ChatUncheckedCreateNestedManyWithoutUser_twoInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutReceiverInput
+  auths?: Prisma.AuthUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPostsInput = {
@@ -1131,9 +1166,7 @@ export type UserUpdateToOneWithWhereWithoutPostsInput = {
 
 export type UserUpdateWithoutPostsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   profile_img_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   joined_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   last_activity?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1145,13 +1178,12 @@ export type UserUpdateWithoutPostsInput = {
   chat_user_one?: Prisma.ChatUpdateManyWithoutUser_oneNestedInput
   chat_user_two?: Prisma.ChatUpdateManyWithoutUser_twoNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutReceiverNestedInput
+  auths?: Prisma.AuthUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPostsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
-  password?: Prisma.StringFieldUpdateOperationsInput | string
   profile_img_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   joined_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   last_activity?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1163,6 +1195,7 @@ export type UserUncheckedUpdateWithoutPostsInput = {
   chat_user_one?: Prisma.ChatUncheckedUpdateManyWithoutUser_oneNestedInput
   chat_user_two?: Prisma.ChatUncheckedUpdateManyWithoutUser_twoNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutReceiverNestedInput
+  auths?: Prisma.AuthUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -1178,6 +1211,7 @@ export type UserCountOutputType = {
   chat_user_one: number
   chat_user_two: number
   notifications: number
+  auths: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1188,6 +1222,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   chat_user_one?: boolean | UserCountOutputTypeCountChat_user_oneArgs
   chat_user_two?: boolean | UserCountOutputTypeCountChat_user_twoArgs
   notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
+  auths?: boolean | UserCountOutputTypeCountAuthsArgs
 }
 
 /**
@@ -1249,12 +1284,17 @@ export type UserCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.Ty
   where?: Prisma.NotificationWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountAuthsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AuthWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  email?: boolean
   username?: boolean
-  password?: boolean
   profile_img_url?: boolean
   joined_date?: boolean
   last_activity?: boolean
@@ -1267,14 +1307,13 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   chat_user_one?: boolean | Prisma.User$chat_user_oneArgs<ExtArgs>
   chat_user_two?: boolean | Prisma.User$chat_user_twoArgs<ExtArgs>
   notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
+  auths?: boolean | Prisma.User$authsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  email?: boolean
   username?: boolean
-  password?: boolean
   profile_img_url?: boolean
   joined_date?: boolean
   last_activity?: boolean
@@ -1284,9 +1323,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  email?: boolean
   username?: boolean
-  password?: boolean
   profile_img_url?: boolean
   joined_date?: boolean
   last_activity?: boolean
@@ -1296,9 +1333,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
 
 export type UserSelectScalar = {
   id?: boolean
-  email?: boolean
   username?: boolean
-  password?: boolean
   profile_img_url?: boolean
   joined_date?: boolean
   last_activity?: boolean
@@ -1306,7 +1341,7 @@ export type UserSelectScalar = {
   bio?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "username" | "password" | "profile_img_url" | "joined_date" | "last_activity" | "acct_status" | "bio", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "username" | "profile_img_url" | "joined_date" | "last_activity" | "acct_status" | "bio", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   following?: boolean | Prisma.User$followingArgs<ExtArgs>
   followed_by?: boolean | Prisma.User$followed_byArgs<ExtArgs>
@@ -1315,6 +1350,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   chat_user_one?: boolean | Prisma.User$chat_user_oneArgs<ExtArgs>
   chat_user_two?: boolean | Prisma.User$chat_user_twoArgs<ExtArgs>
   notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
+  auths?: boolean | Prisma.User$authsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1330,12 +1366,11 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     chat_user_one: Prisma.$ChatPayload<ExtArgs>[]
     chat_user_two: Prisma.$ChatPayload<ExtArgs>[]
     notifications: Prisma.$NotificationPayload<ExtArgs>[]
+    auths: Prisma.$AuthPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    email: string
     username: string
-    password: string
     profile_img_url: string | null
     joined_date: Date
     last_activity: Date
@@ -1742,6 +1777,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   chat_user_one<T extends Prisma.User$chat_user_oneArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$chat_user_oneArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChatPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   chat_user_two<T extends Prisma.User$chat_user_twoArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$chat_user_twoArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ChatPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   notifications<T extends Prisma.User$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  auths<T extends Prisma.User$authsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$authsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuthPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1772,9 +1808,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
  */
 export interface UserFieldRefs {
   readonly id: Prisma.FieldRef<"User", 'String'>
-  readonly email: Prisma.FieldRef<"User", 'String'>
   readonly username: Prisma.FieldRef<"User", 'String'>
-  readonly password: Prisma.FieldRef<"User", 'String'>
   readonly profile_img_url: Prisma.FieldRef<"User", 'String'>
   readonly joined_date: Prisma.FieldRef<"User", 'DateTime'>
   readonly last_activity: Prisma.FieldRef<"User", 'DateTime'>
@@ -2333,6 +2367,30 @@ export type User$notificationsArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   distinct?: Prisma.NotificationScalarFieldEnum | Prisma.NotificationScalarFieldEnum[]
+}
+
+/**
+ * User.auths
+ */
+export type User$authsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Auth
+   */
+  select?: Prisma.AuthSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Auth
+   */
+  omit?: Prisma.AuthOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AuthInclude<ExtArgs> | null
+  where?: Prisma.AuthWhereInput
+  orderBy?: Prisma.AuthOrderByWithRelationInput | Prisma.AuthOrderByWithRelationInput[]
+  cursor?: Prisma.AuthWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AuthScalarFieldEnum | Prisma.AuthScalarFieldEnum[]
 }
 
 /**

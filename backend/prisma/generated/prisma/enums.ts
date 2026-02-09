@@ -23,3 +23,11 @@ export const entity_type = {
 } as const
 
 export type entity_type = (typeof entity_type)[keyof typeof entity_type]
+
+
+export const provider = {
+  GOOGLE: 'GOOGLE',
+  LOCAL: 'LOCAL'
+} as const
+
+export type provider = (typeof provider)[keyof typeof provider]

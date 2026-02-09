@@ -51,6 +51,7 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
+  Auth: 'Auth',
   Chat: 'Chat',
   Follow: 'Follow',
   Like: 'Like',
@@ -73,6 +74,17 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 } as const)
 
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
+
+
+export const AuthScalarFieldEnum = {
+  id: 'id',
+  user_id: 'user_id',
+  provider: 'provider',
+  provider_id: 'provider_id',
+  password: 'password'
+} as const
+
+export type AuthScalarFieldEnum = (typeof AuthScalarFieldEnum)[keyof typeof AuthScalarFieldEnum]
 
 
 export const ChatScalarFieldEnum = {
@@ -125,9 +137,7 @@ export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof Post
 
 export const UserScalarFieldEnum = {
   id: 'id',
-  email: 'email',
   username: 'username',
-  password: 'password',
   profile_img_url: 'profile_img_url',
   joined_date: 'joined_date',
   last_activity: 'last_activity',
