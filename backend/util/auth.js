@@ -2,9 +2,9 @@ const passport = require("passport");
 const oauthStrategy = require("passport-google-oauth20").Strategy;
 const LocalStrategy = require("passport-local").Strategy;
 const jwtStrategy = require("passport-jwt").Strategy;
-const { PrismaClient } = require("../prisma/generated/prisma/client");
-const prisma = new PrismaClient();
+const { prisma } = require("../lib/prisma");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 function cookieExtractor(req) {
   let token = null;
@@ -14,13 +14,18 @@ function cookieExtractor(req) {
   return token;
 }
 
-export async function encryptPassword(password) {
+async function encryptPassword(password) {
   const hash = await bcrypt.hash(password, 10);
   return hash;
 }
-export async function verifyPassword(password, hashedPassword) {
+async function verifyPassword(password, hashedPassword) {
   const match = await bcrypt.compare(password, hashedPassword);
   return match;
+}
+async function signToken(payload) {
+  const secret = process.env.SECRET;
+  const token = await jwt.sign(payload, secret);
+  return token;
 }
 
 passport.use(
@@ -70,3 +75,4 @@ passport.use(
     },
   ),
 );
+module.exports = { passport, encryptPassword, verifyPassword, signToken };
