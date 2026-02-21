@@ -6,19 +6,33 @@ import App from "./App.jsx";
 import Login from "./pages/Login.jsx";
 import Signup from "./pages/Signup.jsx";
 import NotFound from "./pages/NotFound.jsx";
+import LoggedIn from "./components/LoggedIn.jsx";
+import LoggedOut from "./components/LoggedOut.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <LoggedIn />,
+    children: [
+      {
+        path: "dashboard",
+        element: <App />,
+      },
+    ],
   },
   {
-    path: "/signup",
-    element: <Signup />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
+    path: "auth",
+    element: <LoggedOut />,
+    children: [
+      {
+        path: "signup",
+        element: <Signup />,
+      },
+      {
+        path: "login",
+        element: <Login />,
+      },
+    ],
   },
   {
     path: "*",

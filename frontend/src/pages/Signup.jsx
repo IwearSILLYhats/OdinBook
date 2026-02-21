@@ -20,12 +20,13 @@ export default function Signup() {
       password,
       confirm,
     };
+    console.log(body);
     const request = apiFetch("signup", "POST", body);
   }
 
   return (
-    <div>
-      <form action="" method="post">
+    <div className="signupWrapper">
+      <form action="" method="post" onSubmit={(e) => signupSubmit(e)}>
         <label htmlFor="email">Email address</label>
         <input
           type="email"
@@ -68,7 +69,8 @@ export default function Signup() {
       </form>
       <button disabled="disabled">Sign in with Google</button>
       <p>
-        Already have an account? <NavLink to={"/login"}>Log in here</NavLink>
+        Already have an account?{" "}
+        <NavLink to={"/auth/login"}>Log in here</NavLink>
       </p>
       <p>
         Just want to check out the site?{" "}

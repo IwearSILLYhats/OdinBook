@@ -1,3 +1,50 @@
+import { useState } from "react";
+import { useNavigate, NavLink } from "react-router";
+import apiFetch from "../../api/api";
+
 export default function Login() {
-  return <div>Login</div>;
+  const [username, setUsername] = useState(null);
+  const [password, setPassword] = useState(null);
+  const [validation, SetValidation] = useState(null);
+  const navigate = useNavigate();
+
+  function loginSubmit(event) {
+    event.preventDefault();
+    const body = { username, password };
+  }
+
+  return (
+    <div className="loginWrapper">
+      <form action="" method="post" onSubmit={(e) => loginSubmit(e)}>
+        <label htmlFor="username">Username</label>
+        <input
+          type="text"
+          name="username"
+          id="username"
+          placeholder="username"
+          required
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <label htmlFor="password">Password</label>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          required
+          placeholder="******"
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button type="submit">Login</button>
+      </form>
+      <button disabled="disabled">Login with Google</button>
+      <p>
+        Don't have an account?{" "}
+        <NavLink to={"/auth/signup"}>Sign up here</NavLink>
+      </p>
+      <p>
+        Just want to check out the site?{" "}
+        <NavLink to={"/guest"}>Log in as a guest</NavLink>
+      </p>
+    </div>
+  );
 }
