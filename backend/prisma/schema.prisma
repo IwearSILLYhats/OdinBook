@@ -18,7 +18,7 @@ model Auth {
   user        User     @relation(fields: [user_id], references: [id])
   user_id     String
   provider    provider
-  provider_id String
+  provider_id String   @unique
   password    String?
 }
 
