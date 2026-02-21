@@ -6,7 +6,7 @@ const { passport, encryptPassword, signToken } = require("../util/auth");
 indexRouter.post("/signup", async (req, res) => {
   try {
     const { username, email, password, confirm } = req.body;
-
+    console.log(req.body);
     if (password !== confirm) {
       return res.status(401).json({
         validation: {

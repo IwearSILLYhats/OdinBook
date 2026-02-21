@@ -28,5 +28,5 @@ app.use((err, req, res, next) => {
   return res.status(500).send("Something broke!");
 });
 app.listen(process.env.PORT, () => {
-  console.log(`Listening on POR ${process.env.PORT}`);
+  console.log(`Listening on PORT ${process.env.PORT}`);
 });
