@@ -31,15 +31,19 @@ async function signToken(payload) {
 passport.use(
   new LocalStrategy(async function verify(username, password, done) {
     try {
-      const user = await prisma.user.findUnique({
+      const user = await prisma.auth.findUnique({
         where: {
-          username: username,
+          provider: "LOCAL",
+          provider_id: username,
+        },
+        include: {
+          user: true,
         },
       });
       if (!user) {
         return done(null, false);
       }
-      if (!user.verifyPassword(password, user.password)) {
+      if (!verifyPassword(password, user.password)) {
         return done(null, false);
       }
       return done(null, user);

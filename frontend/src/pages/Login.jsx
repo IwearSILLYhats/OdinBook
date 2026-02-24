@@ -6,11 +6,18 @@ export default function Login() {
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
   const [validation, SetValidation] = useState(null);
+  const [submitted, setSubmitted] = useState(false);
   const navigate = useNavigate();
 
-  function loginSubmit(event) {
+  async function loginSubmit(event) {
     event.preventDefault();
+    // setSubmitted(true);
     const body = { username, password };
+    const request = await apiFetch("login/local", "POST", body);
+    if (request.error === null) {
+      navigate("/");
+    }
+    console.log(request);
   }
 
   return (
@@ -34,7 +41,9 @@ export default function Login() {
           placeholder="******"
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type="submit">Login</button>
+        <button type="submit" disabled={submitted}>
+          Login
+        </button>
       </form>
       <button disabled="disabled">Login with Google</button>
       <p>

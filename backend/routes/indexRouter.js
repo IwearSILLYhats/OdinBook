@@ -52,24 +52,42 @@ indexRouter.get("/login/google", (req, res) => {
 indexRouter.post(
   "/login/local",
   passport.authenticate("local", { session: false }),
-  (req, res) => {
+  async (req, res) => {
     try {
-      const secure_cookie = signToken(req.user.id);
+      const secure_cookie = await signToken(req.user.id);
       res.cookie("secure_session", secure_cookie, {
         maxAge: 1000 * 60 * 60,
         httpOnly: true,
         sameSite: "strict",
         secure: true,
       });
-      res.cookie("session_time", {
+      res.cookie("session_time", "", {
         maxAge: 1000 * 60 * 60,
         sameSite: "strict",
       });
-      return res.json({ message: "Logging in user" });
+      return res.status(200).json({ message: "Logging in user", error: null });
     } catch (error) {
       console.log(error);
       return res.json({ error: error });
     }
   },
 );
+indexRouter.get("/logout", (req, res) => {
+  try {
+    res.cookie("secure_session", "", {
+      maxAge: 0,
+      httpOnly: true,
+      sameSite: "strict",
+      secure: true,
+    });
+    res.cookie("session_time", "", {
+      maxAge: 0,
+      sameSite: "strict",
+    });
+    return res.status(200).json({ message: "Logging out user" });
+  } catch (error) {
+    console.log(error);
+    return res.json({ error: error });
+  }
+});
 module.exports = indexRouter;

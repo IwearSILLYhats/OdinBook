@@ -11,7 +11,7 @@ export default function Signup() {
   const [validation, SetValidation] = useState(null);
   const navigate = useNavigate();
 
-  function signupSubmit(event) {
+  async function signupSubmit(event) {
     event.preventDefault();
     setSubmitted(true);
     const body = {
@@ -20,8 +20,8 @@ export default function Signup() {
       password,
       confirm,
     };
-    console.log(body);
-    const request = apiFetch("signup", "POST", body);
+    const request = await apiFetch("signup", "POST", body);
+    console.log(request);
   }
 
   return (
