@@ -70,6 +70,36 @@ indexRouter.get(
     }
   },
 );
+indexRouter.get("/login/guest", async (req, res) => {
+  try {
+    const guest = await prisma.user.upsert({
+      where: {
+        username: "Guest",
+      },
+      update: {},
+      create: {
+        username: "Guest",
+      },
+    });
+    const secure_cookie = await signToken({ id: guest.id });
+    res.cookie("secure_session", secure_cookie, {
+      maxAge: 1000 * 60 * 60,
+      httpOnly: true,
+      sameSite: "strict",
+      secure: true,
+    });
+    res.cookie("session_time", "", {
+      maxAge: 1000 * 60 * 60,
+      sameSite: "strict",
+    });
+    return res
+      .status(200)
+      .json({ message: "Logging in as guest", error: null });
+  } catch (error) {
+    console.log(error);
+    return res.json({ error: error });
+  }
+});
 
 indexRouter.post(
   "/login/local",

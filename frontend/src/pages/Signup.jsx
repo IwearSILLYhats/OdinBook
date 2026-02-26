@@ -26,6 +26,12 @@ export default function Signup() {
   async function googleSignup() {
     window.location.href = "http://localhost:3000/login/google";
   }
+  async function guestLogin() {
+    const request = await apiFetch("login/guest", "GET", null);
+    if (request.error === null) {
+      navigate("/");
+    }
+  }
 
   return (
     <div className="signupWrapper">
@@ -77,10 +83,8 @@ export default function Signup() {
         Already have an account?{" "}
         <NavLink to={"/auth/login"}>Log in here</NavLink>
       </p>
-      <p>
-        Just want to check out the site?{" "}
-        <NavLink to={"/guest"}>Log in as a guest</NavLink>
-      </p>
+      <p>Just want to check out the site?</p>
+      <button onClick={() => guestLogin()}>Login as a guest</button>
     </div>
   );
 }
