@@ -23,6 +23,9 @@ export default function Signup() {
     const request = await apiFetch("signup", "POST", body);
     console.log(request);
   }
+  async function googleSignup() {
+    window.location.href = "http://localhost:3000/login/google";
+  }
 
   return (
     <div className="signupWrapper">
@@ -67,7 +70,9 @@ export default function Signup() {
           Submit
         </button>
       </form>
-      <button disabled="disabled">Sign in with Google</button>
+      <button disabled={submitted} onClick={() => googleSignup()}>
+        Sign in with Google
+      </button>
       <p>
         Already have an account?{" "}
         <NavLink to={"/auth/login"}>Log in here</NavLink>

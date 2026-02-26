@@ -19,6 +19,9 @@ export default function Login() {
     }
     console.log(request);
   }
+  async function googleLogin() {
+    window.location.href = "http://localhost:3000/login/google";
+  }
 
   return (
     <div className="loginWrapper">
@@ -45,7 +48,9 @@ export default function Login() {
           Login
         </button>
       </form>
-      <button disabled="disabled">Login with Google</button>
+      <button disabled={submitted} onClick={() => googleLogin()}>
+        Login with Google
+      </button>
       <p>
         Don't have an account?{" "}
         <NavLink to={"/auth/signup"}>Sign up here</NavLink>

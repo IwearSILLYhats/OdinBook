@@ -52,7 +52,7 @@ export default function LeftNavigation() {
     <div className="leftNavigation">
       <nav>
         <div>
-          <img src="#" alt="profilePicture" />
+          <img src={profile} alt="profilePicture" />
           <button onClick={() => logout()}>Logout</button>
         </div>
         <ul className="iconList">

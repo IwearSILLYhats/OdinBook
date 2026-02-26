@@ -14,8 +14,10 @@ body,
   border-width: 0 1px 0 1px;
   overflow-y: scroll;
 }
-.leftNavigation {
+.leftNavigation,
+.rightNavigation {
   padding: 1rem;
+  min-width: fit-content;
 }
 .leftNavigation button {
   display: flex;
@@ -30,6 +32,7 @@ body,
   flex-direction: column;
   padding: 0;
   list-style-type: none;
+  gap: 0.5rem;
 }
 .iconList a {
   display: flex;
@@ -61,4 +64,7 @@ body,
     flex-direction: column;
     gap: 0.5rem;
   }
+}
+main {
+  min-width: 50%;
 }

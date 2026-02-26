@@ -45,16 +45,38 @@ indexRouter.post("/signup", async (req, res) => {
     return res.json({ error: error });
   }
 });
-indexRouter.get("/login/google", (req, res) => {
-  res.status(200).json({ message: "Google login route" });
-});
+indexRouter.get("/login/google", passport.authenticate("google"));
+
+indexRouter.get(
+  "/oauth2/redirect/google",
+  passport.authenticate("google", { session: false }),
+  async (req, res) => {
+    try {
+      const secure_cookie = await signToken({ id: req.user.user.id });
+      res.cookie("secure_session", secure_cookie, {
+        maxAge: 1000 * 60 * 60,
+        httpOnly: true,
+        sameSite: "strict",
+        secure: true,
+      });
+      res.cookie("session_time", "", {
+        maxAge: 1000 * 60 * 60,
+        sameSite: "strict",
+      });
+      return res.redirect(process.env.FRONTEND);
+    } catch (error) {
+      console.log(error);
+      return res.json({ error: error });
+    }
+  },
+);
 
 indexRouter.post(
   "/login/local",
   passport.authenticate("local", { session: false }),
   async (req, res) => {
     try {
-      const secure_cookie = await signToken(req.user.id);
+      const secure_cookie = await signToken({ id: req.user.id });
       res.cookie("secure_session", secure_cookie, {
         maxAge: 1000 * 60 * 60,
         httpOnly: true,

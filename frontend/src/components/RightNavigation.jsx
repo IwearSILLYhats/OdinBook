@@ -1,6 +1,6 @@
 export default function RightNavigation() {
   return (
-    <div>
+    <div className="rightNavigation">
       <form action="">
         <input type="text" placeholder="Search" />
       </form>

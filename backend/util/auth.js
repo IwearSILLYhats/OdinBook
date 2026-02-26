@@ -9,7 +9,7 @@ const jwt = require("jsonwebtoken");
 function cookieExtractor(req) {
   let token = null;
   if (req && req.cookies) {
-    token = req.cookies["jwt"];
+    token = jwt.verify(req.cookies["secure_session"]);
   }
   return token;
 }
@@ -64,7 +64,7 @@ passport.use(
       try {
         const user = await prisma.user.findUnique({
           where: {
-            username: payload.username,
+            id: payload.id,
           },
         });
         if (!user) {
@@ -75,6 +75,45 @@ passport.use(
       } catch (error) {
         console.log(error);
         return done({ error });
+      }
+    },
+  ),
+);
+
+passport.use(
+  new oauthStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: "/oauth2/redirect/google",
+      scope: ["profile"],
+    },
+    async function verify(accessToken, refreshToken, profile, done) {
+      try {
+        const user = await prisma.auth.upsert({
+          where: {
+            provider: "GOOGLE",
+            provider_id: profile.id,
+          },
+          include: {
+            user: true,
+          },
+          update: {},
+          create: {
+            provider: "GOOGLE",
+            provider_id: profile.id,
+            user: {
+              create: {
+                username: profile.displayName,
+                profile_img_url: profile.picture || null,
+              },
+            },
+          },
+        });
+        return done(null, user);
+      } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: "Something broke" });
       }
     },
   ),
