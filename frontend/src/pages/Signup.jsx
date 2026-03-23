@@ -21,7 +21,9 @@ export default function Signup() {
       confirm,
     };
     const request = await apiFetch("signup", "POST", body);
-    console.log(request);
+    if (request.error === null) {
+      navigate("/auth/login");
+    }
   }
   async function googleSignup() {
     window.location.href = "http://localhost:3000/login/google";
@@ -29,7 +31,7 @@ export default function Signup() {
   async function guestLogin() {
     const request = await apiFetch("login/guest", "GET", null);
     if (request.error === null) {
-      navigate("/");
+      navigate("/app");
     }
   }
 

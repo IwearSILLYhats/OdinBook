@@ -15,7 +15,7 @@ export default function Login() {
     const body = { username, password };
     const request = await apiFetch("login/local", "POST", body);
     if (request.error === null) {
-      navigate("/");
+      navigate("/app");
     }
     console.log(request);
   }
@@ -26,7 +26,7 @@ export default function Login() {
   async function guestLogin() {
     const request = await apiFetch("login/guest", "GET", null);
     if (request.error === null) {
-      navigate("/");
+      navigate("/app");
     }
   }
 
