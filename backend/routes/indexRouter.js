@@ -63,7 +63,7 @@ indexRouter.get(
         maxAge: 1000 * 60 * 60,
         sameSite: "strict",
       });
-      return res.redirect(process.env.FRONTEND);
+      return res.redirect(process.env.FRONTEND + "/app");
     } catch (error) {
       console.log(error);
       return res.json({ error: error });
@@ -106,7 +106,7 @@ indexRouter.post(
   passport.authenticate("local", { session: false }),
   async (req, res) => {
     try {
-      const secure_cookie = await signToken({ id: req.user.id });
+      const secure_cookie = await signToken({ id: req.user.user.id });
       res.cookie("secure_session", secure_cookie, {
         maxAge: 1000 * 60 * 60,
         httpOnly: true,
@@ -142,4 +142,16 @@ indexRouter.get("/logout", (req, res) => {
     return res.json({ error: error });
   }
 });
+indexRouter.get(
+  "/dashboard",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: req.user.id,
+      },
+    });
+    return res.status(200).json({ user });
+  },
+);
 module.exports = indexRouter;
