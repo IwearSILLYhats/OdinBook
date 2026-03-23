@@ -7,8 +7,11 @@ import profile from "../assets/profile.svg";
 import settings from "../assets/settings.svg";
 import newPost from "../assets/newPost.svg";
 import apiFetch from "../../api/api";
+import { useContext } from "react";
+import { UserContext } from "../App";
 
 export default function LeftNavigation() {
+  const userProfile = useContext(UserContext);
   const navigate = useNavigate();
   const navigationItems = [
     {
@@ -52,7 +55,15 @@ export default function LeftNavigation() {
     <div className="leftNavigation">
       <nav>
         <div>
-          <img src={profile} alt="profilePicture" />
+          <img
+            src={
+              userProfile?.profile_img_url
+                ? userProfile.profile_img_url
+                : profile
+            }
+            alt="profilePicture"
+          />
+          <p>{userProfile.username}</p>
           <button onClick={() => logout()}>Logout</button>
         </div>
         <ul className="iconList">
