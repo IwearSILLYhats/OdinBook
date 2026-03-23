@@ -88,6 +88,7 @@ h6 {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   --border-settings: solid rgba(255, 255, 255, 0.1);
+  --solidBorder: solid rgba(155, 155, 155, 1);
   --transparent-modal: rgba(0, 0, 0, 0.5);
   --background: #242424;
   --surface: #2e2e2e;

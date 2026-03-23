@@ -9,6 +9,9 @@ import CharacterCounter from "./CharacterCounter";
 export default function PostForm() {
   const [content, setContent] = useState(null);
   const [count, setCount] = useState(300);
+  function cancelForm() {}
+  function postForm() {}
+  function openDrafts() {}
   return (
     <div className="postFormModal">
       <form action="" method="post" className="postForm">
@@ -30,6 +33,8 @@ export default function PostForm() {
             }}
             value={content}
             maxLength={300}
+            rows={5}
+            placeholder="What's up?"
           ></textarea>
         </div>
         <div className="postFormFooter">

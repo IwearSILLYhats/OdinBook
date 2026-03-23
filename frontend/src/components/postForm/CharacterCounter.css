@@ -3,13 +3,17 @@
   border-radius: 50%;
 }
 .outerCircle {
-  padding: 3px;
-  background: conic-gradient(red var(--p), black var(--p));
+  padding: 4px;
+  background: conic-gradient(
+    var(--secondaryAccent) var(--p),
+    transparent var(--p)
+  );
+  border: 1px var(--solidBorder);
 }
 .innerCircle {
   min-width: 2rem;
   min-height: 2rem;
-  background-color: darkslategray;
+  background-color: var(--surface);
   padding: 0.25rem;
   display: flex;
   justify-content: center;
