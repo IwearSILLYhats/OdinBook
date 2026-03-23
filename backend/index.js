@@ -25,7 +25,7 @@ app.use("/", indexRouter);
 
 app.use((err, req, res, next) => {
   console.log(err);
-  return res.status(500).send("Something broke!");
+  return res.status(500).json({ message: "Something broke!" });
 });
 app.listen(process.env.PORT, () => {
   console.log(`Listening on PORT ${process.env.PORT}`);
