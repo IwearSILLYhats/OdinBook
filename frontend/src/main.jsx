@@ -8,6 +8,7 @@ import Signup from "./pages/Signup.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import LoggedIn from "./components/LoggedIn.jsx";
 import LoggedOut from "./components/LoggedOut.jsx";
+import Feed from "./components/feed/Feed.jsx";
 
 const router = createBrowserRouter([
   {
@@ -15,8 +16,14 @@ const router = createBrowserRouter([
     element: <LoggedIn />,
     children: [
       {
-        index: true,
+        path: "app",
         element: <App />,
+        children: [
+          {
+            index: true,
+            element: <Feed />,
+          },
+        ],
       },
     ],
   },
