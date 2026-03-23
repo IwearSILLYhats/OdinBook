@@ -57,17 +57,19 @@ model Notification {
 }
 
 model Post {
-  id        String    @id @default(uuid())
-  author    User      @relation(fields: [author_id], references: [id])
-  author_id String
-  created   DateTime  @default(now())
-  content   String
-  has_image Boolean
-  edited    DateTime?
-  parent    Post?     @relation("postChildren", fields: [parent_id], references: [id])
-  replies   Post[]    @relation("postChildren")
-  parent_id String?
-  likes     Like[]
+  id             String    @id @default(uuid())
+  author         User      @relation(fields: [author_id], references: [id])
+  author_id      String
+  created        DateTime  @default(now())
+  published      Boolean
+  published_time DateTime?
+  content        String
+  has_image      Boolean
+  edited         DateTime?
+  parent         Post?     @relation("postChildren", fields: [parent_id], references: [id])
+  replies        Post[]    @relation("postChildren")
+  parent_id      String?
+  likes          Like[]
 }
 
 model User {
