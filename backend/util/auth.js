@@ -9,7 +9,7 @@ const jwt = require("jsonwebtoken");
 function cookieExtractor(req) {
   let token = null;
   if (req && req.cookies) {
-    token = jwt.verify(req.cookies["secure_session"]);
+    token = req.cookies["secure_session"];
   }
   return token;
 }
@@ -27,6 +27,10 @@ async function signToken(payload) {
   const token = await jwt.sign(payload, secret);
   return token;
 }
+const jwtOpts = {
+  jwtFromRequest: cookieExtractor,
+  secretOrKey: process.env.SECRET,
+};
 
 passport.use(
   new LocalStrategy(async function verify(username, password, done) {
@@ -55,29 +59,22 @@ passport.use(
 );
 
 passport.use(
-  new jwtStrategy(
-    {
-      jwtFromRequest: cookieExtractor,
-      secretOrKey: process.env.SECRET,
-    },
-    async function verify(payload, done) {
-      try {
-        const user = await prisma.user.findUnique({
-          where: {
-            id: payload.id,
-          },
-        });
-        if (!user) {
-          return done(null, false);
-        } else {
-          return done(null, user);
-        }
-      } catch (error) {
-        console.log(error);
-        return done({ error });
+  new jwtStrategy(jwtOpts, async function verify(payload, done) {
+    try {
+      const user = await prisma.user.findUnique({
+        where: {
+          id: payload.id,
+        },
+      });
+      if (user) {
+        return done(null, user);
       }
-    },
-  ),
+      return done(null, false);
+    } catch (error) {
+      console.log(error);
+      return done({ error });
+    }
+  }),
 );
 
 passport.use(
