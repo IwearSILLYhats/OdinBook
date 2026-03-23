@@ -1,0 +1,23 @@
+.outerCircle,
+.innerCircle {
+  border-radius: 50%;
+}
+.outerCircle {
+  padding: 3px;
+  background: conic-gradient(red var(--p), black var(--p));
+}
+.innerCircle {
+  min-width: 2rem;
+  min-height: 2rem;
+  background-color: darkslategray;
+  padding: 0.25rem;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+  vertical-align: middle;
+}
+.counter {
+  margin: auto;
+  font-size: 75%;
+}

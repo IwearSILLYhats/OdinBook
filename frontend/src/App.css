@@ -10,8 +10,6 @@ body,
   margin: 0 auto;
 }
 #app > * {
-  border: solid white;
-  border-width: 0 1px 0 1px;
   overflow-y: scroll;
 }
 .leftNavigation,
@@ -53,6 +51,12 @@ body,
     display: none;
   }
 }
+.iconSmall {
+  max-width: 1.5rem;
+}
+.iconLarge {
+  max-width: 3rem;
+}
 .signupWrapper,
 .loginWrapper {
   display: flex;
@@ -67,4 +71,14 @@ body,
 }
 main {
   min-width: 50%;
+  border: var(--border-settings);
+  border-width: 0 1px 0 1px;
+  padding: 0.5rem;
+}
+main header {
+  border: var(--border-settings);
+  border-width: 0 0 1px 0;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: center;
 }

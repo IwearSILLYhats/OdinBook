@@ -1,0 +1,15 @@
+.miniForm {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  border: var(--border-settings);
+  border-width: 0 0 1px 0;
+  padding: 0.25rem;
+  span {
+    flex-grow: 1;
+  }
+  img {
+    width: 1rem;
+    height: auto;
+  }
+}

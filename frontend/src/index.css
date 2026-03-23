@@ -87,6 +87,23 @@ h6 {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  --border-settings: solid rgba(255, 255, 255, 0.1);
+  --transparent-modal: rgba(0, 0, 0, 0.5);
+  --background: #242424;
+  --surface: #2e2e2e;
+  --elevatedSurface: #383838;
+  --primaryText: #eaeaea;
+  --secondaryText: #b0b0b0;
+  --mutedText: #7a7a7a;
+  --primaryAccent: #6c63ff;
+  --hoverAccent: #7d75ff;
+  --activeAccent: #5a52e0;
+  --secondaryAccent: #2dd4bf;
+  --secondaryHover: #3ee6d1;
+  --statusSuccess: #22c55e;
+  --statusWarning: #f59e0b;
+  --statusError: #ef4444;
+  --statusInfo: #3b82f6;
 }
 #root {
   width: 100vw;
