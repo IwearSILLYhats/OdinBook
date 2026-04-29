@@ -64,7 +64,7 @@ model Post {
   published      Boolean
   published_time DateTime?
   content        String
-  has_image      Boolean
+  has_image      Boolean   @default(false)
   edited         DateTime?
   parent         Post?     @relation("postChildren", fields: [parent_id], references: [id])
   replies        Post[]    @relation("postChildren")

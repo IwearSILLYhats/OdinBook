@@ -9,7 +9,6 @@ export default function Feed() {
         <img src={logo} alt="Blabber" />
       </header>
       <MiniPostForm />
-      <PostForm />
       <div className="postFeed">Post list</div>
     </main>
   );

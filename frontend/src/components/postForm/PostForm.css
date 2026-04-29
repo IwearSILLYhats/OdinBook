@@ -1,4 +1,5 @@
-.postFormModal {
+.postFormModal,
+.draftModalBackdrop {
   background-color: var(--transparent-modal);
   display: flex;
   position: absolute;
@@ -7,7 +8,8 @@
   width: 100%;
   height: 100%;
 }
-.postForm {
+.postForm,
+.draftModal {
   border-radius: 10px;
   min-width: 25rem;
   border: 1px var(--border-settings);
@@ -29,8 +31,34 @@
 }
 .postFormBody,
 .postFormHeader,
-.postFormFooter {
+.postFormFooter,
+.draftModalHeader,
+.draftModalList,
+.draftCard,
+.draftCardHeader {
   display: flex;
+}
+.draftModal {
+  padding: 0;
+}
+.draftModalHeader {
+  padding: 0.5rem 1rem;
+}
+.draftModalList {
+  background-color: var(--background);
+  padding: 1rem;
+}
+.draftCard {
+  flex-direction: column;
+  background-color: var(--elevatedSurface);
+}
+.draftCardHeader,
+.draftModalHeader {
+  justify-content: space-between;
+}
+.draftModalList {
+  list-style: none;
+  flex-direction: column;
 }
 .postFormBody {
   gap: 0.5rem;

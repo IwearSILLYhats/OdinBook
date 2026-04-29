@@ -5,21 +5,69 @@ import image from "../../assets/image.svg";
 import gif from "../../assets/gif.svg";
 import emoji from "../../assets/emoji.svg";
 import CharacterCounter from "./CharacterCounter";
+import { useContext, useEffect } from "react";
+import { PostFormContext } from "../../App";
+import apiFetch from "../../../api/api";
+import DraftModal from "./DraftModal";
 
 export default function PostForm() {
-  const [content, setContent] = useState(null);
-  const [count, setCount] = useState(300);
-  function cancelForm() {}
-  function postForm() {}
-  function openDrafts() {}
+  const formContext = useContext(PostFormContext);
+  const [content, setContent] = useState("");
+  const [count, setCount] = useState(0);
+  const [postid, setPostid] = useState(null);
+  const [drafts, setDrafts] = useState([]);
+  const [draftsOpen, setDraftsOpen] = useState(false);
+  useEffect(() => {
+    // placeholder for fetching drafts when form is rendered
+    async function fetchDrafts() {
+      const request = await apiFetch("posts/drafts", "GET");
+      if (request.drafts.length > 0) setDrafts(request.drafts);
+    }
+    fetchDrafts();
+  }, []);
+  function cancelForm() {
+    formContext.togglePostForm();
+  }
+  async function submitForm(e) {
+    //Submits a post
+    e.preventDefault();
+    if (postid !== null) {
+      const request = await apiFetch("posts", "PATCH", {
+        content: content,
+        postid: postid,
+      });
+      console.log(request);
+    } else {
+      const request = await apiFetch("posts", "POST", {
+        content: content,
+      });
+      console.log(request);
+    }
+  }
+  function populateDraft(id, text) {
+    setContent(text);
+    setPostid(id);
+    setDraftsOpen(false);
+  }
   return (
     <div className="postFormModal">
+      {draftsOpen && (
+        <DraftModal
+          drafts={drafts}
+          back={setDraftsOpen}
+          populate={populateDraft}
+        />
+      )}
       <form action="" method="post" className="postForm">
         <div className="postFormHeader">
-          <button>Cancel</button>
+          <button onClick={(e) => cancelForm(e)} type="button">
+            Cancel
+          </button>
           <div>
-            <button>Drafts</button>
-            <button>Post</button>
+            <button type="button" onClick={() => setDraftsOpen(!draftsOpen)}>
+              Drafts
+            </button>
+            <button onClick={(e) => submitForm(e)}>Post</button>
           </div>
         </div>
         <div className="postFormBody">

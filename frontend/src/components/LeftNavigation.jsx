@@ -10,7 +10,10 @@ import apiFetch from "../../api/api";
 import { useContext } from "react";
 import { UserContext } from "../App";
 
+import { PostFormContext } from "../App";
+
 export default function LeftNavigation() {
+  const formContext = useContext(PostFormContext);
   const userProfile = useContext(UserContext);
   const navigate = useNavigate();
   const navigationItems = [
@@ -78,7 +81,7 @@ export default function LeftNavigation() {
             );
           })}
         </ul>
-        <button>
+        <button onClick={() => formContext.togglePostForm()} type="button">
           <img src={newPost} alt="newPost" />
           <p>New Post</p>
         </button>

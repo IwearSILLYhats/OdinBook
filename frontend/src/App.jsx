@@ -7,6 +7,7 @@ import { Outlet } from "react-router";
 import PostForm from "./components/postForm/PostForm.jsx";
 
 export const UserContext = createContext(null);
+export const PostFormContext = createContext(null);
 
 export default function App() {
   const [profile, setProfile] = useState(null);
@@ -26,15 +27,24 @@ export default function App() {
   }, []);
   return (
     <UserContext value={profile}>
-      {!profile && <p>Loading...</p>}
-      {profile && (
-        <div id="app">
-          <LeftNavigation />
-          <Outlet />
-          <RightNavigation />
-          {postForm && <PostForm />}
-        </div>
-      )}
+      <PostFormContext
+        value={{
+          postForm,
+          togglePostForm: function () {
+            setPostForm(!postForm);
+          },
+        }}
+      >
+        {!profile && <p>Loading...</p>}
+        {profile && (
+          <div id="app">
+            <LeftNavigation />
+            <Outlet />
+            <RightNavigation />
+            {postForm && <PostForm />}
+          </div>
+        )}
+      </PostFormContext>
     </UserContext>
   );
 }
