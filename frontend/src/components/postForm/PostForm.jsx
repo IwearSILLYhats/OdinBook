@@ -49,6 +49,28 @@ export default function PostForm() {
     setPostid(id);
     setDraftsOpen(false);
   }
+  const modalData = {
+    header: "Save Changes?",
+    subheader:
+      "You have unsaved changes to this draft, would you like to save them?",
+    buttons: [
+      {
+        buttonColor: "blue",
+        buttonFunction: () => {},
+        buttonText: "Save Changes",
+      },
+      {
+        buttonColor: "darkred",
+        buttonFunction: () => {},
+        buttonText: "Discard",
+      },
+      {
+        buttonColor: "grey",
+        buttonFunction: () => {},
+        buttonText: "Keep Editing",
+      },
+    ],
+  };
   return (
     <div className="postFormModal">
       {draftsOpen && (
@@ -56,6 +78,7 @@ export default function PostForm() {
           drafts={drafts}
           back={setDraftsOpen}
           populate={populateDraft}
+          close={cancelForm}
         />
       )}
       <form action="" method="post" className="postForm">

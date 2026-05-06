@@ -44,4 +44,17 @@ postRouter.post(
   },
 );
 
+postRouter.delete(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    try {
+      // TODO delete function
+    } catch (error) {
+      console.log(error);
+      return res.json({ error: error });
+    }
+  },
+);
+
 module.exports = postRouter;

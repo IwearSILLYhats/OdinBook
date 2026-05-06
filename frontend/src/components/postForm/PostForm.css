@@ -8,6 +8,9 @@
   width: 100%;
   height: 100%;
 }
+.draftModalBackdrop {
+  z-index: 1;
+}
 .postForm,
 .draftModal {
   border-radius: 10px;
@@ -47,8 +50,12 @@
 .draftModalList {
   background-color: var(--background);
   padding: 1rem;
+  min-height: 15rem;
 }
 .draftCard {
+  border: 1px var(--solidBorder);
+  border-radius: 10px;
+  padding: 0.5rem;
   flex-direction: column;
   background-color: var(--elevatedSurface);
 }

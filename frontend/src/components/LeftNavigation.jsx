@@ -74,7 +74,7 @@ export default function LeftNavigation() {
             return (
               <li key={item.text}>
                 <Link to={item.link}>
-                  <img src={item.icon} alt={item.text} />
+                  <img src={item.icon} alt={item.text} className="iconSmall" />
                   <h4 className="iconText">{item.text}</h4>
                 </Link>
               </li>
@@ -82,7 +82,7 @@ export default function LeftNavigation() {
           })}
         </ul>
         <button onClick={() => formContext.togglePostForm()} type="button">
-          <img src={newPost} alt="newPost" />
+          <img src={newPost} alt="newPost" className="iconSmall" />
           <p>New Post</p>
         </button>
       </nav>
