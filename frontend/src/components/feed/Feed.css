@@ -1,0 +1,19 @@
+.postFeed {
+  padding: 1rem;
+}
+.postCard {
+  background-color: var(--surface);
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  max-width: 30rem;
+}
+.postHeader,
+.postBody,
+.postFooter {
+  max-width: 100%;
+  flex-wrap: wrap;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}

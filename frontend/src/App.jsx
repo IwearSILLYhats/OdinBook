@@ -39,7 +39,7 @@ export default function App() {
         {profile && (
           <div id="app">
             <LeftNavigation />
-            <Outlet />
+            <Outlet context={content} />
             <RightNavigation />
             {postForm && <PostForm />}
           </div>
