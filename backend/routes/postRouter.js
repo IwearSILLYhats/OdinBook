@@ -35,6 +35,7 @@ postRouter.post(
       };
       if (content) newPost.content = content;
       newPost.published = published || true;
+      newPost.published_time = new Date();
       const createPost = await prisma.post.create({ data: newPost });
       return res.json({ message: "Post creation successful" });
     } catch (error) {

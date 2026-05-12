@@ -173,6 +173,19 @@ indexRouter.get(
             },
           ],
         },
+        select: {
+          content: true,
+          published_time: true,
+          edited: true,
+          id: true,
+          author: {
+            select: {
+              id: true,
+              profile_img_url: true,
+              username: true,
+            },
+          },
+        },
         orderBy: {
           published_time: "desc",
         },
