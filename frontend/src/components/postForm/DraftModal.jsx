@@ -1,6 +1,7 @@
 import { useState } from "react";
 import BackdropModal from "../BackdropModal";
 import apiFetch from "../../../api/api";
+import timeDifference from "../../util/timeDiff";
 
 export default function DraftModal({ back, close, drafts, populate }) {
   const [confirmationModal, setConfirmationModal] = useState(false);
@@ -61,7 +62,7 @@ export default function DraftModal({ back, close, drafts, populate }) {
                   }}
                 >
                   <div className="draftCardHeader">
-                    <p>Time since created</p>
+                    <p>{timeDifference(draft.created)}</p>
                     <button type="button" className="discardButton">
                       ...
                     </button>

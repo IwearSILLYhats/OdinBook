@@ -17,6 +17,7 @@ export default function PostForm() {
   const [postid, setPostid] = useState(null);
   const [drafts, setDrafts] = useState([]);
   const [draftsOpen, setDraftsOpen] = useState(false);
+  const [changes, setChanges] = useState(false);
   useEffect(() => {
     // placeholder for fetching drafts when form is rendered
     async function fetchDrafts() {
@@ -47,16 +48,31 @@ export default function PostForm() {
   function populateDraft(id, text) {
     setContent(text);
     setPostid(id);
+    setChanges(false);
     setDraftsOpen(false);
   }
   const modalData = {
     header: "Save Changes?",
-    subheader:
-      "You have unsaved changes to this draft, would you like to save them?",
+    subheader: "You have unsaved changes, would you like to save?",
     buttons: [
       {
         buttonColor: "blue",
-        buttonFunction: () => {},
+        buttonFunction: async () => {
+          if (postid) {
+            const draft = { id: postid, content: content };
+            const request = await apiFetch("posts", "PATCH", draft);
+            if (!request.error) {
+              cancelForm();
+            }
+          } else {
+            const request = await apiFetch("posts/drafts", "POST", {
+              content: content,
+            });
+            if (!request.error) {
+              cancelForm();
+            }
+          }
+        },
         buttonText: "Save Changes",
       },
       {
@@ -83,11 +99,27 @@ export default function PostForm() {
       )}
       <form action="" method="post" className="postForm">
         <div className="postFormHeader">
-          <button onClick={(e) => cancelForm(e)} type="button">
+          <button
+            onClick={(e) => {
+              if (changes && content.length > 0) {
+              } else {
+                cancelForm();
+              }
+            }}
+            type="button"
+          >
             Cancel
           </button>
           <div>
-            <button type="button" onClick={() => setDraftsOpen(!draftsOpen)}>
+            <button
+              type="button"
+              onClick={() => {
+                if (changes && content.length > 0) {
+                } else {
+                  setDraftsOpen(!draftsOpen);
+                }
+              }}
+            >
               Drafts
             </button>
             <button onClick={(e) => submitForm(e)}>Post</button>

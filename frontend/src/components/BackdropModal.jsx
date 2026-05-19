@@ -1,5 +1,14 @@
 export default function BackdropModal({ options }) {
   const { buttons, header, subheader } = options;
+  /* options object structure: {
+    header: String,
+    subheader: String,
+    buttons: [{
+    buttonColor: String,
+    buttonText: String,
+    buttonFunction: Function,
+      }]
+  } */
   return (
     <div className="modalBackdrop">
       <div className="modalCard">
