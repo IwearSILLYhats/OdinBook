@@ -107,7 +107,23 @@ postRouter.delete(
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     try {
-      // TODO delete function
+      const post = await prisma.post.findUnique({
+        where: {
+          id: req.body.id,
+        },
+      });
+      if (!post) {
+        throw new Error("Post not found");
+      }
+      if (post.author_id !== req.user.id) {
+        throw new Error("User not authorized to delete this post");
+      }
+      await prisma.post.delete({
+        where: {
+          id: req.body.id,
+        },
+      });
+      return res.json({ success: "Post successfully deleted." });
     } catch (error) {
       console.log(error);
       return res.json({ error });
