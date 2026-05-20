@@ -26,25 +26,27 @@ export default function App() {
     fetchDashboard();
   }, []);
   return (
-    <UserContext value={profile}>
-      <PostFormContext
-        value={{
-          postForm,
-          togglePostForm: function () {
-            setPostForm(!postForm);
-          },
-        }}
-      >
-        {!profile && <p>Loading...</p>}
-        {profile && (
-          <div id="app">
-            <LeftNavigation />
-            <Outlet context={content} />
-            <RightNavigation />
-            {postForm && <PostForm />}
-          </div>
-        )}
-      </PostFormContext>
-    </UserContext>
+    <div id="app">
+      <UserContext value={profile}>
+        <PostFormContext
+          value={{
+            postForm,
+            togglePostForm: function () {
+              setPostForm(!postForm);
+            },
+          }}
+        >
+          {!profile && <p>Loading...</p>}
+          {profile && (
+            <>
+              <LeftNavigation />
+              <Outlet context={content} />
+              <RightNavigation />
+              {postForm && <PostForm />}
+            </>
+          )}
+        </PostFormContext>
+      </UserContext>
+    </div>
   );
 }

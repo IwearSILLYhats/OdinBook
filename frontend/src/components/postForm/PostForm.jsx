@@ -9,6 +9,7 @@ import { useContext, useEffect } from "react";
 import { PostFormContext } from "../../App";
 import apiFetch from "../../../api/api";
 import DraftModal from "./DraftModal";
+import BackdropModal from "../BackdropModal";
 
 export default function PostForm() {
   const formContext = useContext(PostFormContext);
@@ -16,7 +17,7 @@ export default function PostForm() {
   const [count, setCount] = useState(0);
   const [postid, setPostid] = useState(null);
   const [drafts, setDrafts] = useState([]);
-  const [draftsOpen, setDraftsOpen] = useState(false);
+  const [modal, setModal] = useState(false);
   const [changes, setChanges] = useState(false);
   useEffect(() => {
     // placeholder for fetching drafts when form is rendered
@@ -33,9 +34,10 @@ export default function PostForm() {
     //Submits a post
     e.preventDefault();
     if (postid !== null) {
-      const request = await apiFetch("posts", "PATCH", {
+      const request = await apiFetch("posts/drafts", "PATCH", {
         content: content,
-        postid: postid,
+        id: postid,
+        published: true,
       });
       console.log(request);
     } else {
@@ -49,59 +51,79 @@ export default function PostForm() {
     setContent(text);
     setPostid(id);
     setChanges(false);
-    setDraftsOpen(false);
+    setModal(false);
   }
-  const modalData = {
-    header: "Save Changes?",
-    subheader: "You have unsaved changes, would you like to save?",
-    buttons: [
-      {
-        buttonColor: "blue",
-        buttonFunction: async () => {
-          if (postid) {
-            const draft = { id: postid, content: content };
-            const request = await apiFetch("posts", "PATCH", draft);
-            if (!request.error) {
-              cancelForm();
+  function modalData(type) {
+    const data = {
+      header: "Save Changes?",
+      subheader: "You have unsaved changes, would you like to save?",
+      buttons: [
+        {
+          buttonColor: "blue",
+          buttonFunction: async () => {
+            if (postid) {
+              const draft = { id: postid, content: content };
+              const request = await apiFetch("posts/drafts", "PATCH", draft);
+              if (!request.error) {
+                setDrafts([
+                  request.draft,
+                  ...drafts.filter((p) => p.id !== postid),
+                ]);
+                setChanges(false);
+                type === "confirmDraft" ? setModal("drafts") : cancelForm();
+              }
+            } else {
+              const request = await apiFetch("posts/drafts", "POST", {
+                content: content,
+              });
+              if (request.error === null) {
+                setDrafts([request.draft, ...drafts]);
+                setChanges(false);
+                type === "confirmDraft" ? setModal("drafts") : cancelForm();
+              }
             }
-          } else {
-            const request = await apiFetch("posts/drafts", "POST", {
-              content: content,
-            });
-            if (!request.error) {
-              cancelForm();
-            }
-          }
+          },
+          buttonText: "Save Changes",
         },
-        buttonText: "Save Changes",
-      },
-      {
-        buttonColor: "darkred",
-        buttonFunction: () => {},
-        buttonText: "Discard",
-      },
-      {
-        buttonColor: "grey",
-        buttonFunction: () => {},
-        buttonText: "Keep Editing",
-      },
-    ],
-  };
+        {
+          buttonColor: "darkred",
+          buttonFunction: () => {
+            setContent("");
+            setPostid(null);
+            type === "confirmDraft" ? setModal("drafts") : cancelForm();
+          },
+          buttonText: "Discard",
+        },
+        {
+          buttonColor: "grey",
+          buttonFunction: () => {
+            setModal(false);
+          },
+          buttonText: "Keep Editing",
+        },
+      ],
+    };
+    return data;
+  }
   return (
     <div className="postFormModal">
-      {draftsOpen && (
+      {modal === "drafts" && (
         <DraftModal
           drafts={drafts}
-          back={setDraftsOpen}
+          back={setModal}
           populate={populateDraft}
           close={cancelForm}
         />
+      )}
+      {(modal === "confirmCancel" || modal === "confirmDraft") && (
+        <BackdropModal options={modalData(modal)} />
       )}
       <form action="" method="post" className="postForm">
         <div className="postFormHeader">
           <button
             onClick={(e) => {
               if (changes && content.length > 0) {
+                setModal("confirmCancel");
               } else {
                 cancelForm();
               }
@@ -115,8 +137,9 @@ export default function PostForm() {
               type="button"
               onClick={() => {
                 if (changes && content.length > 0) {
+                  setModal("confirmDraft");
                 } else {
-                  setDraftsOpen(!draftsOpen);
+                  setModal("drafts");
                 }
               }}
             >
@@ -133,6 +156,9 @@ export default function PostForm() {
             onChange={(e) => {
               setContent(e.target.value);
               setCount(e.target.value.length);
+              if (changes === false) {
+                setChanges(true);
+              }
             }}
             value={content}
             maxLength={300}

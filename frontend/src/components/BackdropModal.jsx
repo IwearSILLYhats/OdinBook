@@ -18,7 +18,7 @@ export default function BackdropModal({ options }) {
           {buttons &&
             buttons.map((btn) => {
               return (
-                <li>
+                <li key={btn.buttonText}>
                   <button
                     type="button"
                     style={{ backgroundColor: btn.buttonColor }}

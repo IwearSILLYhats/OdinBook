@@ -28,13 +28,18 @@ postRouter.post(
   async (req, res) => {
     try {
       const newDraft = await prisma.post.create({
-        author: {
-          connect: { id: req.user.id },
-        },
         data: {
+          author: {
+            connect: { id: req.user.id },
+          },
           published: false,
           content: req.body.content,
         },
+      });
+      return res.json({
+        message: "Draft created successfully!",
+        draft: newDraft,
+        error: null,
       });
     } catch (error) {
       console.log(error);
@@ -81,13 +86,22 @@ postRouter.patch(
       if (draft.author_id !== req.user.id) {
         throw new Error("User not authorized to edit this post");
       }
+      let data = {};
+      if (req.body.content) data.content = req.body.content;
+      if (req.body.published === true) {
+        data.published = true;
+        data.published_time = new Date();
+      }
       const updatedPost = await prisma.post.update({
         where: {
           id: req.body.id,
         },
-        data: {
-          content: req.body.content,
-        },
+        data: data,
+      });
+      return res.json({
+        message: "Draft updated successfully!",
+        draft: updatedPost,
+        error: null,
       });
     } catch (error) {
       console.log(error);
@@ -100,6 +114,32 @@ postRouter.patch(
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     // edit existing post
+    try {
+      const originalPost = await prisma.post.findUnique({
+        where: {
+          id: req.body.id,
+        },
+      });
+      if (!originalPost) {
+        throw new Error("Post not found");
+      }
+      if (originalPost.author_id !== req.user.id) {
+        throw new Error("User not authorized to edit this post");
+      }
+      await prisma.post.update({
+        where: {
+          id: req.body.id,
+        },
+        data: {
+          content: req.body.content,
+          edited: new Date(),
+        },
+      });
+      return res.json({ message: "Post updated successfully" });
+    } catch (error) {
+      console.log(error);
+      return res.json({ error });
+    }
   },
 );
 postRouter.delete(
