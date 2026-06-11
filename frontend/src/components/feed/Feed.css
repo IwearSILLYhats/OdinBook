@@ -18,13 +18,13 @@
 }
 .postHeader,
 .postBody,
-.postFooter {
+.postUI {
   max-width: 100%;
   flex-wrap: wrap;
   display: flex;
   flex-direction: row;
   gap: 0.5rem;
 }
-.postFooter {
+.postUI {
   justify-content: space-between;
 }

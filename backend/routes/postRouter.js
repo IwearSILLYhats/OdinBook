@@ -22,6 +22,34 @@ postRouter.get(
     }
   },
 );
+postRouter.get("/:postid", async (req, res) => {
+  try {
+    const post = await prisma.post.findUnique({
+      select: {
+        id: true,
+        published_time: true,
+        edited: true,
+        parent: true,
+        author: {
+          include: {
+            id: true,
+            username: true,
+            profile_img_url: true,
+          },
+        },
+      },
+      where: {
+        published: true,
+        id: req.params.postid,
+      },
+    });
+    if (!post) throw new Error("Post not found");
+    return res.json({ post });
+  } catch (error) {
+    console.log(error);
+    return res.json({ error });
+  }
+});
 postRouter.post(
   "/drafts",
   passport.authenticate("jwt", { session: false }),

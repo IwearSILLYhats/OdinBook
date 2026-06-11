@@ -1,12 +1,8 @@
 import profile from "../../assets/profile.svg";
 import timeDiff from "../../util/timeDiff";
-import replies from "../../assets/reply.svg";
-import repost from "../../assets/repost.svg";
-import like from "../../assets/heart.svg";
-import saved from "../../assets/saved.svg";
-import share from "../../assets/share.svg";
+import PostUI from "./PostUI";
 
-export default function PostCard({ post }) {
+export default function PostCard({ post, variant }) {
   return (
     <div className="postCard">
       <div className="postHeader">
@@ -22,24 +18,27 @@ export default function PostCard({ post }) {
         <p>{post.content}</p>
         {post.has_image && <p>Attached Image</p>}
       </div>
-      <div className="postFooter">
-        <button type="button">
-          <img src={replies} alt="replies" className="iconSmall" />
-        </button>
-        <button type="button">
-          <img src={repost} alt="repost" className="iconSmall" />
-        </button>
-        <button type="button">
-          <img src={like} alt="like" className="iconSmall" />
-        </button>
-        <button type="button">
-          <img src={saved} alt="saved" className="iconSmall" />
-        </button>
-        <button type="button">
-          <img src={share} alt="share" className="iconSmall" />
-        </button>
-        <button type="button">...</button>
-      </div>
+      {variant === "detail" && (
+        <div className="postDetail">
+          <span>
+            <h5>0</h5>
+            <p>reposts</p>
+          </span>
+          <span>
+            <h5>0</h5>
+            <p>quotes</p>
+          </span>
+          <span>
+            <h5>0</h5>
+            <p>likes</p>
+          </span>
+          <span>
+            <h5>0</h5>
+            <p>saves</p>
+          </span>
+        </div>
+      )}
+      <PostUI />
     </div>
   );
 }

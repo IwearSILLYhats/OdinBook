@@ -145,7 +145,13 @@ export default function PostForm() {
             >
               Drafts
             </button>
-            <button onClick={(e) => submitForm(e)}>Post</button>
+            <button
+              onClick={(e) => {
+                if (count > 0) submitForm(e);
+              }}
+            >
+              Post
+            </button>
           </div>
         </div>
         <div className="postFormBody">
