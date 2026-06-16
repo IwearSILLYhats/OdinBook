@@ -11,16 +11,12 @@ export const PostFormContext = createContext(null);
 
 export default function App() {
   const [profile, setProfile] = useState(null);
-  const [content, setContent] = useState(null);
   const [postForm, setPostForm] = useState(false);
   useEffect(() => {
     async function fetchDashboard() {
       const request = await apiFetch("dashboard", "GET");
-      if (request && request.user) {
-        setProfile(request.user);
-      }
-      if (request && request.posts) {
-        setContent(request.posts);
+      if (request) {
+        setProfile(request);
       }
     }
     fetchDashboard();
@@ -40,7 +36,7 @@ export default function App() {
           {profile && (
             <>
               <LeftNavigation />
-              <Outlet context={content} />
+              <Outlet />
               <RightNavigation />
               {postForm && <PostForm />}
             </>

@@ -31,10 +31,30 @@ postRouter.get("/:postid", async (req, res) => {
         edited: true,
         parent: true,
         author: {
-          include: {
+          select: {
             id: true,
             username: true,
             profile_img_url: true,
+          },
+        },
+        replies: {
+          select: {
+            id: true,
+            published_time: true,
+            edited: true,
+            author: {
+              select: {
+                id: true,
+                username: true,
+                profile_img_url: true,
+              },
+            },
+          },
+        },
+        _count: {
+          select: {
+            likes: true,
+            replies: true,
           },
         },
       },
@@ -192,6 +212,57 @@ postRouter.delete(
         },
       });
       return res.json({ success: "Post successfully deleted." });
+    } catch (error) {
+      console.log(error);
+      return res.json({ error });
+    }
+  },
+);
+
+postRouter.get(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    try {
+      const posts = await prisma.post.findMany({
+        where: {
+          published: true,
+          OR: [
+            {
+              author_id: req.user.id,
+            },
+            {
+              author: {
+                followed_by: {
+                  some: {
+                    follower_id: req.user.id,
+                  },
+                },
+              },
+            },
+          ],
+        },
+        select: {
+          content: true,
+          published_time: true,
+          edited: true,
+          id: true,
+          author: {
+            select: {
+              id: true,
+              profile_img_url: true,
+              username: true,
+            },
+          },
+        },
+        orderBy: {
+          published_time: "desc",
+        },
+        take: 50,
+      });
+
+      if (!posts) throw new Error("No posts found");
+      return res.json({ posts });
     } catch (error) {
       console.log(error);
       return res.json({ error });

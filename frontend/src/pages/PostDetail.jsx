@@ -1,6 +1,21 @@
+import { useParams } from "react-router";
 import PostCard from "../components/feed/PostCard";
+import { useState, useEffect } from "react";
+import apiFetch from "../../api/api";
+import profile from "../assets/profile.svg";
 
 export default function PostDetail() {
+  const postid = useParams().postId;
+  const [post, setPost] = useState(null);
+  useEffect(() => {
+    async function fetchPostDetails() {
+      const request = await apiFetch(`posts/${postid}`, "GET");
+      if (request && !request.error) {
+        setPost(request.post);
+      }
+    }
+    fetchPostDetails();
+  }, []);
   return (
     <div className="postDetail">
       <div className="postHeader">
@@ -8,12 +23,14 @@ export default function PostDetail() {
         <h3>Post</h3>
         <button type="button">Filters</button>
       </div>
-      <PostCard post={"test"} variant={"detail"} />
+      {post && <PostCard post={post} variant={"detail"} />}
       <div className="replyMiniForm">
-        <img src="" alt="profilePicture" className="iconSmall" />
+        <img src={profile} alt="profilePicture" className="iconSmall" />
         <span>Write your reply</span>
       </div>
-      <ul className="replyList"></ul>
+      <ul className="replyList">
+        <li>Replies</li>
+      </ul>
     </div>
   );
 }

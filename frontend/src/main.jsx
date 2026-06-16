@@ -10,6 +10,7 @@ import LoggedIn from "./components/LoggedIn.jsx";
 import LoggedOut from "./components/LoggedOut.jsx";
 import Feed from "./components/feed/Feed.jsx";
 import PostDetail from "./pages/PostDetail.jsx";
+import UserDetail from "./pages/UserDetail.jsx";
 import { Navigate } from "react-router";
 
 const router = createBrowserRouter([
@@ -30,12 +31,12 @@ const router = createBrowserRouter([
             element: <Feed />,
           },
           {
-            path: "post/:postId",
+            path: "posts/:postId",
             element: <PostDetail />,
           },
           {
-            path: "user/:userId",
-            element: <Navigate to="/app" replace />,
+            path: "users/:userId",
+            element: <UserDetail />,
           },
         ],
       },

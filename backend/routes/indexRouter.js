@@ -149,50 +149,12 @@ indexRouter.get(
   "/dashboard",
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
-    const [user, posts] = await Promise.all([
-      prisma.user.findUnique({
-        where: {
-          id: req.user.id,
-        },
-      }),
-      prisma.post.findMany({
-        where: {
-          published: true,
-          OR: [
-            {
-              author_id: req.user.id,
-            },
-            {
-              author: {
-                followed_by: {
-                  some: {
-                    follower_id: req.user.id,
-                  },
-                },
-              },
-            },
-          ],
-        },
-        select: {
-          content: true,
-          published_time: true,
-          edited: true,
-          id: true,
-          author: {
-            select: {
-              id: true,
-              profile_img_url: true,
-              username: true,
-            },
-          },
-        },
-        orderBy: {
-          published_time: "desc",
-        },
-        take: 50,
-      }),
-    ]);
-    return res.status(200).json({ user, posts });
+    const user = await prisma.user.findUnique({
+      where: {
+        id: req.user.id,
+      },
+    });
+    return res.status(200).json({ user });
   },
 );
 module.exports = indexRouter;
