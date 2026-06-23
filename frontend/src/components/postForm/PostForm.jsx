@@ -10,9 +10,10 @@ import { PostFormContext } from "../../App";
 import apiFetch from "../../../api/api";
 import DraftModal from "./DraftModal";
 import BackdropModal from "../BackdropModal";
+import ParentPreview from "./ParentPreview";
 
 export default function PostForm() {
-  const formContext = useContext(PostFormContext);
+  const { parent, togglePostForm, updateParent } = useContext(PostFormContext);
   const [content, setContent] = useState("");
   const [count, setCount] = useState(0);
   const [postid, setPostid] = useState(null);
@@ -20,32 +21,32 @@ export default function PostForm() {
   const [modal, setModal] = useState(false);
   const [changes, setChanges] = useState(false);
   useEffect(() => {
-    // placeholder for fetching drafts when form is rendered
     async function fetchDrafts() {
       const request = await apiFetch("posts/drafts", "GET");
       if (request.drafts.length > 0) setDrafts(request.drafts);
     }
-    fetchDrafts();
+    if (!parent) fetchDrafts();
   }, []);
   function cancelForm() {
-    formContext.togglePostForm();
+    updateParent(null);
+    togglePostForm();
   }
   async function submitForm(e) {
     //Submits a post
     e.preventDefault();
+    let post = { content };
     if (postid !== null) {
-      const request = await apiFetch("posts/drafts", "PATCH", {
-        content: content,
-        id: postid,
-        published: true,
-      });
+      post.id = postid;
+      post.published = true;
+      const request = await apiFetch("posts/drafts", "PATCH", post);
       console.log(request);
     } else {
-      const request = await apiFetch("posts", "POST", {
-        content: content,
-      });
+      if (parent) post.parent = parent;
+      const request = await apiFetch("posts", "POST", post);
       console.log(request);
     }
+    updateParent(null);
+    togglePostForm();
   }
   function populateDraft(id, text) {
     setContent(text);
@@ -54,55 +55,64 @@ export default function PostForm() {
     setModal(false);
   }
   function modalData(type) {
-    const data = {
-      header: "Save Changes?",
-      subheader: "You have unsaved changes, would you like to save?",
-      buttons: [
-        {
-          buttonColor: "blue",
-          buttonFunction: async () => {
-            if (postid) {
-              const draft = { id: postid, content: content };
-              const request = await apiFetch("posts/drafts", "PATCH", draft);
-              if (!request.error) {
-                setDrafts([
-                  request.draft,
-                  ...drafts.filter((p) => p.id !== postid),
-                ]);
-                setChanges(false);
-                type === "confirmDraft" ? setModal("drafts") : cancelForm();
-              }
-            } else {
-              const request = await apiFetch("posts/drafts", "POST", {
-                content: content,
-              });
-              if (request.error === null) {
-                setDrafts([request.draft, ...drafts]);
-                setChanges(false);
-                type === "confirmDraft" ? setModal("drafts") : cancelForm();
-              }
-            }
-          },
-          buttonText: "Save Changes",
-        },
-        {
-          buttonColor: "darkred",
-          buttonFunction: () => {
-            setContent("");
-            setPostid(null);
+    let data;
+    const save = {
+      buttonColor: "blue",
+      buttonFunction: async () => {
+        if (postid) {
+          const draft = { id: postid, content: content };
+          const request = await apiFetch("posts/drafts", "PATCH", draft);
+          if (!request.error) {
+            setDrafts([
+              request.draft,
+              ...drafts.filter((p) => p.id !== postid),
+            ]);
+            setChanges(false);
             type === "confirmDraft" ? setModal("drafts") : cancelForm();
-          },
-          buttonText: "Discard",
-        },
-        {
-          buttonColor: "grey",
-          buttonFunction: () => {
-            setModal(false);
-          },
-          buttonText: "Keep Editing",
-        },
-      ],
+          }
+        } else {
+          const request = await apiFetch("posts/drafts", "POST", {
+            content: content,
+          });
+          if (request.error === null) {
+            setDrafts([request.draft, ...drafts]);
+            setChanges(false);
+            type === "confirmDraft" ? setModal("drafts") : cancelForm();
+          }
+        }
+      },
+      buttonText: "Save Changes",
     };
+    const discard = {
+      buttonColor: "darkred",
+      buttonFunction: () => {
+        setContent("");
+        setPostid(null);
+        type === "confirmDraft" ? setModal("drafts") : cancelForm();
+      },
+      buttonText: "Discard",
+    };
+    const cancel = {
+      buttonColor: "grey",
+      buttonFunction: () => {
+        setModal(false);
+      },
+      buttonText: "Keep Editing",
+    };
+    if (parent) {
+      data = {
+        header: "Discard reply?",
+        subheader: null,
+        buttons: [discard, cancel],
+      };
+    } else {
+      data = {
+        header: "Save Changes?",
+        subheader: "You have unsaved changes, would you like to save?",
+        buttons: [save, discard, cancel],
+      };
+    }
+
     return data;
   }
   return (
@@ -133,27 +143,30 @@ export default function PostForm() {
             Cancel
           </button>
           <div>
-            <button
-              type="button"
-              onClick={() => {
-                if (changes && content.length > 0) {
-                  setModal("confirmDraft");
-                } else {
-                  setModal("drafts");
-                }
-              }}
-            >
-              Drafts
-            </button>
+            {!parent && (
+              <button
+                type="button"
+                onClick={() => {
+                  if (changes && content.length > 0) {
+                    setModal("confirmDraft");
+                  } else {
+                    setModal("drafts");
+                  }
+                }}
+              >
+                Drafts
+              </button>
+            )}
             <button
               onClick={(e) => {
                 if (count > 0) submitForm(e);
               }}
             >
-              Post
+              {parent ? "Reply" : "Post"}
             </button>
           </div>
         </div>
+        {parent && <ParentPreview parent={parent} />}
         <div className="postFormBody">
           <img src={profileIcon} alt="" className="iconLarge" />
           <textarea

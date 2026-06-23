@@ -23,7 +23,8 @@
 }
 .postHeader,
 .postBody,
-.postUI {
+.postUI,
+.replyPreview {
   max-width: 100%;
   flex-wrap: wrap;
   display: flex;
@@ -33,8 +34,13 @@
 .postUI {
   justify-content: space-between;
 }
-.postDetail span {
+.postCardDetail span,
+.postCardDetail {
   display: flex;
   flex-direction: row;
-  gap: 0.5rem;
+  gap: 0.25rem;
+}
+.replyPreview {
+  border: var(--border-settings);
+  border-width: 0 0 1px 0;
 }

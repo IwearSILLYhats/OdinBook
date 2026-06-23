@@ -12,6 +12,7 @@ export const PostFormContext = createContext(null);
 export default function App() {
   const [profile, setProfile] = useState(null);
   const [postForm, setPostForm] = useState(false);
+  const [parent, setParent] = useState(null);
   useEffect(() => {
     async function fetchDashboard() {
       const request = await apiFetch("dashboard", "GET");
@@ -26,7 +27,11 @@ export default function App() {
       <UserContext value={profile}>
         <PostFormContext
           value={{
+            parent,
             postForm,
+            updateParent: function (e) {
+              setParent(e);
+            },
             togglePostForm: function () {
               setPostForm(!postForm);
             },

@@ -30,6 +30,7 @@ postRouter.get("/:postid", async (req, res) => {
         published_time: true,
         edited: true,
         parent: true,
+        content: true,
         author: {
           select: {
             id: true,
@@ -100,13 +101,14 @@ postRouter.post(
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     try {
-      const { content, published } = req.body;
+      const { content, parent, published } = req.body;
       let newPost = {
         author: {
           connect: { id: req.user.id },
         },
       };
       if (content) newPost.content = content;
+      if (parent) newPost.parent = { connect: { id: parent } };
       newPost.published = true;
       newPost.published_time = new Date();
       const createPost = await prisma.post.create({ data: newPost });
