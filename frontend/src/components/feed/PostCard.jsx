@@ -32,7 +32,7 @@ export default function PostCard({ post, variant }) {
               {post._count && (
                 <span>
                   <h5>{post._count.replies}</h5>
-                  <p>replies</p>
+                  <p>{post._count.replies === 1 ? "Reply" : "Replies"}</p>
                 </span>
               )}
               {post._count && post._count.quotes && (
@@ -44,7 +44,7 @@ export default function PostCard({ post, variant }) {
               {post._count && (
                 <span>
                   <h5>{post._count.likes}</h5>
-                  <p>likes</p>
+                  <p>{post._count.likes === 1 ? "Like" : "Likes"}</p>
                 </span>
               )}
               {post._count && post._count.saves && (

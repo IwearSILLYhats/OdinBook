@@ -40,9 +40,16 @@ postRouter.get("/:postid", async (req, res) => {
         },
         replies: {
           select: {
+            content: true,
             id: true,
             published_time: true,
             edited: true,
+            _count: {
+              select: {
+                likes: true,
+                replies: true,
+              },
+            },
             author: {
               select: {
                 id: true,
@@ -229,6 +236,7 @@ postRouter.get(
       const posts = await prisma.post.findMany({
         where: {
           published: true,
+          parent_id: null,
           OR: [
             {
               author_id: req.user.id,
@@ -249,6 +257,12 @@ postRouter.get(
           published_time: true,
           edited: true,
           id: true,
+          _count: {
+            select: {
+              likes: true,
+              replies: true,
+            },
+          },
           author: {
             select: {
               id: true,

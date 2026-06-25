@@ -35,7 +35,8 @@
   justify-content: space-between;
 }
 .postCardDetail span,
-.postCardDetail {
+.postCardDetail,
+.postUI button {
   display: flex;
   flex-direction: row;
   gap: 0.25rem;

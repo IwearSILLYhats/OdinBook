@@ -20,6 +20,7 @@ export default function PostUI({ post }) {
         }}
       >
         <img src={replies} alt="replies" className="iconSmall" />
+        <p>{post._count.replies > 0 ? post._count.replies : ""}</p>
       </button>
       <button type="button">
         <img src={repost} alt="repost" className="iconSmall" />

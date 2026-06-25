@@ -41,7 +41,7 @@ export default function PostForm() {
       const request = await apiFetch("posts/drafts", "PATCH", post);
       console.log(request);
     } else {
-      if (parent) post.parent = parent;
+      if (parent) post.parent = parent.id;
       const request = await apiFetch("posts", "POST", post);
       console.log(request);
     }
