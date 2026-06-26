@@ -22,62 +22,76 @@ postRouter.get(
     }
   },
 );
-postRouter.get("/:postid", async (req, res) => {
-  try {
-    const post = await prisma.post.findUnique({
-      select: {
-        id: true,
-        published_time: true,
-        edited: true,
-        parent: true,
-        content: true,
-        author: {
-          select: {
-            id: true,
-            username: true,
-            profile_img_url: true,
-          },
-        },
-        replies: {
-          select: {
-            content: true,
-            id: true,
-            published_time: true,
-            edited: true,
-            _count: {
-              select: {
-                likes: true,
-                replies: true,
-              },
-            },
-            author: {
-              select: {
-                id: true,
-                username: true,
-                profile_img_url: true,
-              },
+postRouter.get(
+  "/:postid",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    try {
+      const post = await prisma.post.findUnique({
+        select: {
+          id: true,
+          published_time: true,
+          edited: true,
+          parent: true,
+          content: true,
+          likes: {
+            where: {
+              user_id: req.user.id,
             },
           },
-        },
-        _count: {
-          select: {
-            likes: true,
-            replies: true,
+          author: {
+            select: {
+              id: true,
+              username: true,
+              profile_img_url: true,
+            },
+          },
+          replies: {
+            select: {
+              content: true,
+              id: true,
+              published_time: true,
+              edited: true,
+              likes: {
+                where: {
+                  user_id: req.user.id,
+                },
+              },
+              _count: {
+                select: {
+                  likes: true,
+                  replies: true,
+                },
+              },
+              author: {
+                select: {
+                  id: true,
+                  username: true,
+                  profile_img_url: true,
+                },
+              },
+            },
+          },
+          _count: {
+            select: {
+              likes: true,
+              replies: true,
+            },
           },
         },
-      },
-      where: {
-        published: true,
-        id: req.params.postid,
-      },
-    });
-    if (!post) throw new Error("Post not found");
-    return res.json({ post });
-  } catch (error) {
-    console.log(error);
-    return res.json({ error });
-  }
-});
+        where: {
+          published: true,
+          id: req.params.postid,
+        },
+      });
+      if (!post) throw new Error("Post not found");
+      return res.json({ post });
+    } catch (error) {
+      console.log(error);
+      return res.json({ error });
+    }
+  },
+);
 postRouter.post(
   "/drafts",
   passport.authenticate("jwt", { session: false }),
@@ -160,6 +174,56 @@ postRouter.patch(
         draft: updatedPost,
         error: null,
       });
+    } catch (error) {
+      console.log(error);
+      return res.json({ error });
+    }
+  },
+);
+postRouter.patch(
+  "/like/:postid",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    try {
+      const postLike = await prisma.post.findUnique({
+        where: {
+          id: req.params.postid,
+        },
+        select: {
+          id: true,
+          likes: {
+            where: {
+              user_id: req.user.id,
+            },
+          },
+        },
+      });
+      console.log(postLike);
+      if (!postLike) throw new Error("Post not found");
+
+      if (postLike.likes.length > 0) {
+        await prisma.like.delete({
+          where: {
+            user_id_post_id: {
+              user_id: req.user.id,
+              post_id: postLike.id,
+            },
+          },
+        });
+        return res.json({ message: "Post unliked" });
+      } else {
+        await prisma.like.create({
+          data: {
+            user: {
+              connect: { id: req.user.id },
+            },
+            post: {
+              connect: { id: postLike.id },
+            },
+          },
+        });
+        return res.json({ messge: "Post liked" });
+      }
     } catch (error) {
       console.log(error);
       return res.json({ error });
@@ -257,6 +321,11 @@ postRouter.get(
           published_time: true,
           edited: true,
           id: true,
+          likes: {
+            where: {
+              user_id: req.user.id,
+            },
+          },
           _count: {
             select: {
               likes: true,

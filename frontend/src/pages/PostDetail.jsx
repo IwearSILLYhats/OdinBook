@@ -22,7 +22,7 @@ export default function PostDetail() {
   }, []);
   return (
     <div className="postDetail">
-      <div className="postHeader">
+      <div className="postDetailHeader">
         <button type="button">Left Arrow</button>
         <h3>Post</h3>
         <button type="button">Filters</button>

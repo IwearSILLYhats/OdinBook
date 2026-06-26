@@ -13,6 +13,15 @@
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+  border: var(--border-settings);
+  border-width: 0 1px 0 1px;
+  padding: 0.25rem;
+}
+.postDetailHeader {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  justify-content: space-evenly;
 }
 .replyList {
   display: flex;
@@ -20,4 +29,14 @@
   list-style: none;
   gap: 0.5rem;
   padding: 0.25rem;
+}
+.replyList .postCard {
+  background-color: var(--background);
+}
+.replyList li {
+  border: var(--border-settings);
+  border-width: 0 0 1px 0;
+}
+.replyList .postCard:hover {
+  background-color: var(--surface);
 }
