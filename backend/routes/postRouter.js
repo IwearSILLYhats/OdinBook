@@ -198,7 +198,6 @@ postRouter.patch(
           },
         },
       });
-      console.log(postLike);
       if (!postLike) throw new Error("Post not found");
 
       if (postLike.likes.length > 0) {

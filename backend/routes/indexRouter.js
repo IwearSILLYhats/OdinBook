@@ -3,8 +3,10 @@ const indexRouter = express.Router();
 const { prisma } = require("../lib/prisma");
 const { passport, encryptPassword, signToken } = require("../util/auth");
 const postRouter = require("./postRouter");
+const userRouter = require("./userRouter");
 
 indexRouter.use("/posts", postRouter);
+indexRouter.use("/users", userRouter);
 
 indexRouter.post("/signup", async (req, res) => {
   try {

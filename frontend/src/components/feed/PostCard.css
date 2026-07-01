@@ -46,5 +46,5 @@
   border-width: 0 0 1px 0;
 }
 .liked {
-  background-color: #9c1d81;
+  background-color: var(--primaryAccent);
 }
