@@ -32,7 +32,32 @@ postRouter.get(
           id: true,
           published_time: true,
           edited: true,
-          parent: true,
+          parent: {
+            select: {
+              content: true,
+              id: true,
+              published_time: true,
+              edited: true,
+              likes: {
+                where: {
+                  user_id: req.user.id,
+                },
+              },
+              _count: {
+                select: {
+                  likes: true,
+                  replies: true,
+                },
+              },
+              author: {
+                select: {
+                  id: true,
+                  username: true,
+                  profile_img_url: true,
+                },
+              },
+            },
+          },
           content: true,
           likes: {
             where: {

@@ -19,7 +19,7 @@ export default function PostDetail() {
       }
     }
     fetchPostDetails();
-  }, []);
+  }, [postid]);
   return (
     <div className="postDetail">
       <div className="postDetailHeader">

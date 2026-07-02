@@ -22,7 +22,7 @@ export default function PostUI({ post }) {
         }}
       >
         <img src={replies} alt="replies" className="iconSmall" />
-        <p>{post._count.replies > 0 ? post._count.replies : ""}</p>
+        {post._count.replies > 0 && <p>{post._count.replies}</p>}
       </button>
       <button type="button">
         <img src={repost} alt="repost" className="iconSmall" />
@@ -36,7 +36,7 @@ export default function PostUI({ post }) {
         }}
       >
         <img src={like} alt="like" className="iconSmall" />
-        <p>{post._count.likes > 0 ? post._count.likes : ""}</p>
+        {post._count.likes > 0 && <p>{post._count.likes}</p>}
       </button>
       <button type="button">
         <img src={saved} alt="saved" className="iconSmall" />

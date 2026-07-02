@@ -3,13 +3,17 @@ import timeDiff from "../../util/timeDiff";
 import PostUI from "./PostUI";
 import { Link } from "react-router";
 import "./PostCard.css";
+import ParentPreview from "../postForm/ParentPreview";
 
 export default function PostCard({ post, variant }) {
   function handleClick() {
     //event delegation for multiple buttons on card
   }
   return (
-    <div className="postCard">
+    <div className="postCard" key={post.id}>
+      {post?.parent && (
+        <ParentPreview parent={post.parent} variant={"detail"} />
+      )}
       <Link to={`/app/users/${post.author.id}`} className="postLink">
         <div className="postHeader">
           <img

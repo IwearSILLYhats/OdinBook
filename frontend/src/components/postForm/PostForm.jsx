@@ -39,11 +39,9 @@ export default function PostForm() {
       post.id = postid;
       post.published = true;
       const request = await apiFetch("posts/drafts", "PATCH", post);
-      console.log(request);
     } else {
       if (parent) post.parent = parent.id;
       const request = await apiFetch("posts", "POST", post);
-      console.log(request);
     }
     updateParent(null);
     togglePostForm();

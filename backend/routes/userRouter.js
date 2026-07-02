@@ -127,7 +127,6 @@ userRouter.get("/:userid", async (req, res) => {
         take: 25,
       }),
     ]);
-
     if (!user) throw new Error("User not found");
     return res.json({ user, posts, replies });
   } catch (error) {
