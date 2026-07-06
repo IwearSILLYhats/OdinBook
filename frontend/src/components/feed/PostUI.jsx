@@ -24,7 +24,7 @@ export default function PostUI({ post }) {
         <img src={replies} alt="replies" className="iconSmall" />
         {post._count.replies > 0 && <p>{post._count.replies}</p>}
       </button>
-      <button type="button">
+      <button type="button" disabled>
         <img src={repost} alt="repost" className="iconSmall" />
       </button>
       <button
@@ -38,13 +38,15 @@ export default function PostUI({ post }) {
         <img src={like} alt="like" className="iconSmall" />
         {post._count.likes > 0 && <p>{post._count.likes}</p>}
       </button>
-      <button type="button">
+      <button type="button" disabled>
         <img src={saved} alt="saved" className="iconSmall" />
       </button>
-      <button type="button">
+      <button type="button" disabled>
         <img src={share} alt="share" className="iconSmall" />
       </button>
-      <button type="button">...</button>
+      <button type="button" disabled>
+        ...
+      </button>
     </div>
   );
 }
