@@ -4,15 +4,18 @@ import { useState, useEffect } from "react";
 import apiFetch from "../../api/api";
 import profile from "../assets/profile.svg";
 import { useContext } from "react";
-import { PostFormContext } from "../App";
+import { UserContext } from "../App";
+import UserForm from "../components/UserForm";
 import "./UserDetail.css";
 
 export default function UserDetail() {
   const userid = useParams().userId;
+  const myProfile = useContext(UserContext);
   const [user, setUser] = useState(null);
   const [posts, setPosts] = useState(null);
   const [replies, setReplies] = useState(null);
   const [selected, setSelected] = useState("posts");
+  const [editProfile, setEditProfile] = useState(false);
   useEffect(() => {
     async function fetchUserDetails() {
       const request = await apiFetch(`users/${userid}`, "GET");
@@ -25,11 +28,16 @@ export default function UserDetail() {
     fetchUserDetails();
   }, [userid]);
   return (
-    <main className="userDetail">
+    <main className="userDetail" key={userid}>
+      {editProfile && <UserForm user={user} toggle={setEditProfile} />}
       {user && (
         <div className="userProfile">
           <div className="banner">
-            <img src="" alt="Banner" className="bannerImg" />
+            <img
+              src={user.profile_img_url || "#"}
+              alt="Banner"
+              className="bannerImg"
+            />
           </div>
           <div className="userHeader">
             <img
@@ -38,9 +46,24 @@ export default function UserDetail() {
               className="iconLarge"
             />
             <div>
-              <button type="button">Follow</button>
-              <button type="button">Message</button>
-              <button type="button">...</button>
+              {userid === myProfile.id ? (
+                <button
+                  type="button"
+                  onClick={() => setEditProfile(!editProfile)}
+                >
+                  Edit Profile
+                </button>
+              ) : (
+                <>
+                  <button type="button">Follow</button>
+                  <button type="button" disabled>
+                    Message
+                  </button>
+                </>
+              )}
+              <button type="button" disabled>
+                ...
+              </button>
             </div>
           </div>
           <div>
@@ -50,7 +73,7 @@ export default function UserDetail() {
               <p>{user._count.following} following</p>
               <p>{user._count.posts} posts</p>
             </div>
-            <p>User bio</p>
+            <p>{user.bio || "User bio"}</p>
           </div>
           <div>
             <button type="button" onClick={() => setSelected("posts")}>

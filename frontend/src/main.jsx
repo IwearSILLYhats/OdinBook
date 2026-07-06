@@ -12,6 +12,7 @@ import Feed from "./components/feed/Feed.jsx";
 import PostDetail from "./pages/PostDetail.jsx";
 import UserDetail from "./pages/UserDetail.jsx";
 import { Navigate } from "react-router";
+import Explore from "./pages/Explore.jsx";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
           {
             path: "users/:userId",
             element: <UserDetail />,
+          },
+          {
+            path: "explore",
+            element: <Explore />,
           },
         ],
       },
