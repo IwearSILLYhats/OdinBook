@@ -3,6 +3,32 @@ const userRouter = express.Router();
 const { prisma } = require("../lib/prisma");
 const { passport } = require("../util/auth");
 
+userRouter.get(
+  "/explore",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    try {
+      const users = await prisma.user.findMany({
+        where: {
+          id: {
+            not: req.user.id,
+          },
+          followed_by: {
+            none: {
+              follower_id: req.user.id,
+            },
+          },
+        },
+        take: 50,
+      });
+      if (!users) throw new Error("No users found");
+      return res.json({ users });
+    } catch (error) {
+      console.log(error);
+      return res.json({ error });
+    }
+  },
+);
 userRouter.get("/:userid", async (req, res) => {
   try {
     // Fetches user's profile, posts, and replies
@@ -134,5 +160,62 @@ userRouter.get("/:userid", async (req, res) => {
     return res.json({ error });
   }
 });
-
+userRouter.post(
+  "/follow/:userid",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    try {
+      const follow = await prisma.follow.findUnique({
+        where: {
+          follower_id_following_id: {
+            follower_id: req.user.id,
+            following_id: req.params.userid,
+          },
+        },
+        select: {
+          follower_id: true,
+          following_id: true,
+        },
+      });
+      if (follow) {
+        await prisma.follow.delete({
+          follower_id: req.user.id,
+          following_id: req.params.userid,
+        });
+        return res.json({ message: "User unfollowed" });
+      } else {
+        await prisma.follow.create({
+          data: {
+            follower: {
+              connect: {
+                id: req.user.id,
+              },
+            },
+            following: {
+              connect: {
+                id: req.params.userid,
+              },
+            },
+          },
+        });
+        return res.json({ message: "User followed successfully" });
+      }
+    } catch (error) {
+      console.log(error);
+      return res.json({ error });
+    }
+  },
+);
+userRouter.patch(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    try {
+      //TODO - update user profile (banner, pfp, bio)
+    } catch (error) {
+      console.log(error);
+      return res.json({ error });
+    }
+  },
+);
 module.exports = userRouter;

@@ -1,0 +1,28 @@
+.userList {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.userList li {
+  display: flex;
+  flex-direction: column;
+}
+.userHeader,
+.userInfo {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  padding: 0;
+}
+.userCard {
+  background-color: var(--surface);
+  padding: 0.5rem;
+}
+.userCard button {
+  padding: 0.25rem;
+}
+.following {
+  background-color: var(--primaryAccent);
+}
