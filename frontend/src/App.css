@@ -12,12 +12,27 @@ body,
 #app > * {
   overflow-y: scroll;
 }
-.leftNavigation,
-.rightNavigation {
+.flexCol {
+  display: flex;
+  flex-direction: column;
+}
+.flexRow {
+  display: flex;
+  flex-direction: row;
+}
+.cleanList {
+  list-style: none;
+  padding: 0;
+}
+.gap1 {
+  gap: 0.5rem;
+}
+#leftNavigation,
+#rightNavigation {
   padding: 1rem;
   min-width: fit-content;
 }
-.leftNavigation button {
+#leftNavigation button {
   display: flex;
   gap: 0.25rem;
   padding: 0 0.5rem;
@@ -25,20 +40,12 @@ body,
   min-height: 2rem;
   margin: 0.5rem 0;
 }
-.iconList {
-  display: flex;
-  flex-direction: column;
-  padding: 0;
-  list-style-type: none;
-  gap: 0.5rem;
-}
-.iconList a {
-  display: flex;
+#iconList a {
   justify-self: left;
   align-self: flex-start;
   width: 100%;
 }
-.iconList img {
+#iconList img {
   max-width: 1.5rem;
   @media (max-width: 500px) {
     min-width: 50%;
@@ -120,4 +127,23 @@ main header {
     display: flex;
     flex-direction: column;
   }
+}
+#userPreview {
+  width: 100%;
+  min-height: 5rem;
+  overflow-y: hidden;
+}
+#userPreview > div {
+  max-height: 1.5rem;
+  max-width: 1.5rem;
+  width: auto;
+  height: auto;
+  overflow: hidden;
+  transition:
+    max-width 0.5s linear,
+    max-height 0.5s linear;
+}
+#userPreview > div:hover {
+  max-width: 100%;
+  max-height: 100%;
 }
