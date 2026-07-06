@@ -6,6 +6,7 @@ import saved from "../assets/saved.svg";
 import profile from "../assets/profile.svg";
 import settings from "../assets/settings.svg";
 import newPost from "../assets/newPost.svg";
+import search from "../assets/search.svg";
 import apiFetch from "../../api/api";
 import { useContext } from "react";
 import { UserContext } from "../App";
@@ -21,6 +22,11 @@ export default function LeftNavigation() {
       text: "Home",
       link: "/",
       icon: home,
+    },
+    {
+      text: "Explore",
+      link: "/app/explore",
+      icon: search,
     },
     {
       text: "Notifications",
@@ -55,25 +61,33 @@ export default function LeftNavigation() {
   }
 
   return (
-    <div className="leftNavigation">
+    <div id="leftNavigation">
       <nav>
-        <div>
-          <img
-            src={
-              userProfile?.profile_img_url
-                ? userProfile.profile_img_url
-                : profile
-            }
-            alt="profilePicture"
-          />
-          <p>{userProfile.username}</p>
-          <button onClick={() => logout()}>Logout</button>
+        <div id="userPreview">
+          <div>
+            <Link to={`/app/users/${userProfile.id}`}>
+              <div id="userPreviewHeader" className="flexRow gap1">
+                <img
+                  src={
+                    userProfile?.profile_img_url
+                      ? userProfile.profile_img_url
+                      : profile
+                  }
+                  alt="profilePicture"
+                />
+                <p>{userProfile.username}</p>
+              </div>
+            </Link>
+            <button onClick={() => logout()} className="logoutButton">
+              Logout
+            </button>
+          </div>
         </div>
-        <ul className="iconList">
+        <ul className="flexCol cleanList gap1" id="iconList">
           {navigationItems.map((item) => {
             return (
               <li key={item.text}>
-                <Link to={item.link}>
+                <Link to={item.link} className="flexRow gap1">
                   <img src={item.icon} alt={item.text} className="iconSmall" />
                   <h4 className="iconText">{item.text}</h4>
                 </Link>
