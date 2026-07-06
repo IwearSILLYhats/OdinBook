@@ -17,7 +17,7 @@ export default function App() {
     async function fetchDashboard() {
       const request = await apiFetch("dashboard", "GET");
       if (request) {
-        setProfile(request);
+        setProfile(request.user);
       }
     }
     fetchDashboard();
