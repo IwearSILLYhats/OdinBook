@@ -1,6 +1,6 @@
 const url = import.meta.env.VITE_API_URL;
 
-export default async function apiFetch(endpoint, method, body) {
+export default async function apiFetch(endpoint, method, body, multipart) {
   try {
     const reqUrl = `${url}/${endpoint}`;
     const content = {
@@ -12,6 +12,9 @@ export default async function apiFetch(endpoint, method, body) {
     };
     if (body !== null) {
       content.body = JSON.stringify(body);
+    }
+    if (multipart) {
+      content.enctype = "multipart/form-data";
     }
     const request = await fetch(reqUrl, content);
     const response = await request.json();
