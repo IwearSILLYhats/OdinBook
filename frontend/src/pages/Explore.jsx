@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import apiFetch from "../../api/api";
+import { apiFetch } from "../../api/api";
 import { Link } from "react-router";
 import "./Explore.css";
 import UserCard from "../components/UserCard";

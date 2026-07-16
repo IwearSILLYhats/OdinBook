@@ -7,7 +7,7 @@ import saved from "../../assets/saved.svg";
 import share from "../../assets/share.svg";
 import { useContext, useEffect, useState } from "react";
 import { PostFormContext } from "../../App";
-import apiFetch from "../../../api/api";
+import { apiFetch } from "../../../api/api";
 
 export default function PostUI({ post }) {
   const [liked, setLiked] = useState(post.likes.length > 0 ? true : false);

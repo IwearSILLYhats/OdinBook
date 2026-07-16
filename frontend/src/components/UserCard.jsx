@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import profile from "../assets/profile.svg";
 import useDebounce from "../util/useDebounce";
-import apiFetch from "../../api/api";
+import { apiFetch } from "../../api/api";
 
 export default function UserCard({ user }) {
   const [following, setFollowing] = useState(null);

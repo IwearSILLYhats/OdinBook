@@ -7,7 +7,7 @@ import emoji from "../../assets/emoji.svg";
 import CharacterCounter from "./CharacterCounter";
 import { useContext, useEffect } from "react";
 import { PostFormContext } from "../../App";
-import apiFetch from "../../../api/api";
+import { apiFetch } from "../../../api/api";
 import DraftModal from "./DraftModal";
 import BackdropModal from "../BackdropModal";
 import ParentPreview from "./ParentPreview";

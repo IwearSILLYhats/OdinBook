@@ -4,7 +4,7 @@ import MiniPostForm from "../postForm/MiniPostForm";
 import PostCard from "./PostCard";
 import "./Feed.css";
 import { useState, useEffect } from "react";
-import apiFetch from "../../../api/api";
+import { apiFetch } from "../../../api/api";
 import { useContext } from "react";
 import { PostFormContext } from "../../App";
 

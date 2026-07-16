@@ -2,7 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import "./App.css";
 import LeftNavigation from "./components/LeftNavigation";
 import RightNavigation from "./components/RightNavigation";
-import apiFetch from "../api/api";
+import { apiFetch } from "../api/api";
 import { Outlet } from "react-router";
 import PostForm from "./components/postForm/PostForm.jsx";
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, NavLink } from "react-router";
-import apiFetch from "../../api/api";
+import { apiFetch } from "../../api/api";
 
 export default function Login() {
   const [username, setUsername] = useState(null);

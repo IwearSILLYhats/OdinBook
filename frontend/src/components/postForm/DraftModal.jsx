@@ -1,6 +1,6 @@
 import { useState } from "react";
 import BackdropModal from "../BackdropModal";
-import apiFetch from "../../../api/api";
+import { apiFetch } from "../../../api/api";
 import timeDifference from "../../util/timeDiff";
 
 export default function DraftModal({ back, close, drafts, populate }) {

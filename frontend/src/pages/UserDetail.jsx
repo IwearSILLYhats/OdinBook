@@ -1,7 +1,7 @@
 import { useParams } from "react-router";
 import PostCard from "../components/feed/PostCard";
 import { useState, useEffect } from "react";
-import apiFetch from "../../api/api";
+import { apiFetch } from "../../api/api";
 import profile from "../assets/profile.svg";
 import { useContext } from "react";
 import { UserContext } from "../App";

@@ -1,6 +1,6 @@
 const url = import.meta.env.VITE_API_URL;
 
-export default async function apiFetch(endpoint, method, body, multipart) {
+async function apiFetch(endpoint, method, body, multipart) {
   try {
     const reqUrl = `${url}/${endpoint}`;
     const content = {
@@ -23,3 +23,7 @@ export default async function apiFetch(endpoint, method, body, multipart) {
     console.log(error);
   }
 }
+async function uploadRequest(type) {
+  return await apiFetch(`upload/${type}`, "GET");
+}
+export { apiFetch, uploadRequest };

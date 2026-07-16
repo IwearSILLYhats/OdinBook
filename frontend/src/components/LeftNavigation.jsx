@@ -7,7 +7,7 @@ import profile from "../assets/profile.svg";
 import settings from "../assets/settings.svg";
 import newPost from "../assets/newPost.svg";
 import search from "../assets/search.svg";
-import apiFetch from "../../api/api";
+import { apiFetch } from "../../api/api";
 import { useContext } from "react";
 import { UserContext } from "../App";
 
