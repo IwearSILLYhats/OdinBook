@@ -102,7 +102,7 @@ passport.use(
             user: {
               create: {
                 username: profile.displayName,
-                profile_img_url: profile.picture || null,
+                avatar: profile.picture || null,
               },
             },
           },

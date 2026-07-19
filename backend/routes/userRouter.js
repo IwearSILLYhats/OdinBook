@@ -40,7 +40,7 @@ userRouter.get("/:userid", async (req, res) => {
         select: {
           id: true,
           username: true,
-          profile_img_url: true,
+          avatar: true,
           _count: {
             select: {
               following: true,
@@ -79,7 +79,7 @@ userRouter.get("/:userid", async (req, res) => {
           author: {
             select: {
               id: true,
-              profile_img_url: true,
+              avatar: true,
               username: true,
             },
           },
@@ -116,7 +116,7 @@ userRouter.get("/:userid", async (req, res) => {
           author: {
             select: {
               id: true,
-              profile_img_url: true,
+              avatar: true,
               username: true,
             },
           },
@@ -140,7 +140,7 @@ userRouter.get("/:userid", async (req, res) => {
               author: {
                 select: {
                   id: true,
-                  profile_img_url: true,
+                  avatar: true,
                   username: true,
                 },
               },
@@ -211,7 +211,26 @@ userRouter.patch(
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     try {
-      //TODO - update user profile (banner, pfp, bio)
+      console.log(req.body);
+      const { avatar, banner, bio } = req.body;
+      if ((!avatar, !banner, !bio)) {
+        throw new Error("No profile changes sent in request");
+      }
+      let data = {};
+      if (bio) data.bio = bio;
+      if (banner && !req.user.banner) data.banner = true;
+      if (avatar && !req.user.avatar) data.avatar = true;
+      if (avatar || banner) data.profile_updated = new Date();
+      const updatedProfile = await prisma.user.update({
+        where: {
+          id: req.user.id,
+        },
+        data: data,
+      });
+      if (updatedProfile) {
+        return res.json({ success: updatedProfile });
+      }
+      throw new Error("Issue updating user profile");
     } catch (error) {
       console.log(error);
       return res.json({ error });

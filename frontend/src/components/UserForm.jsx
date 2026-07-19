@@ -1,27 +1,39 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { apiFetch, uploadRequest } from "../../api/api";
+import { UserContext } from "../App";
 
 export default function UserForm({ user, toggle }) {
-  const [username, setUsername] = useState(null);
-  const [bio, setBio] = useState(null);
+  const { profile, updateProfile } = useContext(UserContext);
+  const [bio, setBio] = useState("");
   const [pfp, setPfp] = useState(null);
   const [banner, setBanner] = useState(null);
-  async function handleSubmit(e) {
-    e.preventDefault();
-    const body = {};
-    let arr = [];
-    if (username) body.username = username;
-    if (bio) body.bio = bio;
-    if (pfp) {
-      body.profile_img_url = true;
-      arr.push("avatar");
-    }
-    if (banner) {
-      body.banner = banner.name;
-      arr.push("banner");
-    }
+  async function handleSubmit(event) {
     try {
-      const initialRequest = await apiFetch("/upload/banner");
+      event.preventDefault();
+      const body = {};
+      let arr = [];
+      if (bio) body.bio = bio;
+      if (pfp) {
+        body.avatar = true;
+        arr.push("avatars");
+      }
+      if (banner) {
+        body.banner = true;
+        arr.push("banners");
+      }
+      if (arr.length > 0) {
+        let errors = [];
+        const handleImages = await Promise.all(
+          arr.map((e) => uploadRequest(e, pfp)),
+        );
+        handleImages.forEach((e) => {
+          if (e.error) errors.push(e.error);
+        });
+        if (error.length > 0) throw new Error(errors);
+      }
+      const patchProfile = await apiFetch("users", "PATCH", body);
+      if (patchProfile.error) throw new Error(patchProfile.error);
+      updateProfile(patchProfile.success);
     } catch (error) {
       console.log(error);
       return;
@@ -35,27 +47,26 @@ export default function UserForm({ user, toggle }) {
             Cancel
           </button>
           <h5>Edit Profile</h5>
-          <button type="button">Save</button>
+          <button type="button" onClick={(e) => handleSubmit(e)}>
+            Save
+          </button>
         </div>
         <input
           type="file"
           name="banner"
           id=""
-          onChange={(e) => setBanner(e.value)}
+          onChange={(e) => {
+            if (e.target.files && e.target.files[0])
+              setBanner(e.target.files[0]);
+          }}
         />
         <input
           type="file"
           name="profileImg"
           id=""
-          onChange={(e) => setPfp(e.value)}
-        />
-        <label htmlFor="username">Display name</label>
-        <input
-          type="text"
-          name="username"
-          id=""
-          placeholder="e.g. John Doe"
-          onChange={(e) => setUsername(e.value)}
+          onChange={(e) => {
+            if (e.target.files && e.target.files[0]) setPfp(e.target.files[0]);
+          }}
         />
         <label htmlFor="bio" onChange={(e) => setBio(e.value)}>
           Description
@@ -64,6 +75,12 @@ export default function UserForm({ user, toggle }) {
           name="bio"
           id=""
           placeholder="Tell us a bit about yourself"
+          onChange={(e) => {
+            setBio(e.target.value);
+          }}
+          value={bio}
+          maxLength={300}
+          rows={5}
         ></textarea>
       </form>
     </div>

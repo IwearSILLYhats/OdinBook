@@ -24,7 +24,14 @@ export default function App() {
   }, []);
   return (
     <div id="app">
-      <UserContext value={profile}>
+      <UserContext
+        value={{
+          profile,
+          updateProfile: function (e) {
+            setProfile(e);
+          },
+        }}
+      >
         <PostFormContext
           value={{
             parent,

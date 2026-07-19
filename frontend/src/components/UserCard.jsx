@@ -23,7 +23,7 @@ export default function UserCard({ user }) {
         <Link to={`/app/users/${user.id}`} className="postLink">
           <div className="userInfo">
             <img
-              src={user.profile_img_url || profile}
+              src={user.avatar || profile}
               alt={user.username}
               className="iconSmall"
             />

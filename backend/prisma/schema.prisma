@@ -22,6 +22,13 @@ model Auth {
   password    String?
 }
 
+model Attachment {
+  id      String @id @default(uuid())
+  parent  Post   @relation(fields: [post_id], references: [id])
+  post_id String
+  url     String
+}
+
 model Chat {
   id          String @id @default(uuid())
   user_one    User   @relation("userOne", fields: [user_id_one], references: [id])
@@ -57,25 +64,28 @@ model Notification {
 }
 
 model Post {
-  id             String    @id @default(uuid())
-  author         User      @relation(fields: [author_id], references: [id])
+  id             String       @id @default(uuid())
+  author         User         @relation(fields: [author_id], references: [id])
   author_id      String
-  created        DateTime  @default(now())
+  created        DateTime     @default(now())
   published      Boolean
   published_time DateTime?
   content        String
-  has_image      Boolean   @default(false)
+  has_image      Boolean      @default(false)
   edited         DateTime?
-  parent         Post?     @relation("postChildren", fields: [parent_id], references: [id])
-  replies        Post[]    @relation("postChildren")
+  parent         Post?        @relation("postChildren", fields: [parent_id], references: [id])
+  replies        Post[]       @relation("postChildren")
   parent_id      String?
   likes          Like[]
+  attachments    Attachment[]
 }
 
 model User {
   id              String         @id @default(uuid())
   username        String         @unique
-  profile_img_url String?
+  avatar          Boolean        @default(false)
+  banner          Boolean        @default(false)
+  profile_updated DateTime?
   joined_date     DateTime       @default(now())
   last_activity   DateTime       @default(now())
   acct_status     acct_status    @default(ACTIVE)

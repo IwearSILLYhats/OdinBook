@@ -33,20 +33,16 @@ export default function UserDetail() {
       {user && (
         <div className="userProfile">
           <div className="banner">
-            <img
-              src={user.profile_img_url || "#"}
-              alt="Banner"
-              className="bannerImg"
-            />
+            <img src={user.avatar || "#"} alt="Banner" className="bannerImg" />
           </div>
           <div className="userHeader">
             <img
-              src={user?.profile_img_url || profile}
+              src={user?.avatar || profile}
               alt={user?.username}
               className="iconLarge"
             />
             <div>
-              {userid === myProfile.id ? (
+              {userid === myProfile.profile.id ? (
                 <button
                   type="button"
                   onClick={() => setEditProfile(!editProfile)}

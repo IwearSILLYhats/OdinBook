@@ -4,6 +4,8 @@ const { prisma } = require("../lib/prisma");
 const { passport, encryptPassword, signToken } = require("../util/auth");
 const postRouter = require("./postRouter");
 const userRouter = require("./userRouter");
+const supabase = require("../util/supabase");
+const crypto = require("crypto");
 
 indexRouter.use("/posts", postRouter);
 indexRouter.use("/users", userRouter);
@@ -157,6 +159,44 @@ indexRouter.get(
       },
     });
     return res.status(200).json({ user });
+  },
+);
+indexRouter.get(
+  "/upload/:type",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    try {
+      const type = req.params.type;
+      if (type === "avatar") {
+        const { data, error } = await supabase.storage
+          .from("avatars")
+          .createSignedUploadUrl(`${req.user.id}.webp`, {
+            upsert: true,
+          });
+        if (error) throw new Error("Issue fetching signedUploadUrl", error);
+        return res.json(data.signedUrl);
+      } else if (type === "banners") {
+        const { data, error } = await supabase.storage
+          .from("banners")
+          .createSignedUploadUrl(`${req.user.id}.webp`, {
+            upsert: true,
+          });
+        if (error) throw new Error("Issue fetching signedUploadUrl", error);
+        return res.json(data.signedUrl);
+      } else if (type === "attachments") {
+        const filename = `${crypto.randomUUID()}.webp`;
+        const { data, error } = await supabase.storage
+          .from("attachments")
+          .createSignedUploadUrl(filename);
+        if (error) throw new Error("Issue fetching signedUploadUrl", error);
+        return res.json(data.signedUrl);
+      } else {
+        throw new Error("Incorrect/No upload type provided");
+      }
+    } catch (error) {
+      console.log(error);
+      return res.json({ error });
+    }
   },
 );
 module.exports = indexRouter;

@@ -17,7 +17,7 @@ export default function PostCard({ post, variant }) {
       <Link to={`/app/users/${post.author.id}`} className="postLink">
         <div className="postHeader">
           <img
-            src={post.author.profile_img_url || profile}
+            src={post.author.avatar || profile}
             alt={post.author.username}
             className="iconSmall"
           />

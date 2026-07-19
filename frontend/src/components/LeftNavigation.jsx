@@ -3,7 +3,7 @@ import home from "../assets/home.svg";
 import notifications from "../assets/notifications.svg";
 import chats from "../assets/chats.svg";
 import saved from "../assets/saved.svg";
-import profile from "../assets/profile.svg";
+import profileIcon from "../assets/profile.svg";
 import settings from "../assets/settings.svg";
 import newPost from "../assets/newPost.svg";
 import search from "../assets/search.svg";
@@ -15,7 +15,7 @@ import { PostFormContext } from "../App";
 
 export default function LeftNavigation() {
   const formContext = useContext(PostFormContext);
-  const userProfile = useContext(UserContext);
+  const { profile } = useContext(UserContext);
   const navigate = useNavigate();
   const navigationItems = [
     {
@@ -46,7 +46,7 @@ export default function LeftNavigation() {
     {
       text: "Profile",
       link: "/profile",
-      icon: profile,
+      icon: profileIcon,
     },
     {
       text: "Settings",
@@ -65,17 +65,13 @@ export default function LeftNavigation() {
       <nav>
         <div id="userPreview">
           <div>
-            <Link to={`/app/users/${userProfile.id}`}>
+            <Link to={`/app/users/${profile.id}`}>
               <div id="userPreviewHeader" className="flexRow gap1">
                 <img
-                  src={
-                    userProfile?.profile_img_url
-                      ? userProfile.profile_img_url
-                      : profile
-                  }
+                  src={profile?.avatar ? profile.avatar : profileIcon}
                   alt="profilePicture"
                 />
-                <p>{userProfile.username}</p>
+                <p>{profile.username}</p>
               </div>
             </Link>
             <button onClick={() => logout()} className="logoutButton">

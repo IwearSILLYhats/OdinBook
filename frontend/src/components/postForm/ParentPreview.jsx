@@ -6,7 +6,7 @@ import PostUI from "../feed/PostUI";
 export default function ParentPreview({ parent, variant }) {
   return (
     <div className="replyPreview">
-      <img src={parent.profile_img_url || profileIcon} alt={parent.username} />
+      <img src={parent.avatar || profileIcon} alt={parent.username} />
       <div className="previewBody">
         <h5>{parent.author.username}</h5>
         <p>{parent.content}</p>

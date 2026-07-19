@@ -53,7 +53,7 @@ postRouter.get(
                 select: {
                   id: true,
                   username: true,
-                  profile_img_url: true,
+                  avatar: true,
                 },
               },
             },
@@ -68,7 +68,7 @@ postRouter.get(
             select: {
               id: true,
               username: true,
-              profile_img_url: true,
+              avatar: true,
             },
           },
           replies: {
@@ -92,7 +92,7 @@ postRouter.get(
                 select: {
                   id: true,
                   username: true,
-                  profile_img_url: true,
+                  avatar: true,
                 },
               },
             },
@@ -359,7 +359,7 @@ postRouter.get(
           author: {
             select: {
               id: true,
-              profile_img_url: true,
+              avatar: true,
               username: true,
             },
           },
