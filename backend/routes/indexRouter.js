@@ -6,7 +6,6 @@ const postRouter = require("./postRouter");
 const userRouter = require("./userRouter");
 const supabase = require("../util/supabase");
 const crypto = require("crypto");
-
 indexRouter.use("/posts", postRouter);
 indexRouter.use("/users", userRouter);
 
@@ -167,14 +166,14 @@ indexRouter.get(
   async (req, res) => {
     try {
       const type = req.params.type;
-      if (type === "avatar") {
+      if (type === "avatars") {
         const { data, error } = await supabase.storage
           .from("avatars")
           .createSignedUploadUrl(`${req.user.id}.webp`, {
             upsert: true,
           });
         if (error) throw new Error("Issue fetching signedUploadUrl", error);
-        return res.json(data.signedUrl);
+        return res.json({ url: data.signedUrl });
       } else if (type === "banners") {
         const { data, error } = await supabase.storage
           .from("banners")
@@ -182,14 +181,14 @@ indexRouter.get(
             upsert: true,
           });
         if (error) throw new Error("Issue fetching signedUploadUrl", error);
-        return res.json(data.signedUrl);
+        return res.json({ url: data.signedUrl });
       } else if (type === "attachments") {
         const filename = `${crypto.randomUUID()}.webp`;
         const { data, error } = await supabase.storage
           .from("attachments")
           .createSignedUploadUrl(filename);
         if (error) throw new Error("Issue fetching signedUploadUrl", error);
-        return res.json(data.signedUrl);
+        return res.json({ url: data.signedUrl });
       } else {
         throw new Error("Incorrect/No upload type provided");
       }

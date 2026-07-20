@@ -20,7 +20,9 @@
   justify-content: space-between;
   padding-left: 0.5rem;
 }
-.userHeader .iconLarge {
+.userHeader img {
+  max-width: 4rem;
+  max-height: 4rem;
   transform: translateY(-50%);
   background-color: white;
   border-radius: 50%;
@@ -63,4 +65,9 @@
 }
 #userFormUi {
   justify-content: space-between;
+}
+.banner {
+  overflow: hidden;
+  max-height: 8rem;
+  max-width: 100%;
 }

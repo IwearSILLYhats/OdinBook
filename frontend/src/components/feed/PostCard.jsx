@@ -4,6 +4,7 @@ import PostUI from "./PostUI";
 import { Link } from "react-router";
 import "./PostCard.css";
 import ParentPreview from "../postForm/ParentPreview";
+import { formatAvatar } from "../../util/imgUrlFormatter";
 
 export default function PostCard({ post, variant }) {
   function handleClick() {
@@ -17,7 +18,7 @@ export default function PostCard({ post, variant }) {
       <Link to={`/app/users/${post.author.id}`} className="postLink">
         <div className="postHeader">
           <img
-            src={post.author.avatar || profile}
+            src={post.author.avatar ? formatAvatar(post.author.id) : profile}
             alt={post.author.username}
             className="iconSmall"
           />

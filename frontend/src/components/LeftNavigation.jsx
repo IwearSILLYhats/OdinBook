@@ -10,6 +10,7 @@ import search from "../assets/search.svg";
 import { apiFetch } from "../../api/api";
 import { useContext } from "react";
 import { UserContext } from "../App";
+import { formatAvatar } from "../util/imgUrlFormatter";
 
 import { PostFormContext } from "../App";
 
@@ -68,7 +69,7 @@ export default function LeftNavigation() {
             <Link to={`/app/users/${profile.id}`}>
               <div id="userPreviewHeader" className="flexRow gap1">
                 <img
-                  src={profile?.avatar ? profile.avatar : profileIcon}
+                  src={profile?.avatar ? formatAvatar(profile.id) : profileIcon}
                   alt="profilePicture"
                 />
                 <p>{profile.username}</p>

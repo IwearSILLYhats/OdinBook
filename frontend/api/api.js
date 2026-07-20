@@ -39,7 +39,10 @@ async function fileUpload(url, file) {
     const request = await fetch(url, content);
     const response = await request.json();
     if (response.error) {
-      throw new Error("Error returned from file storage during upload");
+      throw new Error(
+        "Error returned from file storage during upload",
+        response.error,
+      );
     }
     return response;
   } catch (error) {
@@ -52,7 +55,7 @@ async function uploadRequest(type, file) {
   try {
     const [urlReqData, compressedImg] = await Promise.all([
       apiFetch(`upload/${type}`, "GET"),
-      compressImg(type, file),
+      compressImg(file, type),
     ]);
     if (urlReqData.error) {
       throw new Error("Failed when requesting signed URL", urlReqData.error);
@@ -60,11 +63,11 @@ async function uploadRequest(type, file) {
     if (compressedImg.error) {
       throw new Error("Failed when compressing image", compressedImg.error);
     }
-    const upload = await fileUpload(urlReqData.data.signedUrl, type);
+    const upload = await fileUpload(urlReqData.url, file);
 
     if (upload.error) throw new Error("Upload to storage failed", upload.error);
 
-    return { success: urlReqData.path, error: null };
+    return urlReqData.path;
   } catch (error) {
     console.log(error);
     return { error };

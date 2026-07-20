@@ -2,11 +2,15 @@ import profileIcon from "../../assets/profile.svg";
 import like from "../../assets/heart.svg";
 import replies from "../../assets/reply.svg";
 import PostUI from "../feed/PostUI";
+import { formatAvatar } from "../../util/imgUrlFormatter";
 
 export default function ParentPreview({ parent, variant }) {
   return (
     <div className="replyPreview">
-      <img src={parent.avatar || profileIcon} alt={parent.username} />
+      <img
+        src={parent.avatar ? formatAvatar(parent.id) : profileIcon}
+        alt={parent.username}
+      />
       <div className="previewBody">
         <h5>{parent.author.username}</h5>
         <p>{parent.content}</p>

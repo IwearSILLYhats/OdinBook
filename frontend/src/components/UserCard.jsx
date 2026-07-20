@@ -3,6 +3,7 @@ import { Link } from "react-router";
 import profile from "../assets/profile.svg";
 import useDebounce from "../util/useDebounce";
 import { apiFetch } from "../../api/api";
+import { formatAvatar } from "../util/imgUrlFormatter";
 
 export default function UserCard({ user }) {
   const [following, setFollowing] = useState(null);
@@ -23,7 +24,7 @@ export default function UserCard({ user }) {
         <Link to={`/app/users/${user.id}`} className="postLink">
           <div className="userInfo">
             <img
-              src={user.avatar || profile}
+              src={user.avatar ? formatAvatar(user.id) : profile}
               alt={user.username}
               className="iconSmall"
             />

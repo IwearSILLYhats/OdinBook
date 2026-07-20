@@ -130,8 +130,16 @@ main header {
 }
 #userPreview {
   width: 100%;
-  min-height: 5rem;
+  min-height: 7rem;
   overflow-y: hidden;
+}
+#userPreview img {
+  max-width: 1.5rem;
+  max-height: 1.5rem;
+  border-radius: 50%;
+  transition:
+    max-width 0.5s linear,
+    max-height 0.5s linear;
 }
 #userPreview > div {
   max-height: 1.5rem;
@@ -143,7 +151,12 @@ main header {
     max-width 0.5s linear,
     max-height 0.5s linear;
 }
-#userPreview > div:hover {
+
+#userPreview:hover > div {
   max-width: 100%;
   max-height: 100%;
+}
+#userPreview:hover img {
+  max-width: 2.5rem;
+  max-height: 2.5rem;
 }

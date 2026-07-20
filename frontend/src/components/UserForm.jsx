@@ -15,21 +15,17 @@ export default function UserForm({ user, toggle }) {
       if (bio) body.bio = bio;
       if (pfp) {
         body.avatar = true;
-        arr.push("avatars");
+        arr.push({ type: "avatars", file: pfp });
       }
       if (banner) {
         body.banner = true;
-        arr.push("banners");
+        arr.push({ type: "banners", file: banner });
       }
       if (arr.length > 0) {
         let errors = [];
         const handleImages = await Promise.all(
-          arr.map((e) => uploadRequest(e, pfp)),
+          arr.map((e) => uploadRequest(e.type, e.file)),
         );
-        handleImages.forEach((e) => {
-          if (e.error) errors.push(e.error);
-        });
-        if (error.length > 0) throw new Error(errors);
       }
       const patchProfile = await apiFetch("users", "PATCH", body);
       if (patchProfile.error) throw new Error(patchProfile.error);

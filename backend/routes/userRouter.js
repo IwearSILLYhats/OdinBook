@@ -41,6 +41,8 @@ userRouter.get("/:userid", async (req, res) => {
           id: true,
           username: true,
           avatar: true,
+          banner: true,
+          bio: true,
           _count: {
             select: {
               following: true,

@@ -7,6 +7,7 @@ import { useContext } from "react";
 import { UserContext } from "../App";
 import UserForm from "../components/UserForm";
 import "./UserDetail.css";
+import { formatAvatar, formatBanner } from "../util/imgUrlFormatter";
 
 export default function UserDetail() {
   const userid = useParams().userId;
@@ -26,6 +27,7 @@ export default function UserDetail() {
       }
     }
     fetchUserDetails();
+    console.log(user);
   }, [userid]);
   return (
     <main className="userDetail" key={userid}>
@@ -33,13 +35,16 @@ export default function UserDetail() {
       {user && (
         <div className="userProfile">
           <div className="banner">
-            <img src={user.avatar || "#"} alt="Banner" className="bannerImg" />
+            <img
+              src={user.banner ? formatBanner(user.id) : "#"}
+              alt="Banner"
+              className="bannerImg"
+            />
           </div>
           <div className="userHeader">
             <img
-              src={user?.avatar || profile}
+              src={user.avatar ? formatAvatar(user.id) : profile}
               alt={user?.username}
-              className="iconLarge"
             />
             <div>
               {userid === myProfile.profile.id ? (
