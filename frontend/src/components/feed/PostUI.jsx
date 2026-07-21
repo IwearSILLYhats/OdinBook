@@ -21,11 +21,11 @@ export default function PostUI({ post }) {
           togglePostForm();
         }}
       >
-        <img src={replies} alt="replies" className="iconSmall" />
+        <img src={replies} alt="replies" className="icon imgSmall" />
         {post._count.replies > 0 && <p>{post._count.replies}</p>}
       </button>
       <button type="button" disabled>
-        <img src={repost} alt="repost" className="iconSmall" />
+        <img src={repost} alt="repost" className="icon imgSmall" />
       </button>
       <button
         type="button"
@@ -35,14 +35,14 @@ export default function PostUI({ post }) {
           setLiked(!liked);
         }}
       >
-        <img src={like} alt="like" className="iconSmall" />
+        <img src={like} alt="like" className="icon imgSmall" />
         {post._count.likes > 0 && <p>{post._count.likes}</p>}
       </button>
       <button type="button" disabled>
-        <img src={saved} alt="saved" className="iconSmall" />
+        <img src={saved} alt="saved" className="icon imgSmall" />
       </button>
       <button type="button" disabled>
-        <img src={share} alt="share" className="iconSmall" />
+        <img src={share} alt="share" className="icon imgSmall" />
       </button>
       <button type="button" disabled>
         ...

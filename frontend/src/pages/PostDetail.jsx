@@ -35,7 +35,7 @@ export default function PostDetail() {
           togglePostForm();
         }}
       >
-        <img src={profile} alt="profilePicture" className="iconSmall" />
+        <img src={profile} alt="profilePicture" className="icon imgSmall" />
         <span>Write your reply</span>
       </div>
       <ul className="replyList">

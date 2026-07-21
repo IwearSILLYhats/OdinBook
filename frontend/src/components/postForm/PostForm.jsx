@@ -166,7 +166,7 @@ export default function PostForm() {
         </div>
         {parent && <ParentPreview parent={parent} />}
         <div className="postFormBody">
-          <img src={profileIcon} alt="" className="iconLarge" />
+          <img src={profileIcon} alt="" className="icon imgLarge" />
           <textarea
             name=""
             id=""
@@ -186,13 +186,13 @@ export default function PostForm() {
         <div className="postFormFooter">
           <div>
             <button>
-              <img src={image} alt="" className="iconSmall" />
+              <img src={image} alt="" className="icon imgSmall" />
             </button>
             <button>
-              <img src={gif} alt="" className="iconSmall" />
+              <img src={gif} alt="" className="icon imgSmall" />
             </button>
             <button>
-              <img src={emoji} alt="" className="iconSmall" />
+              <img src={emoji} alt="" className="icon imgSmall" />
             </button>
           </div>
           <div>

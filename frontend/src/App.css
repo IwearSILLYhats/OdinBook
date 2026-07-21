@@ -58,15 +58,17 @@ body,
     display: none;
   }
 }
-.iconSmall {
+.imgSmall {
   max-width: 1.5rem;
 }
-.iconLarge {
+.imgLarge {
   width: 3rem;
 }
-.iconSmall,
-.iconLarge {
+.icon {
   filter: invert(80%);
+}
+.avatar {
+  border-radius: 50%;
 }
 .signupWrapper,
 .loginWrapper {

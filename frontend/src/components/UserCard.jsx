@@ -26,7 +26,7 @@ export default function UserCard({ user }) {
             <img
               src={user.avatar ? formatAvatar(user.id) : profile}
               alt={user.username}
-              className="iconSmall"
+              className="icon imgSmall"
             />
             <p>{user.username}</p>
           </div>

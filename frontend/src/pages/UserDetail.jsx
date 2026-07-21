@@ -45,6 +45,7 @@ export default function UserDetail() {
             <img
               src={user.avatar ? formatAvatar(user.id) : profile}
               alt={user?.username}
+              className={user.avatar ? "" : "icon imgLarge"}
             />
             <div>
               {userid === myProfile.profile.id ? (

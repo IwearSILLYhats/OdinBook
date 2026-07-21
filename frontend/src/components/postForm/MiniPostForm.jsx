@@ -8,9 +8,9 @@ export default function MiniPostForm() {
   const formContext = useContext(PostFormContext);
   return (
     <div className="miniForm" onClick={() => formContext.togglePostForm()}>
-      <img src={profileIcon} alt="ProfileImg" className="iconSmall" />
+      <img src={profileIcon} alt="ProfileImg" className="icon imgSmall" />
       <span>What's up?</span>
-      <img src={imageIcon} alt="Picture Icon" className="iconSmall" />
+      <img src={imageIcon} alt="Picture Icon" className="icon imgSmall" />
     </div>
   );
 }

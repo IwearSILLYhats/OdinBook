@@ -19,13 +19,13 @@ export default function ParentPreview({ parent, variant }) {
         <div className="postCardDetail">
           {parent._count && (
             <span>
-              <img src={replies} alt="replies" className="iconSmall" />
+              <img src={replies} alt="replies" className="icon imgSmall" />
               <p>{parent._count.replies}</p>
             </span>
           )}
           {parent._count && (
             <span>
-              <img src={like} alt="like" className="iconSmall" />
+              <img src={like} alt="like" className="icon imgSmall" />
               <p>{parent._count.likes}</p>
             </span>
           )}

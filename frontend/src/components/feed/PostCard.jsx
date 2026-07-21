@@ -20,7 +20,7 @@ export default function PostCard({ post, variant }) {
           <img
             src={post.author.avatar ? formatAvatar(post.author.id) : profile}
             alt={post.author.username}
-            className="iconSmall"
+            className={post.author.avatar ? "avatar imgSmall" : "icon imgSmall"}
           />
           <p className="postAuthor">{post.author.username}</p>
           <p>{timeDiff(post.published_time)}</p>

@@ -71,6 +71,7 @@ export default function LeftNavigation() {
                 <img
                   src={profile?.avatar ? formatAvatar(profile.id) : profileIcon}
                   alt="profilePicture"
+                  className={profile.avatar ? "" : "icon"}
                 />
                 <p>{profile.username}</p>
               </div>
@@ -85,7 +86,11 @@ export default function LeftNavigation() {
             return (
               <li key={item.text}>
                 <Link to={item.link} className="flexRow gap1">
-                  <img src={item.icon} alt={item.text} className="iconSmall" />
+                  <img
+                    src={item.icon}
+                    alt={item.text}
+                    className="icon imgSmall"
+                  />
                   <h4 className="iconText">{item.text}</h4>
                 </Link>
               </li>
@@ -93,7 +98,7 @@ export default function LeftNavigation() {
           })}
         </ul>
         <button onClick={() => formContext.togglePostForm()} type="button">
-          <img src={newPost} alt="newPost" className="iconSmall" />
+          <img src={newPost} alt="newPost" className="icon imgSmall" />
           <p>New Post</p>
         </button>
       </nav>
