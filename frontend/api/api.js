@@ -29,7 +29,7 @@ async function fileUpload(url, file) {
   try {
     const content = {
       headers: {
-        "Content-Type": file.type,
+        "Content-Type": file.type || file.file.type,
       },
       method: "PUT",
     };
@@ -63,7 +63,7 @@ async function uploadRequest(type, file) {
     if (compressedImg.error) {
       throw new Error("Failed when compressing image", compressedImg.error);
     }
-    const upload = await fileUpload(urlReqData.url, file);
+    const upload = await fileUpload(urlReqData.url, compressedImg);
 
     if (upload.error) throw new Error("Upload to storage failed", upload.error);
 

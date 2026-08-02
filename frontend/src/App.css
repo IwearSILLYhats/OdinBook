@@ -86,7 +86,6 @@ main {
   min-width: 50%;
   border: var(--border-settings);
   border-width: 0 1px 0 1px;
-  padding: 0.5rem;
 }
 main header {
   border: var(--border-settings);

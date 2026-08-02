@@ -33,7 +33,11 @@ const jwtOpts = {
 };
 
 passport.use(
-  new LocalStrategy(async function verify(username, password, done) {
+  new LocalStrategy({ usernameField: "email" }, async function verify(
+    username,
+    password,
+    done,
+  ) {
     try {
       const user = await prisma.auth.findUnique({
         where: {
@@ -45,9 +49,11 @@ passport.use(
         },
       });
       if (!user) {
+        console.log("User not found");
         return done(null, false);
       }
       if (!verifyPassword(password, user.password)) {
+        console.log("Username or password is incorrect");
         return done(null, false);
       }
       return done(null, user);
@@ -115,4 +121,26 @@ passport.use(
     },
   ),
 );
-module.exports = { passport, encryptPassword, verifyPassword, signToken };
+const localAuth = passport.authenticate("local", {
+  session: false,
+  failWithError: true,
+});
+const jwtAuth = passport.authenticate("jwt", {
+  session: false,
+  failWithError: true,
+});
+const googleAuth = passport.authenticate("google");
+const googleRedirect = passport.authenticate("google", {
+  session: false,
+  failWithError: true,
+});
+module.exports = {
+  localAuth,
+  jwtAuth,
+  googleAuth,
+  googleRedirect,
+  passport,
+  encryptPassword,
+  verifyPassword,
+  signToken,
+};

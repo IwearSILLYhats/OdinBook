@@ -27,7 +27,6 @@ export default function UserDetail() {
       }
     }
     fetchUserDetails();
-    console.log(user);
   }, [userid]);
   return (
     <main className="userDetail" key={userid}>
@@ -68,7 +67,7 @@ export default function UserDetail() {
               </button>
             </div>
           </div>
-          <div>
+          <div className="userBio">
             <h3>{user?.username}</h3>
             <div className="userStats">
               <p>{user._count.followed_by} followers</p>

@@ -2,7 +2,7 @@ import Compressor from "compressorjs";
 
 async function compressImg(file, type) {
   let options = {
-    convertTypes: mimeTypes,
+    convertSize: 5000,
     mimeType: "image/webp",
     success(result) {
       return result;
@@ -18,7 +18,8 @@ async function compressImg(file, type) {
   if (type === "banner") {
     options = { ...options, ...bannerDims };
   }
-  return new Compressor(file, options);
+  const img = await new Compressor(file, options);
+  return img.result;
 }
 const bannerDims = {
   height: 500,
@@ -28,6 +29,5 @@ const avatarDims = {
   height: 400,
   width: 400,
 };
-const mimeTypes = ["image/png", "image/jpeg", "image/webp", "image/gif"];
 
 export { compressImg };

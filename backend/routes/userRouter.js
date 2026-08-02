@@ -213,9 +213,8 @@ userRouter.patch(
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     try {
-      console.log(req.body);
       const { avatar, banner, bio } = req.body;
-      if ((!avatar, !banner, !bio)) {
+      if (!avatar && !banner && !bio) {
         throw new Error("No profile changes sent in request");
       }
       let data = {};
