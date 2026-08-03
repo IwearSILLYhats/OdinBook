@@ -32,6 +32,11 @@ postRouter.get(
           id: true,
           published_time: true,
           edited: true,
+          attachments: {
+            select: {
+              url: true,
+            },
+          },
           parent: {
             select: {
               content: true,
@@ -147,7 +152,7 @@ postRouter.post(
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     try {
-      const { content, parent, published } = req.body;
+      const { attachment, content, parent, published } = req.body;
       let newPost = {
         author: {
           connect: { id: req.user.id },
@@ -155,6 +160,7 @@ postRouter.post(
       };
       if (content) newPost.content = content;
       if (parent) newPost.parent = { connect: { id: parent } };
+      if (attachment) newPost.attachments = { create: { url: attachment } };
       newPost.published = true;
       newPost.published_time = new Date();
       const createPost = await prisma.post.create({ data: newPost });
@@ -361,6 +367,11 @@ postRouter.get(
               id: true,
               avatar: true,
               username: true,
+            },
+          },
+          attachments: {
+            select: {
+              url: true,
             },
           },
         },

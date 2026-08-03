@@ -57,17 +57,18 @@ async function uploadRequest(type, file) {
       apiFetch(`upload/${type}`, "GET"),
       compressImg(file, type),
     ]);
-    if (urlReqData.error) {
+    if (urlReqData?.error) {
       throw new Error("Failed when requesting signed URL", urlReqData.error);
     }
-    if (compressedImg.error) {
+    if (compressedImg?.error) {
       throw new Error("Failed when compressing image", compressedImg.error);
     }
     const upload = await fileUpload(urlReqData.url, compressedImg);
 
-    if (upload.error) throw new Error("Upload to storage failed", upload.error);
+    if (upload?.error)
+      throw new Error("Upload to storage failed", upload.error);
 
-    return urlReqData.path;
+    return upload.Key;
   } catch (error) {
     console.log(error);
     return { error };

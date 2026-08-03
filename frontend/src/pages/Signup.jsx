@@ -21,7 +21,7 @@ export default function Signup() {
       confirm,
     };
     const request = await apiFetch("signup", "POST", body);
-    if (request.error === null) {
+    if (!request.error) {
       navigate("/auth/login");
     }
   }

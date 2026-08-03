@@ -7,7 +7,7 @@ function formatBanner(userId) {
   return `${storageUrl}/banners/${userId}.webp`;
 }
 function formatAttachment(path) {
-  return `${storageUrl}/attachments/${path}.webp`;
+  return `${storageUrl}${path}`;
 }
 
 export { formatAvatar, formatBanner, formatAttachment };

@@ -85,6 +85,11 @@ userRouter.get("/:userid", async (req, res) => {
               username: true,
             },
           },
+          attachments: {
+            select: {
+              url: true,
+            },
+          },
         },
         orderBy: {
           published_time: "desc",
@@ -122,6 +127,11 @@ userRouter.get("/:userid", async (req, res) => {
               username: true,
             },
           },
+          attachments: {
+            select: {
+              url: true,
+            },
+          },
           parent: {
             select: {
               content: true,
@@ -137,6 +147,11 @@ userRouter.get("/:userid", async (req, res) => {
                 select: {
                   likes: true,
                   replies: true,
+                },
+              },
+              attachments: {
+                select: {
+                  url: true,
                 },
               },
               author: {

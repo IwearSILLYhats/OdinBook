@@ -5,14 +5,15 @@ import image from "../../assets/image.svg";
 import gif from "../../assets/gif.svg";
 import emoji from "../../assets/emoji.svg";
 import CharacterCounter from "./CharacterCounter";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { PostFormContext } from "../../App";
-import { apiFetch } from "../../../api/api";
+import { apiFetch, uploadRequest } from "../../../api/api";
 import DraftModal from "./DraftModal";
 import BackdropModal from "../BackdropModal";
 import ParentPreview from "./ParentPreview";
 
 export default function PostForm() {
+  const fileInput = useRef(null);
   const { parent, togglePostForm, updateParent } = useContext(PostFormContext);
   const [content, setContent] = useState("");
   const [count, setCount] = useState(0);
@@ -20,6 +21,7 @@ export default function PostForm() {
   const [drafts, setDrafts] = useState([]);
   const [modal, setModal] = useState(false);
   const [changes, setChanges] = useState(false);
+  const [attachment, setAttachment] = useState(null);
   useEffect(() => {
     async function fetchDrafts() {
       const request = await apiFetch("posts/drafts", "GET");
@@ -35,6 +37,13 @@ export default function PostForm() {
     //Submits a post
     e.preventDefault();
     let post = { content };
+    let file;
+    if (attachment) {
+      file = await uploadRequest("attachments", attachment);
+      if (file?.error)
+        throw new Error("Error uploading attachment", file.error);
+      post.attachment = file;
+    }
     if (postid !== null) {
       post.id = postid;
       post.published = true;
@@ -183,15 +192,29 @@ export default function PostForm() {
             placeholder="What's up?"
           ></textarea>
         </div>
+        <span>{attachment && attachment.name}</span>
         <div className="postFormFooter">
           <div>
-            <button>
-              <img src={image} alt="" className="icon imgSmall" />
-            </button>
-            <button>
+            <label htmlFor="attachment">
+              <button type="button" onClick={() => fileInput.current.click()}>
+                <img src={image} alt="" className="icon imgSmall" />
+              </button>
+              <input
+                type="file"
+                name="attachment"
+                id="attachment"
+                onChange={(e) => {
+                  if (e.target.files && e.target.files[0])
+                    setAttachment(e.target.files[0]);
+                }}
+                style={{ display: "none" }}
+                ref={fileInput}
+              />
+            </label>
+            <button type="button" disabled>
               <img src={gif} alt="" className="icon imgSmall" />
             </button>
-            <button>
+            <button type="button" disabled>
               <img src={emoji} alt="" className="icon imgSmall" />
             </button>
           </div>

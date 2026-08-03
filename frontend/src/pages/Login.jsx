@@ -3,7 +3,7 @@ import { useNavigate, NavLink } from "react-router";
 import { apiFetch } from "../../api/api";
 
 export default function Login() {
-  const [username, setUsername] = useState(null);
+  const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [validation, SetValidation] = useState(null);
   const [submitted, setSubmitted] = useState(false);
@@ -11,12 +11,13 @@ export default function Login() {
 
   async function loginSubmit(event) {
     event.preventDefault();
-    // setSubmitted(true);
-    const body = { username, password };
+    //setSubmitted(true);
+    const body = { email, password };
     const request = await apiFetch("login/local", "POST", body);
     if (request.error === null) {
       navigate("/app");
     }
+    //setSubmitted(false);
     console.log(request);
   }
   async function googleLogin() {
@@ -33,14 +34,14 @@ export default function Login() {
   return (
     <div className="loginWrapper">
       <form action="" method="post" onSubmit={(e) => loginSubmit(e)}>
-        <label htmlFor="username">Username</label>
+        <label htmlFor="email">Email</label>
         <input
           type="text"
-          name="username"
-          id="username"
-          placeholder="username"
+          name="email"
+          id="email"
+          placeholder="Steve@example.com"
           required
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
         />
         <label htmlFor="password">Password</label>
         <input

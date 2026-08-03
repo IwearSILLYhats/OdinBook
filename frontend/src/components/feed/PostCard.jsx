@@ -4,7 +4,7 @@ import PostUI from "./PostUI";
 import { Link } from "react-router";
 import "./PostCard.css";
 import ParentPreview from "../postForm/ParentPreview";
-import { formatAvatar } from "../../util/imgUrlFormatter";
+import { formatAvatar, formatAttachment } from "../../util/imgUrlFormatter";
 
 export default function PostCard({ post, variant }) {
   function handleClick() {
@@ -30,7 +30,11 @@ export default function PostCard({ post, variant }) {
         <>
           <div className="postBody">
             <p>{post.content}</p>
-            {post.has_image && <p>Attached Image</p>}
+            {post.attachments.map((e) => {
+              return (
+                <img src={formatAttachment(e.url)} alt={e.url} key={e.url} />
+              );
+            })}
           </div>
           {variant === "detail" && (
             <div className="postCardDetail">
@@ -65,7 +69,18 @@ export default function PostCard({ post, variant }) {
         <Link to={`/app/posts/${post.id}`} className="postLink">
           <div className="postBody">
             <p>{post.content}</p>
-            {post.has_image && <p>Attached Image</p>}
+            {post.attachments.map((e) => {
+              console.log(post);
+              console.log(formatAttachment(e.url));
+              return (
+                <img
+                  src={formatAttachment(e.url)}
+                  alt={e.url}
+                  key={e.url}
+                  className="postImg"
+                />
+              );
+            })}
           </div>
           {variant === "detail" && (
             <div className="postCardDetail">

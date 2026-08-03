@@ -4,13 +4,6 @@ async function compressImg(file, type) {
   let options = {
     convertSize: 5000,
     mimeType: "image/webp",
-    success(result) {
-      return result;
-    },
-    error(error) {
-      console.log(error);
-      return { error };
-    },
   };
   if (type === "avatar") {
     options = { ...options, ...avatarDims };
@@ -18,8 +11,18 @@ async function compressImg(file, type) {
   if (type === "banner") {
     options = { ...options, ...bannerDims };
   }
-  const img = await new Compressor(file, options);
-  return img.result;
+  return new Promise((resolve, reject) => {
+    new Compressor(file, {
+      ...options,
+      success(result) {
+        resolve(result);
+      },
+      error(error) {
+        console.log(error);
+        reject(error);
+      },
+    });
+  });
 }
 const bannerDims = {
   height: 500,

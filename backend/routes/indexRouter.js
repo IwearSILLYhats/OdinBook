@@ -157,6 +157,7 @@ indexRouter.get("/dashboard", jwtAuth, async (req, res) => {
 indexRouter.get("/upload/:type", jwtAuth, async (req, res) => {
   try {
     const type = req.params.type;
+
     if (type === "avatars") {
       const { data, error } = await supabase.storage
         .from("avatars")
@@ -179,7 +180,7 @@ indexRouter.get("/upload/:type", jwtAuth, async (req, res) => {
         .from("attachments")
         .createSignedUploadUrl(filename);
       if (error) throw new Error("Issue fetching signedUploadUrl", error);
-      return res.json({ url: data.signedUrl });
+      return res.json({ url: data.signedUrl, filename: filename });
     } else {
       throw new Error("Incorrect/No upload type provided");
     }
