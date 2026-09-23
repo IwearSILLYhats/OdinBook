@@ -161,3 +161,13 @@ main header {
   max-width: 2.5rem;
   max-height: 2.5rem;
 }
+@media (max-width: 600px) {
+  #rightNavigation {
+    display: none;
+  }
+  #leftNavigation {
+    button p {
+      display: none;
+    }
+  }
+}

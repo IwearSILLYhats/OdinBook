@@ -7,6 +7,7 @@ import profileIcon from "../assets/profile.svg";
 import settings from "../assets/settings.svg";
 import newPost from "../assets/newPost.svg";
 import search from "../assets/search.svg";
+import upArrow from "../assets/upArrow.svg";
 import { apiFetch } from "../../api/api";
 import { useContext } from "react";
 import { UserContext } from "../App";
@@ -63,6 +64,7 @@ export default function LeftNavigation() {
 
   return (
     <div id="leftNavigation">
+      
       <nav>
         <div id="userPreview">
           <div>
@@ -102,7 +104,10 @@ export default function LeftNavigation() {
           <p>New Post</p>
         </button>
       </nav>
-      <button>To top</button>
+      <button>
+        <img src={upArrow} alt="toTop" className="icon imgSmall" />
+        <p>To top</p>
+      </button>
     </div>
   );
 }

@@ -70,8 +70,6 @@ export default function PostCard({ post, variant }) {
           <div className="postBody">
             <p>{post.content}</p>
             {post.attachments.map((e) => {
-              console.log(post);
-              console.log(formatAttachment(e.url));
               return (
                 <img
                   src={formatAttachment(e.url)}
