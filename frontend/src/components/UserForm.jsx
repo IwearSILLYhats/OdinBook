@@ -1,9 +1,9 @@
 import { useState, useContext } from "react";
 import { apiFetch, uploadRequest } from "../../api/api";
-import { UserContext } from "../App";
+import { UserContext } from "../contexts/UserContext.js";
 
-export default function UserForm({ user, toggle }) {
-  const { profile, updateProfile } = useContext(UserContext);
+export default function UserForm({ toggle }) {
+  const { updateProfile } = useContext(UserContext);
   const [bio, setBio] = useState("");
   const [pfp, setPfp] = useState(null);
   const [banner, setBanner] = useState(null);

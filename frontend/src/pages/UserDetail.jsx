@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { apiFetch } from "../../api/api";
 import profile from "../assets/profile.svg";
 import { useContext } from "react";
-import { UserContext } from "../App";
+import { UserContext } from "../contexts/UserContext.js";
 import UserForm from "../components/UserForm";
 import "./UserDetail.css";
 import { formatAvatar, formatBanner } from "../util/imgUrlFormatter";

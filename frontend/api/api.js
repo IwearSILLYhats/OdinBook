@@ -22,7 +22,7 @@ async function apiFetch(endpoint, method, body, multipart) {
     return response;
   } catch (error) {
     console.log(error);
-    return;
+    return { error };
   }
 }
 async function fileUpload(url, file) {
@@ -47,7 +47,7 @@ async function fileUpload(url, file) {
     return response;
   } catch (error) {
     console.log(error);
-    return;
+    return { error };
   }
 }
 

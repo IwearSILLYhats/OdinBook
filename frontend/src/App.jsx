@@ -5,8 +5,8 @@ import RightNavigation from "./components/RightNavigation";
 import { apiFetch } from "../api/api";
 import { Outlet } from "react-router";
 import PostForm from "./components/postForm/PostForm.jsx";
+import { UserContext } from "./contexts/UserContext.js";
 
-export const UserContext = createContext(null);
 export const PostFormContext = createContext(null);
 
 export default function App() {
@@ -24,14 +24,7 @@ export default function App() {
   }, []);
   return (
     <div id="app">
-      <UserContext
-        value={{
-          profile,
-          updateProfile: function (e) {
-            setProfile(e);
-          },
-        }}
-      >
+      <UserContextProvider>
         <PostFormContext
           value={{
             parent,
@@ -54,7 +47,7 @@ export default function App() {
             </>
           )}
         </PostFormContext>
-      </UserContext>
+      </UserContextProvider>
     </div>
   );
 }

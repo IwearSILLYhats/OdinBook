@@ -10,7 +10,7 @@ import search from "../assets/search.svg";
 import upArrow from "../assets/upArrow.svg";
 import { apiFetch } from "../../api/api";
 import { useContext } from "react";
-import { UserContext } from "../App";
+import { UserContext } from "../contexts/UserContext.js";
 import { formatAvatar } from "../util/imgUrlFormatter";
 
 import { PostFormContext } from "../App";
