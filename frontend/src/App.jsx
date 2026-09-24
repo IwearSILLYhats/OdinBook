@@ -1,18 +1,16 @@
-import { createContext, useEffect, useState } from "react";
+import { useEffect } from "react";
 import "./App.css";
 import LeftNavigation from "./components/LeftNavigation";
 import RightNavigation from "./components/RightNavigation";
 import { apiFetch } from "../api/api";
 import { Outlet } from "react-router";
 import PostForm from "./components/postForm/PostForm.jsx";
-import { UserContext } from "./contexts/UserContext.js";
-
-export const PostFormContext = createContext(null);
+import { useUserContext  } from "./contexts/UserContext.js";
+import { usePostFormContext } from "./contexts/PostFormContext.js";
 
 export default function App() {
-  const [profile, setProfile] = useState(null);
-  const [postForm, setPostForm] = useState(false);
-  const [parent, setParent] = useState(null);
+  const {profile, setProfile} = useUserContext();
+  const {postForm} = usePostFormContext();
   useEffect(() => {
     async function fetchDashboard() {
       const request = await apiFetch("dashboard", "GET");
@@ -21,22 +19,9 @@ export default function App() {
       }
     }
     fetchDashboard();
-  }, []);
+  }, [setProfile]);
   return (
     <div id="app">
-      <UserContextProvider>
-        <PostFormContext
-          value={{
-            parent,
-            postForm,
-            updateParent: function (e) {
-              setParent(e);
-            },
-            togglePostForm: function () {
-              setPostForm(!postForm);
-            },
-          }}
-        >
           {!profile && <p>Loading...</p>}
           {profile && (
             <>
@@ -46,8 +31,6 @@ export default function App() {
               {postForm && <PostForm />}
             </>
           )}
-        </PostFormContext>
-      </UserContextProvider>
     </div>
   );
 }

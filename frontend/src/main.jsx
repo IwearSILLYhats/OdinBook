@@ -13,6 +13,8 @@ import PostDetail from "./pages/PostDetail.jsx";
 import UserDetail from "./pages/UserDetail.jsx";
 import { Navigate } from "react-router";
 import Explore from "./pages/Explore.jsx";
+import { UserContextProvider } from "./contexts/UserProvider.jsx";
+import { PostFormContextProvider } from "./contexts/PostFormProvider.jsx";
 
 const router = createBrowserRouter([
   {
@@ -69,6 +71,10 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <UserContextProvider>
+    <PostFormContextProvider>
+      <RouterProvider router={router} />
+    </PostFormContextProvider>
+    </UserContextProvider>
   </StrictMode>,
 );

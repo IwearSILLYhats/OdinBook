@@ -4,7 +4,7 @@ import { Link } from "react-router";
 import "./Explore.css";
 import UserCard from "../components/UserCard";
 
-export default function () {
+export default function Explore () {
   const [users, setUsers] = useState(null);
   useEffect(() => {
     async function fetchUsers() {

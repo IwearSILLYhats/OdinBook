@@ -1,23 +1,21 @@
-import profile from "../../assets/profile.svg";
-import timeDiff from "../../util/timeDiff";
 import replies from "../../assets/reply.svg";
 import repost from "../../assets/repost.svg";
 import like from "../../assets/heart.svg";
 import saved from "../../assets/saved.svg";
 import share from "../../assets/share.svg";
-import { useContext, useEffect, useState } from "react";
-import { PostFormContext } from "../../App";
+import { useState } from "react";
+import { usePostFormContext } from "../../contexts/PostFormContext.js";
 import { apiFetch } from "../../../api/api";
 
 export default function PostUI({ post }) {
   const [liked, setLiked] = useState(post.likes.length > 0 ? true : false);
-  const { togglePostForm, updateParent } = useContext(PostFormContext);
+  const { togglePostForm, setParent } = usePostFormContext();
   return (
     <div className="postUI">
       <button
         type="button"
         onClick={() => {
-          updateParent(post);
+          setParent(post);
           togglePostForm();
         }}
       >

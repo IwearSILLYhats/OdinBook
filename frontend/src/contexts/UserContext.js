@@ -1,20 +1,8 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext } from "react";
 
-const UserContext = createContext(null);
+export const UserContext = createContext(null);
 
-export function UserContextProvider ({ children }) {
-    const [profile, setProfile] = useState(null);
 
-    const updateProfile = (newProfile) => {
-        setProfile(newProfile);
-    };
-
-    return (
-        <UserContext.Provider value={{ profile, updateProfile }}>
-            {children}
-        </UserContext.Provider>
-    );
-}
 
 export function useUserContext() {
     const context = useContext(UserContext);

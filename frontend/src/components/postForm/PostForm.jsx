@@ -5,8 +5,8 @@ import image from "../../assets/image.svg";
 import gif from "../../assets/gif.svg";
 import emoji from "../../assets/emoji.svg";
 import CharacterCounter from "./CharacterCounter";
-import { useContext, useEffect, useRef } from "react";
-import { PostFormContext } from "../../App";
+import { useEffect, useRef } from "react";
+import { usePostFormContext } from "../../contexts/PostFormContext.js";
 import { apiFetch, uploadRequest } from "../../../api/api";
 import DraftModal from "./DraftModal";
 import BackdropModal from "../BackdropModal";
@@ -14,7 +14,7 @@ import ParentPreview from "./ParentPreview";
 
 export default function PostForm() {
   const fileInput = useRef(null);
-  const { parent, togglePostForm, updateParent } = useContext(PostFormContext);
+  const { parent, togglePostForm, setParent } = usePostFormContext();
   const [content, setContent] = useState("");
   const [count, setCount] = useState(0);
   const [postid, setPostid] = useState(null);
@@ -30,7 +30,7 @@ export default function PostForm() {
     if (!parent) fetchDrafts();
   }, []);
   function cancelForm() {
-    updateParent(null);
+    setParent(null);
     togglePostForm();
   }
   async function submitForm(e) {
@@ -52,7 +52,7 @@ export default function PostForm() {
       if (parent) post.parent = parent.id;
       const request = await apiFetch("posts", "POST", post);
     }
-    updateParent(null);
+    setParent(null);
     togglePostForm();
   }
   function populateDraft(id, text) {

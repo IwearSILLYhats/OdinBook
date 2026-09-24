@@ -1,11 +1,10 @@
 import profileIcon from "../../assets/profile.svg";
 import imageIcon from "../../assets/image.svg";
 import "./MiniPostForm.css";
-import { PostFormContext } from "../../App";
-import { useContext } from "react";
+import { usePostFormContext } from "../../contexts/PostFormContext.js";
 
 export default function MiniPostForm() {
-  const formContext = useContext(PostFormContext);
+  const formContext = usePostFormContext();
   return (
     <div className="miniForm" onClick={() => formContext.togglePostForm()}>
       <img src={profileIcon} alt="ProfileImg" className="icon imgSmall" />

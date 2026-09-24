@@ -1,9 +1,9 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { apiFetch, uploadRequest } from "../../api/api";
-import { UserContext } from "../contexts/UserContext.js";
+import { useUserContext } from "../contexts/UserContext.js";
 
 export default function UserForm({ toggle }) {
-  const { updateProfile } = useContext(UserContext);
+  const { setProfile } = useUserContext();
   const [bio, setBio] = useState("");
   const [pfp, setPfp] = useState(null);
   const [banner, setBanner] = useState(null);
@@ -29,7 +29,7 @@ export default function UserForm({ toggle }) {
       }
       const patchProfile = await apiFetch("users", "PATCH", body);
       if (patchProfile.error) throw new Error(patchProfile.error);
-      updateProfile(patchProfile.success);
+      setProfile(patchProfile.success);
     } catch (error) {
       console.log(error);
       return;

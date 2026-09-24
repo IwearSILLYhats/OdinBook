@@ -4,11 +4,10 @@ import { useState, useEffect } from "react";
 import { apiFetch } from "../../api/api";
 import profile from "../assets/profile.svg";
 import "./PostDetail.css";
-import { useContext } from "react";
-import { PostFormContext } from "../App";
+import { usePostFormContext } from "../contexts/PostFormContext.js";
 
 export default function PostDetail() {
-  const { togglePostForm, updateParent } = useContext(PostFormContext);
+  const { togglePostForm, setParent } = usePostFormContext();
   const postid = useParams().postId;
   const [post, setPost] = useState(null);
   useEffect(() => {
@@ -31,7 +30,7 @@ export default function PostDetail() {
       <div
         className="replyMiniForm"
         onClick={() => {
-          updateParent(post);
+          setParent(post);
           togglePostForm();
         }}
       >

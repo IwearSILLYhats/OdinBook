@@ -9,15 +9,14 @@ import newPost from "../assets/newPost.svg";
 import search from "../assets/search.svg";
 import upArrow from "../assets/upArrow.svg";
 import { apiFetch } from "../../api/api";
-import { useContext } from "react";
-import { UserContext } from "../contexts/UserContext.js";
+import { useUserContext } from "../contexts/UserContext.js";
+import { usePostFormContext } from "../contexts/PostFormContext.js";
 import { formatAvatar } from "../util/imgUrlFormatter";
 
-import { PostFormContext } from "../App";
 
 export default function LeftNavigation() {
-  const formContext = useContext(PostFormContext);
-  const { profile } = useContext(UserContext);
+  const formContext = usePostFormContext();
+  const { profile } = useUserContext();
   const navigate = useNavigate();
   const navigationItems = [
     {

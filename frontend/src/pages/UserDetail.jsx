@@ -3,15 +3,14 @@ import PostCard from "../components/feed/PostCard";
 import { useState, useEffect } from "react";
 import { apiFetch } from "../../api/api";
 import profile from "../assets/profile.svg";
-import { useContext } from "react";
-import { UserContext } from "../contexts/UserContext.js";
+import { useUserContext } from "../contexts/UserContext.js";
 import UserForm from "../components/UserForm";
 import "./UserDetail.css";
 import { formatAvatar, formatBanner } from "../util/imgUrlFormatter";
 
 export default function UserDetail() {
   const userid = useParams().userId;
-  const myProfile = useContext(UserContext);
+  const myProfile = useUserContext();
   const [user, setUser] = useState(null);
   const [posts, setPosts] = useState(null);
   const [replies, setReplies] = useState(null);
