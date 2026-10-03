@@ -22,8 +22,7 @@ export default function UserForm({ toggle }) {
         arr.push({ type: "banners", file: banner });
       }
       if (arr.length > 0) {
-        let errors = [];
-        const handleImages = await Promise.all(
+        await Promise.all(
           arr.map((e) => uploadRequest(e.type, e.file)),
         );
       }

@@ -8,7 +8,6 @@ export default function Signup() {
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
   const [confirm, setConfirm] = useState(null);
-  const [validation, SetValidation] = useState(null);
   const navigate = useNavigate();
 
   async function signupSubmit(event) {

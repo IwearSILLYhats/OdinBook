@@ -28,7 +28,7 @@ export default function PostForm() {
       if (request.drafts.length > 0) setDrafts(request.drafts);
     }
     if (!parent) fetchDrafts();
-  }, []);
+  }, [parent]);
   function cancelForm() {
     setParent(null);
     togglePostForm();
@@ -47,10 +47,10 @@ export default function PostForm() {
     if (postid !== null) {
       post.id = postid;
       post.published = true;
-      const request = await apiFetch("posts/drafts", "PATCH", post);
+      await apiFetch("posts/drafts", "PATCH", post);
     } else {
       if (parent) post.parent = parent.id;
-      const request = await apiFetch("posts", "POST", post);
+      await apiFetch("posts", "POST", post);
     }
     setParent(null);
     togglePostForm();
@@ -138,7 +138,7 @@ export default function PostForm() {
       <form action="" method="post" className="postForm">
         <div className="postFormHeader">
           <button
-            onClick={(e) => {
+            onClick={() => {
               if (changes && content.length > 0) {
                 setModal("confirmCancel");
               } else {

@@ -5,19 +5,18 @@ import { apiFetch } from "../../api/api";
 export default function Login() {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
-  const [validation, SetValidation] = useState(null);
   const [submitted, setSubmitted] = useState(false);
   const navigate = useNavigate();
 
   async function loginSubmit(event) {
     event.preventDefault();
-    //setSubmitted(true);
+    setSubmitted(true);
     const body = { email, password };
     const request = await apiFetch("login/local", "POST", body);
     if (request.error === null) {
       navigate("/app");
     }
-    //setSubmitted(false);
+    setSubmitted(false);
     console.log(request);
   }
   async function googleLogin() {

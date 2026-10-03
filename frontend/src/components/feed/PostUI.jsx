@@ -29,7 +29,7 @@ export default function PostUI({ post }) {
         type="button"
         className={liked ? "liked" : ""}
         onClick={async () => {
-          const request = await apiFetch(`posts/like/${post.id}`, "PATCH");
+          await apiFetch(`posts/like/${post.id}`, "PATCH");
           setLiked(!liked);
         }}
       >

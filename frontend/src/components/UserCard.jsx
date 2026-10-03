@@ -11,13 +11,13 @@ export default function UserCard({ user }) {
   useEffect(() => {
     async function requestFollow() {
       //Only requests if change has been made to 'following' and debounces if final value after debounce timer is different than original.
-      if (following !== null) {
-        const request = await apiFetch(`users/follow/${user.id}`, "POST");
-        console.log(following, debouncedStatus);
+      if (debouncedStatus !== null) {
+        await apiFetch(`users/follow/${user.id}`, "POST");
+  
       }
     }
     requestFollow();
-  }, [debouncedStatus]);
+  }, [debouncedStatus, user.id]);
   return (
     <li className="userCard">
       <div className="userHeader">
@@ -36,7 +36,6 @@ export default function UserCard({ user }) {
           className={following ? "following" : ""}
           onClick={() => {
             setFollowing(following ? false : true);
-            console.log(debouncedStatus);
           }}
         >
           {following ? "Following" : "Follow"}
