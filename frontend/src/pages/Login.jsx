@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, NavLink } from "react-router";
 import { apiFetch } from "../../api/api";
+const url = import.meta.env.VITE_API_URL;
 
 export default function Login() {
   const [email, setEmail] = useState(null);
@@ -20,7 +21,7 @@ export default function Login() {
     console.log(request);
   }
   async function googleLogin() {
-    window.location.href = "http://localhost:3000/login/google";
+    window.location.href = `${url}/login/google`;
   }
 
   async function guestLogin() {

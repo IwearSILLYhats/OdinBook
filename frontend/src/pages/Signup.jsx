@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, NavLink } from "react-router";
 import { apiFetch } from "../../api/api";
+const url = import.meta.env.VITE_API_URL;
 
 export default function Signup() {
   const [submitted, setSubmitted] = useState(false);
@@ -25,7 +26,7 @@ export default function Signup() {
     }
   }
   async function googleSignup() {
-    window.location.href = "http://localhost:3000/login/google";
+    window.location.href = `${url}/login/google`;
   }
   async function guestLogin() {
     const request = await apiFetch("login/guest", "GET", null);
