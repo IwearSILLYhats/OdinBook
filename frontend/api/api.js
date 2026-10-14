@@ -3,6 +3,7 @@ import { compressImg } from "../src/util/compressImg";
 
 async function apiFetch(endpoint, method, body, multipart) {
   try {
+    console.log("API URL:", url);
     const reqUrl = `${url}/${endpoint}`;
     const content = {
       headers: {
