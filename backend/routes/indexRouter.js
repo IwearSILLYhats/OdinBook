@@ -71,6 +71,7 @@ indexRouter.get("/oauth2/redirect/google", googleRedirect, async (req, res) => {
     res.cookie("session_time", "", {
       maxAge: 1000 * 60 * 60,
       sameSite: "none",
+      secure: true,
     });
     return res.redirect(process.env.FRONTEND + "/app");
   } catch (error) {
@@ -99,6 +100,7 @@ indexRouter.get("/login/guest", async (req, res) => {
     res.cookie("session_time", "", {
       maxAge: 1000 * 60 * 60,
       sameSite: "none",
+      secure: true,
     });
     return res
       .status(200)
@@ -121,6 +123,7 @@ indexRouter.post("/login/local", localAuth, async (req, res) => {
     res.cookie("session_time", "", {
       maxAge: 1000 * 60 * 60,
       sameSite: "none",
+      secure: true,
     });
     return res.status(200).json({ message: "Logging in user", error: null });
   } catch (error) {
@@ -139,6 +142,7 @@ indexRouter.get("/logout", (req, res) => {
     res.cookie("session_time", "", {
       maxAge: 0,
       sameSite: "none",
+      secure: true,
     });
     return res.status(200).json({ message: "Logging out user" });
   } catch (error) {
