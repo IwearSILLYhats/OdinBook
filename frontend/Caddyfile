@@ -1,5 +1,11 @@
-:{$PORT} {
-    root * dist
-    file_server
+{
+    admin off
+    auto_https off
+}
+
+:{$PORT:8080} {
+    root * /srv
+    encode gzip
     try_files {path} /index.html
+    file_server
 }
