@@ -8,7 +8,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "start": "caddy run --config Caddyfile"
+    "start": "npm run build && caddy run --config Caddyfile"
   },
   "dependencies": {
     "compressorjs": "^1.3.0",

@@ -1,0 +1,11 @@
+{
+    "providers": [],
+    "phases": {
+        "setup": {
+            "nixPkgs": ["caddy"]
+        }
+    },
+    "start": {
+        "command": "caddy run --config Caddyfile"
+    }
+}
