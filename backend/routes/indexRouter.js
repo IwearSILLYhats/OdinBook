@@ -65,12 +65,12 @@ indexRouter.get("/oauth2/redirect/google", googleRedirect, async (req, res) => {
     res.cookie("secure_session", secure_cookie, {
       maxAge: 1000 * 60 * 60,
       httpOnly: true,
-      sameSite: "strict",
+      sameSite: "none",
       secure: true,
     });
     res.cookie("session_time", "", {
       maxAge: 1000 * 60 * 60,
-      sameSite: "strict",
+      sameSite: "none",
     });
     return res.redirect(process.env.FRONTEND + "/app");
   } catch (error) {
@@ -93,12 +93,12 @@ indexRouter.get("/login/guest", async (req, res) => {
     res.cookie("secure_session", secure_cookie, {
       maxAge: 1000 * 60 * 60,
       httpOnly: true,
-      sameSite: "strict",
+      sameSite: "none",
       secure: true,
     });
     res.cookie("session_time", "", {
       maxAge: 1000 * 60 * 60,
-      sameSite: "strict",
+      sameSite: "none",
     });
     return res
       .status(200)
@@ -115,12 +115,12 @@ indexRouter.post("/login/local", localAuth, async (req, res) => {
     res.cookie("secure_session", secure_cookie, {
       maxAge: 1000 * 60 * 60,
       httpOnly: true,
-      sameSite: "strict",
+      sameSite: "none",
       secure: true,
     });
     res.cookie("session_time", "", {
       maxAge: 1000 * 60 * 60,
-      sameSite: "strict",
+      sameSite: "none",
     });
     return res.status(200).json({ message: "Logging in user", error: null });
   } catch (error) {
@@ -133,12 +133,12 @@ indexRouter.get("/logout", (req, res) => {
     res.cookie("secure_session", "", {
       maxAge: 0,
       httpOnly: true,
-      sameSite: "strict",
+      sameSite: "none",
       secure: true,
     });
     res.cookie("session_time", "", {
       maxAge: 0,
-      sameSite: "strict",
+      sameSite: "none",
     });
     return res.status(200).json({ message: "Logging out user" });
   } catch (error) {
