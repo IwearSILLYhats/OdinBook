@@ -24,8 +24,7 @@ app.use(express.json());
 app.use("/", indexRouter);
 
 app.use((err, req, res, next) => {
-  console.log(err);
-  return res.status(500).json({ message: "Something broke!" });
+  return res.status(500).json({ message: err });
 });
 app.listen(process.env.PORT, () => {
   console.log(`Listening on PORT ${process.env.PORT}`);

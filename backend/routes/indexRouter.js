@@ -193,4 +193,12 @@ indexRouter.get("/upload/:type", jwtAuth, async (req, res) => {
     return res.json({ error });
   }
 });
+indexRouter.get("/auth/session" , jwtAuth, async (req, res) => {
+  try {
+    return res.status(200).json({ message: "Session is valid", error: null });
+  } catch (error) {
+    console.log(error);
+    return res.json({ error: error });
+  }
+});
 module.exports = indexRouter;

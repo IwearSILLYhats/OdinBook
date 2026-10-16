@@ -24,7 +24,9 @@ async function verifyPassword(password, hashedPassword) {
 }
 async function signToken(payload) {
   const secret = process.env.SECRET;
-  const token = await jwt.sign(payload, secret);
+  const token = await jwt.sign(payload, secret, {
+    expiresIn: "1h",
+  });
   return token;
 }
 const jwtOpts = {
