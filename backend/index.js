@@ -24,7 +24,7 @@ app.use(express.json());
 app.use("/", indexRouter);
 
 app.use((err, req, res, next) => {
-  return res.status(500).json({ message: err });
+  return res.status(err.status || 500).json({ error: err.message || "Internal Server Error" });
 });
 app.listen(process.env.PORT, () => {
   console.log(`Listening on PORT ${process.env.PORT}`);
