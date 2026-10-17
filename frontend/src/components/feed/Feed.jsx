@@ -4,8 +4,7 @@ import PostCard from "./PostCard";
 import "./Feed.css";
 import { useState, useEffect } from "react";
 import { apiFetch } from "../../../api/api";
-import { useAuthContext } from "../contexts/AuthContext.js";
-
+import { useAuthContext } from "../../contexts/AuthContext.js";
 export default function Feed() {
   const { authenticate } = useAuthContext();
   const [content, setContent] = useState(null);
