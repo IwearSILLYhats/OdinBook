@@ -15,6 +15,7 @@ import { Navigate } from "react-router";
 import Explore from "./pages/Explore.jsx";
 import { UserContextProvider } from "./contexts/UserProvider.jsx";
 import { PostFormContextProvider } from "./contexts/PostFormProvider.jsx";
+import {AuthProvider} from "./contexts/AuthProvider.jsx";
 
 const router = createBrowserRouter([
   {
@@ -71,10 +72,12 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
+    <AuthProvider>
     <UserContextProvider>
     <PostFormContextProvider>
       <RouterProvider router={router} />
     </PostFormContextProvider>
     </UserContextProvider>
+    </AuthProvider>
   </StrictMode>,
 );

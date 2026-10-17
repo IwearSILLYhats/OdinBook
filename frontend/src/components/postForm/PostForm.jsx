@@ -11,8 +11,10 @@ import { apiFetch, uploadRequest } from "../../../api/api";
 import DraftModal from "./DraftModal";
 import BackdropModal from "../BackdropModal";
 import ParentPreview from "./ParentPreview";
+import { useAuthContext } from "../../contexts/AuthContext.js";
 
 export default function PostForm() {
+  const { authenticate } = useAuthContext();
   const fileInput = useRef(null);
   const { parent, togglePostForm, setParent } = usePostFormContext();
   const [content, setContent] = useState("");
@@ -25,10 +27,11 @@ export default function PostForm() {
   useEffect(() => {
     async function fetchDrafts() {
       const request = await apiFetch("posts/drafts", "GET");
+      authenticate(request.status);
       if (request.drafts.length > 0) setDrafts(request.drafts);
     }
     if (!parent) fetchDrafts();
-  }, [parent]);
+  }, [parent, authenticate]);
   function cancelForm() {
     setParent(null);
     togglePostForm();
@@ -47,10 +50,12 @@ export default function PostForm() {
     if (postid !== null) {
       post.id = postid;
       post.published = true;
-      await apiFetch("posts/drafts", "PATCH", post);
+      const request = await apiFetch("posts/drafts", "PATCH", post);
+      authenticate(request.status);
     } else {
       if (parent) post.parent = parent.id;
-      await apiFetch("posts", "POST", post);
+      const request = await apiFetch("posts", "POST", post);
+      authenticate(request.status);
     }
     setParent(null);
     togglePostForm();
@@ -69,6 +74,7 @@ export default function PostForm() {
         if (postid) {
           const draft = { id: postid, content: content };
           const request = await apiFetch("posts/drafts", "PATCH", draft);
+          authenticate(request.status);
           if (!request.error) {
             setDrafts([
               request.draft,
@@ -81,6 +87,7 @@ export default function PostForm() {
           const request = await apiFetch("posts/drafts", "POST", {
             content: content,
           });
+          authenticate(request.status);
           if (request.error === null) {
             setDrafts([request.draft, ...drafts]);
             setChanges(false);

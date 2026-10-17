@@ -5,6 +5,7 @@ import { apiFetch } from "../../api/api";
 import profile from "../assets/profile.svg";
 import "./PostDetail.css";
 import { usePostFormContext } from "../contexts/PostFormContext.js";
+import { useAuthContext } from "../contexts/AuthContext.js";
 
 export default function PostDetail() {
   const { togglePostForm, setParent } = usePostFormContext();
@@ -13,6 +14,7 @@ export default function PostDetail() {
   useEffect(() => {
     async function fetchPostDetails() {
       const request = await apiFetch(`posts/${postid}`, "GET");
+      authenticate(request.status);
       if (request && !request.error) {
         setPost(request.post);
       }

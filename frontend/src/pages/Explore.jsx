@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 import { apiFetch } from "../../api/api";
-import { Link } from "react-router";
 import "./Explore.css";
 import UserCard from "../components/UserCard";
+import { useAuthContext } from "../contexts/AuthContext.js";
 
 export default function Explore () {
+  const { authenticate } = useAuthContext();
   const [users, setUsers] = useState(null);
   useEffect(() => {
     async function fetchUsers() {
       const request = await apiFetch("users/explore");
+      authenticate(request.status);
       if (request.users.length > 0) setUsers(request.users);
     }
     fetchUsers();

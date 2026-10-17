@@ -107,7 +107,7 @@ indexRouter.get("/login/guest", async (req, res) => {
       .json({ message: "Logging in as guest", error: null });
   } catch (error) {
     console.log(error);
-    return res.json({ error: error });
+    return res.status(error.status || 500).json({ error: error.message || "Internal Server Error" });
   }
 });
 
@@ -128,7 +128,7 @@ indexRouter.post("/login/local", localAuth, async (req, res) => {
     return res.status(200).json({ message: "Logging in user", error: null });
   } catch (error) {
     console.log(error);
-    return res.json({ error: error });
+    return res.status(error.status || 500).json({ error: error.message || "Internal Server Error" });
   }
 });
 indexRouter.get("/logout", (req, res) => {
@@ -147,7 +147,7 @@ indexRouter.get("/logout", (req, res) => {
     return res.status(200).json({ message: "Logging out user" });
   } catch (error) {
     console.log(error);
-    return res.json({ error: error });
+    return res.status(error.status || 500).json({ error: error.message || "Internal Server Error" });
   }
 });
 indexRouter.get("/dashboard", jwtAuth, async (req, res) => {
@@ -190,15 +190,18 @@ indexRouter.get("/upload/:type", jwtAuth, async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    return res.json({ error });
+    return res.status(error.status || 500).json({ error: error.message || "Internal Server Error" });
   }
 });
 indexRouter.get("/auth/session" , jwtAuth, async (req, res) => {
   try {
+    if(!req.user) {
+      return res.status(401).json({ error: "Session is invalid" });
+    }
     return res.status(200).json({ message: "Session is valid", error: null });
   } catch (error) {
     console.log(error);
-    return res.json({ error: error });
+    return res.status(error.status || 500).json({ error: error.message || "Internal Server Error" });
   }
 });
 module.exports = indexRouter;

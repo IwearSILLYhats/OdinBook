@@ -1,7 +1,15 @@
 import { Navigate, Outlet } from "react-router";
+import { useAuthContext } from "../contexts/AuthContext";
 
 export default function LoggedIn() {
-  const isLoggedIn = document.cookie !== "";
+  const { auth } = useAuthContext();
 
-  return isLoggedIn ? <Outlet /> : <Navigate to={"/auth/login"} replace />;
+  return (
+    <>
+    {auth === "loading" && <p>Loading...</p>}
+    {auth && <Outlet />}
+    {!auth && <Navigate to={"/auth/login"} replace />}
+    </>
+  )
+  
 }

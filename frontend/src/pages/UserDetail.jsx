@@ -7,8 +7,10 @@ import { useUserContext } from "../contexts/UserContext.js";
 import UserForm from "../components/UserForm";
 import "./UserDetail.css";
 import { formatAvatar, formatBanner } from "../util/imgUrlFormatter";
+import { useAuthContext } from "../contexts/AuthContext.js";
 
 export default function UserDetail() {
+  const { authenticate } = useAuthContext();
   const userid = useParams().userId;
   const myProfile = useUserContext();
   const [user, setUser] = useState(null);
@@ -19,6 +21,7 @@ export default function UserDetail() {
   useEffect(() => {
     async function fetchUserDetails() {
       const request = await apiFetch(`users/${userid}`, "GET");
+      authenticate(request.status);
       if (request && !request.error) {
         setUser(request.user);
         setPosts(request.posts);
@@ -26,7 +29,7 @@ export default function UserDetail() {
       }
     }
     fetchUserDetails();
-  }, [userid]);
+  }, [userid, authenticate]);
   return (
     <main className="userDetail" key={userid}>
       {editProfile && <UserForm user={user} toggle={setEditProfile} />}

@@ -7,13 +7,16 @@ import { Outlet } from "react-router";
 import PostForm from "./components/postForm/PostForm.jsx";
 import { useUserContext  } from "./contexts/UserContext.js";
 import { usePostFormContext } from "./contexts/PostFormContext.js";
+import { useAuthContext } from "./contexts/AuthContext.js";
 
 export default function App() {
   const {profile, setProfile} = useUserContext();
   const {postForm} = usePostFormContext();
+  const {authenticate} = useAuthContext();
   useEffect(() => {
     async function fetchDashboard() {
       const request = await apiFetch("dashboard", "GET");
+      authenticate(request.status);
       if (request) {
         setProfile(request.user);
       }

@@ -3,21 +3,23 @@ import { Link } from "react-router";
 import profile from "../assets/profile.svg";
 import useDebounce from "../util/useDebounce";
 import { apiFetch } from "../../api/api";
+import { useAuthContext } from "../contexts/AuthContext.js";
 import { formatAvatar } from "../util/imgUrlFormatter";
 
 export default function UserCard({ user }) {
+  const { authenticate } = useAuthContext();
   const [following, setFollowing] = useState(null);
   const debouncedStatus = useDebounce(following, 2000);
   useEffect(() => {
     async function requestFollow() {
       //Only requests if change has been made to 'following' and debounces if final value after debounce timer is different than original.
       if (debouncedStatus !== null) {
-        await apiFetch(`users/follow/${user.id}`, "POST");
-  
+        const request = await apiFetch(`users/follow/${user.id}`, "POST");
+        authenticate(request.status);
       }
     }
     requestFollow();
-  }, [debouncedStatus, user.id]);
+  }, [debouncedStatus, user.id, authenticate]);
   return (
     <li className="userCard">
       <div className="userHeader">

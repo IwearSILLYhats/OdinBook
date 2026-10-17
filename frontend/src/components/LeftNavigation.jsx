@@ -11,10 +11,12 @@ import upArrow from "../assets/upArrow.svg";
 import { apiFetch } from "../../api/api";
 import { useUserContext } from "../contexts/UserContext.js";
 import { usePostFormContext } from "../contexts/PostFormContext.js";
+import { useAuthContext } from "../contexts/AuthContext.js";
 import { formatAvatar } from "../util/imgUrlFormatter";
 
 
 export default function LeftNavigation() {
+  const { setAuth } = useAuthContext();
   const formContext = usePostFormContext();
   const { profile } = useUserContext();
   const navigate = useNavigate();
@@ -56,8 +58,8 @@ export default function LeftNavigation() {
     },
   ];
   async function logout() {
-    const request = await apiFetch("logout", "GET");
-    console.log(request, "Logging out");
+    await apiFetch("logout", "GET");
+    setAuth(false);
     navigate("/auth/login");
   }
 

@@ -2,8 +2,10 @@ import { useState } from "react";
 import { useNavigate, NavLink } from "react-router";
 import { apiFetch } from "../../api/api";
 const url = import.meta.env.VITE_API_URL;
+import { useAuthContext } from "../contexts/AuthContext.js";
 
 export default function Signup() {
+  const { authenticate } = useAuthContext();
   const [submitted, setSubmitted] = useState(false);
   const [email, setEmail] = useState(null);
   const [username, setUsername] = useState(null);
@@ -21,6 +23,7 @@ export default function Signup() {
       confirm,
     };
     const request = await apiFetch("signup", "POST", body);
+    authenticate(request.status);
     if (!request.error) {
       navigate("/auth/login");
     }
@@ -30,6 +33,7 @@ export default function Signup() {
   }
   async function guestLogin() {
     const request = await apiFetch("login/guest", "GET", null);
+    authenticate(request.status);
     if (request.error === null) {
       navigate("/app");
     }

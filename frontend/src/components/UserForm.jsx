@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { apiFetch, uploadRequest } from "../../api/api";
 import { useUserContext } from "../contexts/UserContext.js";
+import { useAuthContext } from "../contexts/AuthContext.js";
 
 export default function UserForm({ toggle }) {
+  const { authenticate } = useAuthContext();
   const { setProfile } = useUserContext();
   const [bio, setBio] = useState("");
   const [pfp, setPfp] = useState(null);
@@ -27,6 +29,7 @@ export default function UserForm({ toggle }) {
         );
       }
       const patchProfile = await apiFetch("users", "PATCH", body);
+      authenticate(patchProfile.status);
       if (patchProfile.error) throw new Error(patchProfile.error);
       setProfile(patchProfile.success);
     } catch (error) {

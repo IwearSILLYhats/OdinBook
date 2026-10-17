@@ -1,7 +1,8 @@
 import { Navigate, Outlet } from "react-router";
+import { useAuthContext } from "../contexts/AuthContext";
 
 export default function LoggedOut() {
-  const isLoggedOut = document.cookie === "";
+  const { auth } = useAuthContext();
 
-  return isLoggedOut ? <Outlet /> : <Navigate to={"/"} replace />;
+  return !auth ? <Outlet /> : <Navigate to={"/"} replace />;
 }

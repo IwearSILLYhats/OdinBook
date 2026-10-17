@@ -6,8 +6,10 @@ import share from "../../assets/share.svg";
 import { useState } from "react";
 import { usePostFormContext } from "../../contexts/PostFormContext.js";
 import { apiFetch } from "../../../api/api";
+import { useAuthContext } from "../../contexts/AuthContext.js";
 
 export default function PostUI({ post }) {
+  const { authenticate } = useAuthContext();
   const [liked, setLiked] = useState(post.likes.length > 0 ? true : false);
   const { togglePostForm, setParent } = usePostFormContext();
   return (
@@ -29,7 +31,8 @@ export default function PostUI({ post }) {
         type="button"
         className={liked ? "liked" : ""}
         onClick={async () => {
-          await apiFetch(`posts/like/${post.id}`, "PATCH");
+          const request = await apiFetch(`posts/like/${post.id}`, "PATCH");
+          authenticate(request.status);
           setLiked(!liked);
         }}
       >

@@ -2,8 +2,10 @@ import { useState } from "react";
 import BackdropModal from "../BackdropModal";
 import { apiFetch } from "../../../api/api";
 import timeDifference from "../../util/timeDiff";
+import { useAuthContext } from "../../contexts/AuthContext.js";
 
 export default function DraftModal({ back, close, drafts, populate }) {
+  const { authenticate } = useAuthContext();
   const [confirmationModal, setConfirmationModal] = useState(false);
   function clickHandler(draftId, draftText, event) {
     if (event.target.classList.contains("discardButton")) {
@@ -24,6 +26,7 @@ export default function DraftModal({ back, close, drafts, populate }) {
           const request = await apiFetch("posts", "DELETE", {
             id: confirmationModal,
           });
+          authenticate(request.status);
           if (!request.error) {
             close();
           }
