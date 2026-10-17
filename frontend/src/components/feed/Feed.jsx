@@ -17,7 +17,7 @@ export default function Feed() {
       }
     }
     fetchPosts();
-  }, []);
+  }, [authenticate]);
   return (
     <main>
       <header>

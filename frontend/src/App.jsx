@@ -22,7 +22,7 @@ export default function App() {
       }
     }
     fetchDashboard();
-  }, [setProfile]);
+  }, [setProfile, authenticate]);
   return (
     <div id="app">
           {!profile && <p>Loading...</p>}
